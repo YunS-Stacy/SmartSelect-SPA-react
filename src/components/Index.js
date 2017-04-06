@@ -15,6 +15,8 @@ import LayerToggle from '../components/LayerToggle';
 import Map from '../components/Map';
 import Background from '../components/Background';
 import LocalMarket from '../components/LocalMarket';
+import VariableSelection from '../components/VariableSelection';
+
 
 // import Section3 from '../components/Section3';
 // import Section4 from '../components/Section4';
@@ -48,7 +50,6 @@ import './less/antMotion_style.less';
 export default class Index extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props)
     this.state = {
       isMode: false,
     };
@@ -87,6 +88,8 @@ export default class Index extends React.Component {
           <Background id="background" key="background" isMode={this.state.isMode}
             style= {{height: '50vh'}}/>
           <LocalMarket id="localmarket" key="localmarket" isMode={this.state.isMode}/>
+          <VariableSelection id="variableselection" key="variableselection" isMode={this.state.isMode}/>
+
           {/* <Section3 id="content_2_0" key="content_2_0" isMode={this.state.isMode}/> */}
           {/* <Predictors id="content_2_1" key="content_2_1"/> */}
           {/* <Section4 id="section_4_0" key="section_4_0" isMode={this.state.isMode}/> */}
@@ -95,7 +98,7 @@ export default class Index extends React.Component {
 
           <Footer id="footer" key="footer" isMode={this.state.isMode}/>
           {/* <Point key="list" ref="list" data={['map', 'content_2_0', 'content_3_0', 'content_4_0', 'content_9_0']} /> */}
-          <Point key="list" ref="list" data={['map', 'background', 'localmarket']} />
+          <Point key="list" ref="list" data={['map', 'background', 'localmarket', 'variableselection']} />
         </div>
       )
     } else {

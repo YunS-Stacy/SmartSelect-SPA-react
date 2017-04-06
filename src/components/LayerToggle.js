@@ -26,46 +26,58 @@ const styles ={
 }
 
 export default class LayerToggle extends Component {
-  constructor(props) {
-    super(props);
-  }
-  handleBuildings (e, bool){
+  state = {
+      parcelVis: 'none',
+      footVis: 'visible',
+      blueVis: 'none',
+    };
+
+  handleBuilding (e, bool){
     let layerVisible = bool === true ? 'visible' : 'none';
     this.props.initialMap.setLayoutProperty('3d-buildings', 'visibility', layerVisible);
+    this.setState({
+      footVis: layerVisible
+    })
+
   }
+
 
   handleBlueprint (e, bool){
     let layerVisible = bool === true ? 'visible' : 'none';
     this.props.initialMap.setLayoutProperty('3d-blueprint', 'visibility', layerVisible);
+    this.setState({
+      blueVis: layerVisible
+    })
+
   }
 
-  handlePrice (e, bool){
-    console.log(bool)
+  handleParcel (e, bool){
     let layerVisible = bool === true ? 'visible' : 'none';
-    this.props.initialMap.setLayoutProperty('house-points', 'visibility', layerVisible);
+    this.props.initialMap.setLayoutProperty('aptParcel', 'visibility', layerVisible);
+    this.setState({
+      parcelVis: layerVisible
+    })
+
   }
 
   handleStyleChange(e, value){
-
     let layerId = value;
-    console.log(value);
     let mapStyle;
     switch (value) {
 
       case 'customized':
-      console.log(value);
-      mapStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy?';
+      mapStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy';
       break;
       case 'satellite':
-      mapStyle = 'mapbox://styles/yunshi/cj0u96uwe009w2rqryu8r7bg8?'
+      mapStyle = 'mapbox://styles/yunshi/cj0u96uwe009w2rqryu8r7bg8'
       break;
 
       case 'light':
-      mapStyle = 'mapbox://styles/yunshi/cj0u990c700fm2smr7yvnv1c5?'
+      mapStyle = 'mapbox://styles/yunshi/cj0u990c700fm2smr7yvnv1c5'
       break;
 
       default:
-      mapStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy?'
+      mapStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy'
       break;
 
     };
@@ -75,7 +87,6 @@ export default class LayerToggle extends Component {
       mapStyle: mapStyle
     })
   }
-
 
   render(){
     return (
@@ -121,20 +132,20 @@ export default class LayerToggle extends Component {
           <Checkbox
             label="ESTIMATED PRICE"
             labelStyle={styles.label}
-            onCheck = {this.handlePrice.bind(this)}
-            defaultChecked = {true}
+            onCheck = {this.handleParcel.bind(this)}
+            checked = {this.state.parcelVis === 'visible' ? true : false}
           />
           <Checkbox
             label="3D BUILDING LAYER"
             labelStyle={styles.label}
-            onCheck = {this.handleBuildings.bind(this)}
-            defaultChecked = {true}
+            onCheck = {this.handleBuilding.bind(this)}
+            checked = {this.state.footVis === 'visible' ? true : false}
           />
           <Checkbox
             label="YOUR BUILDING"
             labelStyle={styles.label}
             onCheck = {this.handleBlueprint.bind(this)}
-            defaultChecked = {true}
+            checked = {this.state.blueVis === 'visible' ? true : false}
             disabled = {this.props.height === 0 ? true : false}
           />
         </div>

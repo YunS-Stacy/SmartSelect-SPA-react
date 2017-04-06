@@ -39,7 +39,7 @@ export default class Mapping extends Component {
   }
   //
   // handleClick(map, e){
-  //   let features = map.queryRenderedFeatures(e.point, { layers: ['house-points'] });
+  //   let features = map.queryRenderedFeatures(e.point, { layers: ['aptParcel'] });
   //   // if the features have no info, return nothing
   //   if (!features.length) {
   //     return;
@@ -54,8 +54,7 @@ export default class Mapping extends Component {
 
   handleMouseMove(map, e){
     //changing the cursor style to 'pointer'
-
-    let features = map.queryRenderedFeatures(e.point, { layers: ['house-points'] });
+    let features = map.queryRenderedFeatures(e.point, { layers: ['aptParcel'] });
     map.getCanvas().style.cursor = (features.length) ? 'pointer' : '';
     if (!features.length) {
       this.setState({
@@ -66,13 +65,12 @@ export default class Mapping extends Component {
     }
     let feature = features[0];
     this.setState({
-      popupCoords: feature.geometry.coordinates,
-      popupMessage: feature.properties['sold_without_price_estimate']
+      popupCoords: e.lngLat,
+      popupMessage: feature.properties['unit_price']
     });
   };
 
   handleMouseOut(map, e){
-
     this.setState({
       popupCoords: [0,0],
       popupMessage: ''
@@ -221,11 +219,12 @@ export default class Mapping extends Component {
     // One for unclustered points, three for each cluster category,
     // and one for cluster labels.
     map.addLayer({
-      "id": "house-points",
+      "id": "aptParcel",
       "type": "fill",
       "source": 'composite',
       'source-layer': 'unionParcel',
       'paint': {
+        // make circles larger as the user zooms from z12 to z22
 
         'fill-color': {
           property: 'unit_price',
@@ -298,7 +297,7 @@ export default class Mapping extends Component {
     // const {center} = this.state;
     const {props} = this;
     const mapPosition= this.props.mode === 'mode-welcome' ? 'fixed' : 'absolute';
-    // const mapInteractive = this.props.mode === 'mode-welcome' ? false : true;
+    const mapInteractive = this.props.mode === 'mode-welcome' ? false : true;
     return (
 
       <ReactMapboxGl
@@ -313,7 +312,7 @@ export default class Mapping extends Component {
           width: "100vw",
           position: mapPosition
         }}
-        // interactive={mapInteractive}
+        interactive={mapInteractive}
         onStyleLoad={(map)=>{this.handleLoaded(map)}}
         onMouseUp={(map)=>{this.handleMouseUp(map)}}
         // onClick={(map, e)=>{this.handleClick(map, e)}}

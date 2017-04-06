@@ -83,9 +83,9 @@ export default {
     initialMap: {},
     mapLoaded: false,
     mapCenter: [-75.1639, 39.9522],
-    mapPitch: 0,
-    mapZoom: [14],
-    mapBearing: 9.2,
+    mapPitch: 60,
+    mapZoom: [15],
+    mapBearing: 0,
     mapStyle:'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy',
 
     calData: {
@@ -103,7 +103,6 @@ export default {
   },
 
   reducers: {
-
     styleChange(state, datum){
       const newStyle = datum.mapStyle;
       return { ...state, mapStyle: newStyle};
@@ -138,24 +137,37 @@ export default {
 
     changeMode(state){
 
-      const newMode = state.mode === 'mode-welcome' ? 'mode-mapping' : 'mode-welcome'
-      const newPitch = state.mapPitch === 0 ? 60 : 0
-      const newZoom = state.mapZoom[0] === 14 ? 15 :14// extract the number first, cannot tell [14] === [14] is true
-      const newCenter = [-75.1639, 39.9522]
-      const newBearing = state.mapBearing === 9.2 ? 0 : 9.2
-
+      const newMode = state.mode === 'mode-welcome' ? 'mode-mapping' : 'mode-welcome';
+      let newPitch, newZoom, newCenter, newBearing;
+      switch (newMode) {
+        case 'mode-mapping':
+        newPitch = 0;
+        newZoom =[14];
+        newCenter = [-75.1639, 39.9522];
+        newBearing = 9.2;
+        break;
+        case 'mode-welcome':
+        newPitch = 60;
+        newZoom =[15];
+        newCenter = [-75.1639, 39.9522];
+        newBearing = 0;
+        break;
+        default:
+        break;
+      }
+      // zoom number must extract the number first, cannot tell [14] === [14] is true
       return { ...state, mode: newMode, mapPitch: newPitch, mapZoom: [newZoom], mapCenter: newCenter, mapBearing: newBearing};
     }
   },
   //https://gist.githubusercontent.com/yunshi-stacy/dedcd037381f619bbca233a1c83c4d61/raw/47955aa0165504a63286857a5f23cc5b65732ba9/philadelphia_crime_points.geojson
   effects: {
     *addchartData(){
-//       fetch(url).then(function (response) {
-//   if (!response.ok) {
-//     throw new TypeError('bad response status');
-//   }
-//   return cache.put(url, response);
-// })
+      //       fetch(url).then(function (response) {
+      //   if (!response.ok) {
+      //     throw new TypeError('bad response status');
+      //   }
+      //   return cache.put(url, response);
+      // })
 
       const data = Zillow.getZestimateFromProperty('2930 Chestnut Street')
       console.log(data)
@@ -163,12 +175,12 @@ export default {
     }
   },
   subscriptions: {
-  setup({ dispatch }) {
-    console.log('store is connected and listening');
-    dispatch({ type: 'addchartData' });
-    console.log('dispatched')
+    setup({ dispatch }) {
+      console.log('store is connected and listening');
+      // dispatch({ type: 'addchartData' });
+      // console.log('dispatched')
+    },
   },
-},
   // subscriptions: {},
 };
 

@@ -80,7 +80,7 @@ export default class Corrplot extends Component {
 		width: 550,
 		height: 650,
 		plotCfg: {
-			margin: [50,150,100,50]
+			margin: [0,150,150,50]
 		}
 	}
 
@@ -111,8 +111,12 @@ export default class Corrplot extends Component {
 							plotCfg={this.state.plotCfg}
 							forceFit={this.state.forceFit} />
 					</div>
-					<div style={{width: '50vw', marginTop: '15vh'}}>
-						<p style={{fontSize: '1.4em'}}>Corrplot</p>
+					<div style={{width: '35vw', marginTop: '15vh', paddingRight: '2vw'}}>
+						<h3>Correlation Matix</h3>
+						<p style={{fontSize: '1.4em'}}>Built a large dataset, it's time to find the least variables that describe the apartment price best.</p>
+						<br/>
+							<p style={{fontSize: '1.4em'}}>To find the relationship between variables, the correlation matrix may serve the goal well.</p>
+
 					</div>
 
 				</div>
