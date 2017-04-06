@@ -1,0 +1,63 @@
+/*introduction*/
+.background-wrapper {
+  height: 500px;
+  overflow: hidden;
+}
+.background > h1 {
+  text-align: center;
+  position: relative;
+  top: 15%;
+  margin-bottom: 40px;
+  font-size: 5em;
+  font-weight: 100;
+
+}
+.background > ul {
+  position: relative;
+  top: 10%;
+  padding: 20px 0;
+}
+.background > ul > li {
+  width: 33.3%;
+  padding: 0 4%;
+  display: inline-block;
+  text-align: center;
+}
+.background > ul > li.queue-anim-leaving {
+  position: relative !important;
+}
+.background > ul > li > h3 {
+  line-height: 32px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 400;
+}
+.background > ul > li > p {
+  font-size: 1.4em;
+}
+@media screen and (max-width: 767px) {
+  .background-wrapper {
+    height: 760px;
+  }
+  .background-wrapper .background {
+    width: 90%;
+    max-width: 100%;
+  }
+  .background-wrapper .background > h1 {
+    top: auto;
+    margin: 40px auto 20px;
+  }
+  .background-wrapper .background > ul {
+    top: auto;
+    padding: 0;
+  }
+  .background-wrapper .background > ul > li {
+    width: 100%;
+    max-width: 250px;
+    display: block;
+    margin: 20px auto 40px;
+    padding: 0;
+  }
+}
+/*end of introduction*/

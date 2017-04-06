@@ -1,0 +1,112 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,300,100,700,500);
+/*global*/
+html, body, :global(#root) {
+  height: 100%;
+  font-family: 'Roboto', 'texgyreherosregular', 'Helvetica Neue', 'Arial', sans-serif;
+}
+body video {
+  display: block;
+}
+.text-center {
+  text-align: center;
+}
+a {
+  transition: color 450 cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+h1,
+h2,
+h3,
+h4 {
+  color: #404040;
+}
+#react-content {
+  width: 100%;
+  overflow: hidden;
+}
+#page-404 {
+  min-height: 680px;
+  text-align: center;
+  padding-top: 10%;
+  color: #999;
+}
+#page-404 h1 {
+  text-shadow: -1px -1px 4px #666;
+  font-size: 200px;
+}
+#nprogress .bar {
+  background: #52bad5;
+}
+#nprogress .peg {
+  box-shadow: 0 0 10px #52bad5, 0 0 5px #52bad5;
+}
+#nprogress .spinner-icon {
+  border-top-color: #52bad5;
+  border-left-color: #52bad5;
+}
+/*end of global*/
+/*common*/
+.content-wrapper > .tween-one-leaving, .queue-anim-leaving {
+  position: absolute !important;
+  width: 100%;
+}
+
+.video {
+  max-width: 800px;
+}
+
+.templates-wrapper {
+  user-select: none;
+}
+
+.is-edit {
+  * {
+    pointer-events: none;
+  }
+}
+
+#react-content{
+  min-height: 100%;
+}
+/*end of common*/
+
+/*content*/
+.content-template-wrapper {
+  width: 100%;
+  background: #fff;
+  height: 100vh;
+  border-color: #666;
+  position: relative;
+}
+.content-template-wrapper .content-template {
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  margin: auto;
+  position: relative;
+}
+.content-template-wrapper .content-template h1 {
+  font-size: 6em;
+  font-weight: 100;
+  margin-bottom: 40px;
+  text-align: center;
+  color: #404040;
+  line-height: 48px;
+}
+.content-template-wrapper .content-template > p {
+  font-size: 1.3em;
+  margin: 20px auto;
+}
+.content-half-wrapper {
+  height: 50vh;
+}
+@media screen and (max-width: 767px) {
+  .content-template-wrapper .content-template {
+    /*h1, > p {
+        text-align: center;
+      }*/
+  }
+  .content-template-wrapper .content-template h1 {
+    font-size: 24px;
+  }
+}
+/*end of content*/
