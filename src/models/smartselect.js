@@ -77,17 +77,19 @@ import Zillow from '../utils/get_zillow';
 
 export default {
   namespace: 'smartselect',
-
   state: {
+    // Three mode: 'mode-welcome', 'mode-query', 'mode-build'
     mode: 'mode-welcome',
     initialMap: {},
     mapLoaded: false,
     mapCenter: [-75.1639, 39.9522],
-    mapPitch: 60,
+    mapPitch: 65,
     mapZoom: [15],
-    mapBearing: 0,
+    mapBearing: 9.2,
     mapStyle:'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy',
-
+    footVis: 'visible',
+    blueVis: 'visible',
+    parcelVis: 'none',
     calData: {
       polygon: {
         area: 0,
@@ -103,7 +105,7 @@ export default {
   },
 
   reducers: {
-    styleChange(state, datum){
+    changeStyle(state, datum){
       const newStyle = datum.mapStyle;
       return { ...state, mapStyle: newStyle};
     },
@@ -131,53 +133,75 @@ export default {
       return { ...state, mapLoaded: true, initialMap: datum.initialMap};
     },
 
+    changeVis(state, datum){
+      const newVis = datum.layerVis;
+      switch (datum.layerName) {
+        case 'parcel':
+        return { ...state, parcelVis: newVis};
+        case 'footprint':
+        return { ...state, footVis: newVis};
+        case 'blueprint':
+        return { ...state, blueVis: newVis};
+        default:
+        break;
+      };
+    },
+
     changeCenter(state, datum){
       return { ...state, mapCenter: datum.mapCenter}
     },
 
-    changeMode(state){
-
-      const newMode = state.mode === 'mode-welcome' ? 'mode-mapping' : 'mode-welcome';
-      let newPitch, newZoom, newCenter, newBearing;
+    changeMode(state, datum){
+      const newMode = datum.mode;
+      let newStyle, newPitch, newZoom, newCenter, newBearing, newFootVis, newParcelVis;
       switch (newMode) {
-        case 'mode-mapping':
+        case 'mode-query':
+        newStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy';
         newPitch = 0;
         newZoom =[14];
         newCenter = [-75.1639, 39.9522];
-        newBearing = 9.2;
+        newBearing = 0;
+        newFootVis = 'none';
+        newParcelVis = 'visible';
         break;
         case 'mode-welcome':
-        newPitch = 60;
+        newStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy';
+        newPitch = 65;
         newZoom =[15];
         newCenter = [-75.1639, 39.9522];
-        newBearing = 0;
+        newBearing = 9.2;
+        newFootVis = 'visible';
+        newParcelVis = 'none';
         break;
         default:
         break;
       }
       // zoom number must extract the number first, cannot tell [14] === [14] is true
-      return { ...state, mode: newMode, mapPitch: newPitch, mapZoom: [newZoom], mapCenter: newCenter, mapBearing: newBearing};
+      return { ...state, mode: newMode, mapStyle: newStyle, mapPitch: newPitch, mapZoom: [newZoom], mapCenter: newCenter, mapBearing: newBearing, footVis: newFootVis, parcelVis: newParcelVis};
     }
   },
   //https://gist.githubusercontent.com/yunshi-stacy/dedcd037381f619bbca233a1c83c4d61/raw/47955aa0165504a63286857a5f23cc5b65732ba9/philadelphia_crime_points.geojson
   effects: {
-    *addchartData(){
+    *queryZillow( datum, { call, put }){
+      console.log(datum);
+      const zpid = datum.zpid;
+      console.log(zpid)
       //       fetch(url).then(function (response) {
       //   if (!response.ok) {
       //     throw new TypeError('bad response status');
       //   }
       //   return cache.put(url, response);
       // })
-
-      const data = Zillow.getZestimateFromProperty('2930 Chestnut Street')
-      console.log(data)
+      const data = Zillow.getCompsFromZpid(zpid)
+      // console.log(data)
 
     }
   },
   subscriptions: {
+
     setup({ dispatch }) {
       console.log('store is connected and listening');
-      // dispatch({ type: 'addchartData' });
+      // dispatch({ type: 'queryZillow' });
       // console.log('dispatched')
     },
   },

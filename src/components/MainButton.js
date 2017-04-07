@@ -40,7 +40,10 @@ export default class MainButton extends Component{
           // }
           // loading={this.state.loading}
 					onClick={(e) => {e.preventDefault();
-            this.props.dispatch({type: 'smartselect/changeMode'})
+            this.props.dispatch({
+              type: 'smartselect/changeMode',
+              mode: 'mode-query',
+            })
           }}//use bind(this), if not using constructor
 					id="btn-get-started-loader"
           style={style.button}

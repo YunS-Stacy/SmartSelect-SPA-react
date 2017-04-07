@@ -11,6 +11,8 @@ import Nav from '../components/Nav';
 import Mapping from '../components/Mapping';
 import MappingPanel from '../components/MappingPanel';
 import LayerToggle from '../components/LayerToggle';
+import InfoCard from '../components/InfoCard';
+
 
 import Map from '../components/Map';
 import Background from '../components/Background';
@@ -110,6 +112,9 @@ export default class Index extends React.Component {
             initialMap={this.props.initialMap}
           />
           <LayerToggle
+            parcelVis={this.props.parcelVis}
+            footVis={this.props.footVis}
+            blueVis={this.props.blueVis}
             dispatch={this.props.dispatch}
             initialMap={this.props.initialMap}
             height={this.props.height}/>
@@ -119,7 +124,7 @@ export default class Index extends React.Component {
     }
   }
   componentWillReceiveProps(nextProps){
-    if(nextProps.mode==='mode-mapping'){
+    if(nextProps.mode==='mode-query'){
       jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'visible');
     } else{
       jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'hidden');
@@ -127,6 +132,7 @@ export default class Index extends React.Component {
   }
 
   render() {
+
     return(
       <MuiThemeProvider>
         <div className="templates-wrapper">

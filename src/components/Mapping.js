@@ -10,7 +10,7 @@ import _ from 'underscore';
 import Pubsub from 'pubsub-js';
 
 import Snackbar from 'material-ui/Snackbar';
-import { Icon } from 'antd';
+import { Button } from 'antd';
 
 // mapboxgl.accessToken = 'pk.eyJ1IjoieXVuc2hpIiwiYSI6ImNpeHczcjA3ZDAwMTMyd3Btb3Fzd3hpODIifQ.SWiqUD9o_DkHZuJBPIEHPA';
 
@@ -65,17 +65,18 @@ export default class Mapping extends Component {
     }
     let feature = features[0];
     this.setState({
-      popupCoords: e.lngLat,
-      popupMessage: feature.properties['unit_price']
+      popupCoords: {lng: feature.properties['lon'],lat: feature.properties['lat']},
+      popupMessage: {
+        address: feature.properties['location'],
+        refPrice: feature.properties['sold_witho'],
+        source: feature.properties['predicted'] === 1 ? 'Predicted Value' : 'Record from Latest Transaction',
+        zoning: feature.properties['zoning'],
+        zpid: feature.properties['zpid'],
+        opa: feature.properties['opa_accoun'],
+      },
     });
-  };
+  }
 
-  handleMouseOut(map, e){
-    this.setState({
-      popupCoords: [0,0],
-      popupMessage: ''
-    });
-  };
 
 
   handleMouseUp(map){
@@ -238,7 +239,7 @@ export default class Mapping extends Component {
         }
       },
       'layout': {
-        visibility: 'visible'
+        visibility: 'none'
       }
     });
 
@@ -251,38 +252,21 @@ export default class Mapping extends Component {
         // initialDraw: draw
       });
     }, 5000);
-    // let scaleControl = new mapboxgl.ScaleControl({unit: 'imperial'});
-    // let geolocateControl = new mapboxgl.GeolocateControl();
-    // let naviControl = new mapboxgl.NavigationControl();
-    // console.log(naviControl);
-    // let drawControl = new MapboxDraw({
-    //   displayControlsDefault: true,
-    //   controls: {
-    //     polygon: true,
-    //     trash: true
-    //   },
-    // });
-
     map.addControl(this.state.scaleControl,'bottom-right');
     map.addControl(this.state.geolocateControl,'bottom-right');
     map.addControl(this.state.naviControl,'bottom-right');
     map.addControl(this.state.draw,'bottom-right');
-    // var directions = new MapboxDirections({
-    //   accessToken: 'YOUR-MAPBOX-ACCESS-TOKEN',
-    //   unit: 'metric',
-    //   profile: 'cycling'
-    // });
-    // map.addControl(new MapboxDirections(), 'bottom-left');
 
     jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'hidden');
   }
 
   componentWillReceiveProps(nextProps){
+    const map = this.props.initialMap;
     if(nextProps.mapStyle !== this.props.mapStyle){
-      this.props.initialMap.removeControl(this.state.scaleControl);
-      this.props.initialMap.removeControl(this.state.geolocateControl);
-      this.props.initialMap.removeControl(this.state.naviControl);
-      this.props.initialMap.removeControl(this.state.draw);
+      map.removeControl(this.state.scaleControl);
+      map.removeControl(this.state.geolocateControl);
+      map.removeControl(this.state.naviControl);
+      map.removeControl(this.state.draw);
     }
     // this.props.initialMap.addControl(new mapboxgl.ScaleControl({unit: 'imperial'}),'bottom-right');
     // this.props.initialMap.addControl(new mapboxgl.GeolocateControl(),'bottom-right');
@@ -317,7 +301,7 @@ export default class Mapping extends Component {
         onMouseUp={(map)=>{this.handleMouseUp(map)}}
         // onClick={(map, e)=>{this.handleClick(map, e)}}
         onMouseMove={(map, e)=>{this.handleMouseMove(map, e)}}
-        onMouseOut={(map, e)=>{this.handleMouseOut(map, e)}}
+        // onMouseOut={(map, e)=>{this.handleMouseOut(map, e)}}
       >
 
         <Popup
@@ -326,15 +310,16 @@ export default class Mapping extends Component {
           // onMouseLeave={(e)=>{e.preventDefault();this.setState({popupCoords: [0,0], popupMessage: ''})}}
           // onClick={(e)=>{console.log(e); this.setState({popupCoords: [0,0]})}}
         >
-          <h5><strong>Predictive Price:</strong></h5>
-          <h5>${this.state.popupMessage}</h5>
-          {/*
-            <button
-            className="mapboxgl-popup-close-button"
-            type="button"
-            onClick={(e)=>{e.preventDefault();this.setState({popupCoords: [0,0], popupMessage: ''})}}
+          <h5><strong>Parcel Information:</strong></h5>
+          <ul>
+            <li><strong>Address: </strong>{this.state.popupMessage.address}</li>
+            <li><strong>Ref. Price: </strong>{this.state.popupMessage.refPrice}</li>
+            <li style={{float: 'right'}}><em><strong>Source: </strong>{this.state.popupMessage.source}</em></li>
 
-          >×</button> */}
+            <li><Button>Zillow</Button></li>
+
+          </ul>
+
         </Popup>
         <Snackbar
           open={this.props.calData.point}

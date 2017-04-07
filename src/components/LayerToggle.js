@@ -26,69 +26,76 @@ const styles ={
 }
 
 export default class LayerToggle extends Component {
-  state = {
-      parcelVis: 'none',
-      footVis: 'visible',
-      blueVis: 'none',
-    };
-
   handleBuilding (e, bool){
-    let layerVisible = bool === true ? 'visible' : 'none';
-    this.props.initialMap.setLayoutProperty('3d-buildings', 'visibility', layerVisible);
-    this.setState({
-      footVis: layerVisible
+    const layerName = 'footprint';
+    let layerVis = bool === true ? 'visible' : 'none';
+    this.props.initialMap.setLayoutProperty('3d-buildings', 'visibility', layerVis);
+    // this.setState({
+    //   footVis: layerVis
+    // });
+    this.props.dispatch({
+      type: 'smartselect/changeVis',
+      layerName: layerName,
+      layerVis: layerVis,
     })
-
   }
 
 
   handleBlueprint (e, bool){
-    let layerVisible = bool === true ? 'visible' : 'none';
-    this.props.initialMap.setLayoutProperty('3d-blueprint', 'visibility', layerVisible);
-    this.setState({
-      blueVis: layerVisible
+    const layerName = 'blueprint';
+    let layerVis = bool === true ? 'visible' : 'none';
+    this.props.initialMap.setLayoutProperty('3d-blueprint', 'visibility', layerVis);
+    // this.setState({
+    //   blueVis: layerVis
+    // })
+    this.props.dispatch({
+      type: 'smartselect/changeVis',
+      layerName: layerName,
+      layerVis: layerVis,
     })
-
   }
 
   handleParcel (e, bool){
-    let layerVisible = bool === true ? 'visible' : 'none';
-    this.props.initialMap.setLayoutProperty('aptParcel', 'visibility', layerVisible);
-    this.setState({
-      parcelVis: layerVisible
+    const layerName = 'parcel';
+    let layerVis = bool === true ? 'visible' : 'none';
+    this.props.initialMap.setLayoutProperty('aptParcel', 'visibility', layerVis);
+    // this.setState({
+    //   parcelVis: layerVis
+    // })
+    this.props.dispatch({
+      type: 'smartselect/changeVis',
+      layerName: layerName,
+      layerVis: layerVis,
     })
-
   }
 
-  handleStyleChange(e, value){
+  handlechangeStyle(e, value){
     let layerId = value;
     let mapStyle;
     switch (value) {
-
       case 'customized':
       mapStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy';
       break;
       case 'satellite':
-      mapStyle = 'mapbox://styles/yunshi/cj0u96uwe009w2rqryu8r7bg8'
+      mapStyle = 'mapbox://styles/yunshi/cj0u96uwe009w2rqryu8r7bg8';
       break;
-
       case 'light':
-      mapStyle = 'mapbox://styles/yunshi/cj0u990c700fm2smr7yvnv1c5'
+      mapStyle = 'mapbox://styles/yunshi/cj0u990c700fm2smr7yvnv1c5';
       break;
-
       default:
-      mapStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy'
       break;
-
     };
 
     this.props.dispatch({
-      type: 'smartselect/styleChange',
+      type: 'smartselect/changeStyle',
       mapStyle: mapStyle
-    })
+    });
   }
-
   render(){
+    const map = this.props.initialMap;
+    map.setLayoutProperty('3d-buildings', 'visibility', this.props.footVis);
+    map.setLayoutProperty('3d-blueprint', 'visibility', this.props.blueVis);
+    map.setLayoutProperty('aptParcel', 'visibility', this.props.parcelVis);
     return (
       <Paper
         zDepth={3}
@@ -98,58 +105,50 @@ export default class LayerToggle extends Component {
           <RadioButtonGroup
             name="mapStyle"
             defaultSelected="customized"
-            onChange={this.handleStyleChange.bind(this)}
+            onChange={this.handlechangeStyle.bind(this)}
           >
             <RadioButton
               value="customized"
               label="CUSTOMIZED"
               labelStyle={styles.label}
-
               // style={styles.radioButton}
             />
             <RadioButton
               value="light"
               label="LIGHT"
               labelStyle={styles.label}
-
               // style={styles.radioButton}
             />
-
             <RadioButton
               value="satellite"
               label="SATELLITE"
               labelStyle={styles.label}
-
               // style={styles.radioButton}
             />
-
           </RadioButtonGroup>
-
         </div>
         <Divider />
         <div style={styles.group}>
-
           <Checkbox
             label="ESTIMATED PRICE"
             labelStyle={styles.label}
             onCheck = {this.handleParcel.bind(this)}
-            checked = {this.state.parcelVis === 'visible' ? true : false}
+            checked = {this.props.parcelVis === 'visible' ? true : false}
           />
           <Checkbox
             label="3D BUILDING LAYER"
             labelStyle={styles.label}
             onCheck = {this.handleBuilding.bind(this)}
-            checked = {this.state.footVis === 'visible' ? true : false}
+            checked = {this.props.footVis === 'visible' ? true : false}
           />
           <Checkbox
             label="YOUR BUILDING"
             labelStyle={styles.label}
             onCheck = {this.handleBlueprint.bind(this)}
-            checked = {this.state.blueVis === 'visible' ? true : false}
+            checked = {this.props.blueVis === 'visible' ? true : false}
             disabled = {this.props.height === 0 ? true : false}
           />
         </div>
-
       </Paper>
             );
           }

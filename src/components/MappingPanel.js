@@ -24,10 +24,7 @@ import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left
 
 const paperStyle = {
 	"position": 'absolute',
-	// "overflow": 'auto',
-	// "fontSize": '16px',
 	"width": '25vw',
-	// "maxHeight": '75vh',
 	"margin": '0',
 	'top':'7vh',
 	"padding": '0 0 2em 0',
@@ -220,8 +217,8 @@ renderContent() {
 
 render() {
 
-	// console.log(this.props.mode==='mode-mapping');
-	if(this.props.mode==='mode-mapping'){
+	// console.log(this.props.mode==='mode-query');
+	if(this.props.mode==='mode-query'){
 		jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'visible');
 	} else{
 		jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'hidden');
