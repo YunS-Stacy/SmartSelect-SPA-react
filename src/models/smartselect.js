@@ -3,10 +3,20 @@ import request from '../utils/request';
 import fetch from 'dva/fetch';
 import { parseString } from 'xml2js';
 import Zillow from '../utils/get_zillow';
+import _ from 'lodash';
+import turf from 'turf';
 
 export default {
   namespace: 'smartselect',
   state: {
+    draw:{},
+    blueprint: {
+      'type': 'Feature',
+      'geometry': {
+        'type': 'Polygon',
+        'coordinates': [[[0,0],[0,0],[0,0],[0,0]]]
+      },
+    },
     // Three mode: 'mode-welcome', 'mode-query', 'mode-build'
     mode: 'mode-welcome',
     initialMap: {},
@@ -41,16 +51,71 @@ export default {
       return { ...state, mapStyle: newStyle};
     },
 
-    buildingHeight(state, datum){
-      return { ...state, height: datum.height};
-    },
-    calculate(state, datum){
-      return { ...state, calData: datum.calData};
 
+    askCalculate(state){
+      let data = state.draw.getAll();
+      let calculatedValue = {
+        polygon: {
+          area: 0,
+          length: 0
+        },
+        line: {
+          length: 0
+        },
+        point: false,
+        num: 0
+      };
+
+      _.each(data.features,(datum)=>{
+        let type = datum.geometry.type;
+        switch (type) {
+          case 'Polygon':
+          // convert square meters to square foot
+          let poly_area = turf.area(datum) * 10.7639;
+          let poly_length = turf.lineDistance(datum, 'miles');
+          // restrict to 2 decimal points
+          let rounded_poly_area = Math.round(poly_area*100)/100;
+          let rounded_poly_length = Math.round(poly_length*5280*100)/100;
+          calculatedValue.polygon.area = rounded_poly_area;
+          calculatedValue.polygon.length = rounded_poly_length;
+          break;
+
+          case 'LineString':
+          // convert square meters to square foot
+          let line_length = turf.lineDistance(datum, 'miles');
+          // restrict to 2 decimal points
+          let rounded_line_length = Math.round(line_length*5280*100)/100;
+          calculatedValue.line.length = rounded_line_length;
+          break;
+          case 'Point':
+          calculatedValue.point = true;
+          default:
+        }
+      });
+
+      calculatedValue.num = data.features.length;
+      return { ...state, calData: calculatedValue};
     },
 
+        buildingHeight(state, datum){
+          return { ...state, height: datum.height};
+        },
+    askExtrude(state, datum){
+      const height = datum.height;
+      let data = state.draw.getAll();
+      // only draw the polygon
+      data.features = _.filter(data.features, function(datum){
+        return datum.geometry.type === 'Polygon' || datum.geometry.type === 'MultiPolygon';
+      });
+      if (data.features.length > 0){
+        return { ...state, blueprint: data, height: height}
+      } else {
+        return { ...state, height: height}
+      }
+    },
     mapLoaded(state, datum){
-      return { ...state, mapLoaded: true, initialMap: datum.initialMap};
+
+      return { ...state, mapLoaded: true, initialMap: datum.initialMap,draw:datum.draw};
     },
 
     changeVis(state, datum){
@@ -103,23 +168,25 @@ export default {
       return { ...state, mode: newMode, mapStyle: newStyle, mapPitch: newPitch,
         mapZoom: [newZoom], mapCenter: newCenter, mapBearing: newBearing,
         footVis: newFootVis, parcelVis: newParcelVis, blueVis: newBlueVis};
-    },
-    getZillow(state, datum){
-      const newDataZillow = datum.dataZillow;
-      return { ...state, dataZillow: newDataZillow }
-    }
-  },
+      },
 
-  effects: {
-    *queryZillow( datum, { call, put }){
-      const zpid = datum.zpid;
-      const dataZillow = yield call(Zillow.getComps, zpid);
-      yield put({ type: 'getZillow', dataZillow})
-    }
-  },
-  subscriptions: {
-    setup({ dispatch }) {
-      console.log('store is connected and listening');
+      getZillow(state, datum){
+        const newDataZillow = datum.dataZillow;
+        return { ...state, dataZillow: newDataZillow }
+      }
     },
-  },
-};
+
+    effects: {
+
+      *queryZillow( datum, { call, put }){
+        const zpid = datum.zpid;
+        const dataZillow = yield call(Zillow.getComps, zpid);
+        yield put({ type: 'getZillow', dataZillow})
+      }
+    },
+    subscriptions: {
+      setup({ dispatch }) {
+        console.log('store is connected and listening');
+      },
+    },
+  };

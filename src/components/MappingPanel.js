@@ -44,15 +44,15 @@ export default class MappingPanel extends Component{
 	}
 
 	handleCalculate = () => {
-
-		PubSub.publish('askforCalculate');
+		this.props.dispatch({
+			type: 'smartselect/askCalculate'
+		})
 	}
 
 	handleSlider = (event, value) => {
 		this.setState({slider: value});
-		PubSub.publish('askforExtrude');
 		this.props.dispatch({
-			type: 'smartselect/buildingHeight',
+			type: 'smartselect/askExtrude',
 			height: value
 		})
 	}

@@ -12,15 +12,6 @@ const problemContent = `In real world, we may spend much time tweeking a long pr
 const solutionContent = `The final model used only "LOCATION" factors as predictors.
                           Sometimes it is even more valuable to know what matters most the value than a number!`
 export default class Section2 extends React.Component {
-
-  static propTypes = {
-    id: React.PropTypes.string,
-  };
-
-  static defaultProps = {
-    className: 'background',
-  };
-
   getBlockChildren = (item, i) =>(
     <li key={i} id={`${this.props.id}-block${i}`}>
       <h3>{item.title}</h3>

@@ -88,8 +88,8 @@ export default class Index extends React.Component {
             mode={this.props.mode}
             id="map" key="map" isMode={this.state.isMode}/>
           <Background id="background" key="background" isMode={this.state.isMode}
-            style= {{height: '50vh'}}/>
-          <LocalMarket id="localmarket" key="localmarket" isMode={this.state.isMode}/>
+            className='background' style= {{height: '50vh'}}/>
+          <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}/>
           <VariableSelection id="variableselection" key="variableselection" isMode={this.state.isMode}/>
 
           {/* <Section3 id="content_2_0" key="content_2_0" isMode={this.state.isMode}/> */}
@@ -116,7 +116,6 @@ export default class Index extends React.Component {
             parcelVis={this.props.parcelVis}
             footVis={this.props.footVis}
             blueVis={this.props.blueVis}
-            initialMap={this.props.initialMap}
             height={this.props.height}
             dispatch={this.props.dispatch}
           />
@@ -146,13 +145,16 @@ export default class Index extends React.Component {
             initialMap={this.props.initialMap}
             mapStyle={this.props.mapStyle}
             mapZoom={this.props.mapZoom}
-            mapCenter={this.props.mapCenter}
             mapBearing={this.props.mapBearing}
             mapPitch={this.props.mapPitch}
             calData={this.props.calData}
             height={this.props.height}
             dataZillow={this.props.dataZillow}
             dispatch={this.props.dispatch}
+            parcelVis={this.props.parcelVis}
+            footVis={this.props.footVis}
+            blueVis={this.props.blueVis}
+            blueprint={this.props.blueprint}
           />
 
           <Nav

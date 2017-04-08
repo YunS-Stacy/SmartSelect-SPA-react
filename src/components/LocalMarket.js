@@ -8,19 +8,9 @@ import axios from 'axios';
 import SpiralPlot from '../components/SpiralPlot';
 import RosePlot from '../components/RosePlot';
 
-
 import './css/localmarket.css';
 
 export default class LocalMarket extends Component {
-
-  static propTypes = {
-    id: React.PropTypes.string,
-  };
-
-  static defaultProps = {
-    className: 'localmarket',
-  };
-
   state={
     datumN: [],
     datumPh: [],

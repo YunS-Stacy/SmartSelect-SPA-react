@@ -26,18 +26,9 @@ const styles ={
 }
 
 export default class LayerToggle extends Component {
-  state = {
-      parcelVis: 'none',
-      footVis: 'visible',
-      blueVis: 'none',
-    };
   handleBuilding (e, bool){
     const layerName = 'footprint';
-    let layerVis = bool === true ? 'visible' : 'none';
-    this.props.initialMap.setLayoutProperty('3d-buildings', 'visibility', layerVis);
-    // this.setState({
-    //   footVis: layerVis
-    // });
+    const layerVis = bool === true ? 'visible' : 'none';
     this.props.dispatch({
       type: 'smartselect/changeVis',
       layerName: layerName,
@@ -48,11 +39,7 @@ export default class LayerToggle extends Component {
 
   handleBlueprint (e, bool){
     const layerName = 'blueprint';
-    let layerVis = bool === true ? 'visible' : 'none';
-    this.props.initialMap.setLayoutProperty('3d-blueprint', 'visibility', layerVis);
-    // this.setState({
-    //   blueVis: layerVis
-    // })
+    const layerVis = bool === true ? 'visible' : 'none';
     this.props.dispatch({
       type: 'smartselect/changeVis',
       layerName: layerName,
@@ -62,11 +49,7 @@ export default class LayerToggle extends Component {
 
   handleParcel (e, bool){
     const layerName = 'parcel';
-    let layerVis = bool === true ? 'visible' : 'none';
-    this.props.initialMap.setLayoutProperty('aptParcel', 'visibility', layerVis);
-    // this.setState({
-    //   parcelVis: layerVis
-    // })
+    const layerVis = bool === true ? 'visible' : 'none';
     this.props.dispatch({
       type: 'smartselect/changeVis',
       layerName: layerName,
@@ -75,9 +58,6 @@ export default class LayerToggle extends Component {
   }
 
   handlechangeStyle(e, value){
-    const map = this.props.initialMap;
-
-    let layerId = value;
     let mapStyle;
     switch (value) {
       case 'customized':
@@ -99,11 +79,6 @@ export default class LayerToggle extends Component {
     });
   }
   render(){
-    console.log('calculatelayertoggle update')
-    const map = this.props.initialMap;
-    map.setLayoutProperty('3d-buildings', 'visibility', this.props.footVis);
-    map.setLayoutProperty('3d-blueprint', 'visibility', this.props.blueVis);
-    map.setLayoutProperty('aptParcel', 'visibility', this.props.parcelVis);
     return (
       <Paper
         zDepth={3}
@@ -158,6 +133,6 @@ export default class LayerToggle extends Component {
           />
         </div>
       </Paper>
-            );
-          }
+    );
+  }
 };
