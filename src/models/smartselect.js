@@ -4,77 +4,6 @@ import fetch from 'dva/fetch';
 import { parseString } from 'xml2js';
 import Zillow from '../utils/get_zillow';
 
-//
-// var zillow = function(address){
-//   //go through the CORS problem
-//   $.ajaxPrefilter( function (options) {
-//     if (options.crossDomain && jQuery.support.cors) {
-//       var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
-//       options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
-//       //options.url = "http://cors.corsproxy.io/url=" + options.url;
-//     }
-//   });
-//   var xml;
-//   //function to parse xml as DOM
-//   jQuery.extend({
-//     getValues: function(url) {
-//       var result = null;
-//       $.ajax({
-//         url: url,
-//         type: 'get',
-//         dataType: 'xml',
-//         async: false,
-//         success: function(data) {
-//           result = data;
-//         }
-//       });
-//       return result;
-//     }
-//   });
-//   //check availability, else return ''
-//   var getData = function(tagName){
-//     if (tagName === 'zpid' || tagName=== 'useCode' || tagName=== 'taxAssessmentYear' || tagName=== 'taxAssessment' || tagName=== 'lastSoldDate' || tagName=== 'lastSoldPrice' || tagName=== 'yearBuilt' || tagName=== 'lotSizeSqFt' || tagName=== 'finishedSqFt')
-//     {if (typeof $(results).find(tagName)[0] === 'object'){
-//       console.log(tagName+': '+$(results).find(tagName)[0].innerHTML);
-//       return $(results).find(tagName)[0].innerHTML;
-//     } else {
-//       console.log(tagName +': Unknown');
-//       return 'Unknown';}
-//     }
-//     if (tagName === 'amount' || tagName=== 'last-updated' || tagName=== 'low' || tagName=== 'high')
-//     {if (typeof $(results).find(tagName)[1] === 'object'){
-//       console.log(tagName+': '+$(results).find(tagName)[1].innerHTML);
-//       return $(results).find(tagName)[1].innerHTML;
-//     } else {
-//       console.log(tagName +': Unknown');
-//       return 'Unknown';
-//     }}
-//   };
-//   //get input
-//   var zwsId = 'X1-ZWz19eddsdp2bv_1r7kw';
-//   var results = jQuery.getValues('http://www.zillow.com/webservice/GetDeepSearchResults.htm?zws-id='+ zwsId +'&address='+ address +'&citystatezip=Philadelphia%2C+PA&rentzestimate=true');
-//   var zpid = getData('zpid');
-//   //get type
-//   var useCode = getData('useCode');
-//   //tax/sale records
-//   var taxAssessmentYear = getData('taxAssessmentYear');
-//   //console.log('taxYear'+taxAssessmentYear)
-//   var taxAssessment = getData('taxAssessment');
-//   var lastSoldDate = getData('lastSoldDate');
-//   var lastSoldPrice = getData('lastSoldPrice');
-//   //details
-//   var yearBuilt = getData('yearBuilt');
-//   var lotSizeSqFt = getData('lotSizeSqFt');
-//   var finishedSqFt = getData('finishedSqFt');
-//   var neighborhood = $(results).find('region').attr("name");
-//   //calculate rent perSqft
-//   var rentAmount = getData('amount');
-//   //console.log(rentAmount);
-//   var lastUpdated = getData('last-updated');
-//   var valueChangeLow = getData('low');
-//   var valueChangeHigh = getData('high');
-// };
-
 export default {
   namespace: 'smartselect',
   state: {
@@ -84,11 +13,12 @@ export default {
     mapLoaded: false,
     mapCenter: [-75.1639, 39.9522],
     mapPitch: 65,
-    mapZoom: [15],
+    mapZoom: [14],
     mapBearing: 9.2,
     mapStyle:'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy',
+    mapInteractive: false,
     footVis: 'visible',
-    blueVis: 'visible',
+    blueVis: 'none',
     parcelVis: 'none',
     calData: {
       polygon: {
@@ -101,7 +31,8 @@ export default {
       num: 0,
       point: false,
     },
-    height: 0
+    height: 0,
+    dataZillow: [],
   },
 
   reducers: {
@@ -117,18 +48,7 @@ export default {
       return { ...state, calData: datum.calData};
 
     },
-    // initialMap(state, datum){
-    //   console.log('store has the initialMap')
-    //   console.log(datum.initialMap);
-    //
-    //   return { ...state, initialMap: datum.initialMap}
-    //
-    // },
-    // showMapping(state){
-    //   console.log('show mapping dispatch');
-    //   return { ...}
-    //
-    // },
+
     mapLoaded(state, datum){
       return { ...state, mapLoaded: true, initialMap: datum.initialMap};
     },
@@ -153,63 +73,53 @@ export default {
 
     changeMode(state, datum){
       const newMode = datum.mode;
-      let newStyle, newPitch, newZoom, newCenter, newBearing, newFootVis, newParcelVis;
+      let newStyle, newPitch, newZoom, newCenter, newBearing, newFootVis, newParcelVis, newBlueVis;
       switch (newMode) {
         case 'mode-query':
         newStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy';
         newPitch = 0;
-        newZoom =[14];
+        newZoom =[16];
         newCenter = [-75.1639, 39.9522];
         newBearing = 0;
         newFootVis = 'none';
         newParcelVis = 'visible';
+        newBlueVis = 'visible';
         break;
         case 'mode-welcome':
         newStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy';
         newPitch = 65;
-        newZoom =[15];
+        newZoom =[14];
         newCenter = [-75.1639, 39.9522];
         newBearing = 9.2;
         newFootVis = 'visible';
         newParcelVis = 'none';
+        newBlueVis = 'none';
+
         break;
         default:
         break;
       }
       // zoom number must extract the number first, cannot tell [14] === [14] is true
-      return { ...state, mode: newMode, mapStyle: newStyle, mapPitch: newPitch, mapZoom: [newZoom], mapCenter: newCenter, mapBearing: newBearing, footVis: newFootVis, parcelVis: newParcelVis};
+      return { ...state, mode: newMode, mapStyle: newStyle, mapPitch: newPitch,
+        mapZoom: [newZoom], mapCenter: newCenter, mapBearing: newBearing,
+        footVis: newFootVis, parcelVis: newParcelVis, blueVis: newBlueVis};
+    },
+    getZillow(state, datum){
+      const newDataZillow = datum.dataZillow;
+      return { ...state, dataZillow: newDataZillow }
     }
   },
-  //https://gist.githubusercontent.com/yunshi-stacy/dedcd037381f619bbca233a1c83c4d61/raw/47955aa0165504a63286857a5f23cc5b65732ba9/philadelphia_crime_points.geojson
+
   effects: {
     *queryZillow( datum, { call, put }){
-      console.log(datum);
       const zpid = datum.zpid;
-      console.log(zpid)
-      //       fetch(url).then(function (response) {
-      //   if (!response.ok) {
-      //     throw new TypeError('bad response status');
-      //   }
-      //   return cache.put(url, response);
-      // })
-      const data = Zillow.getCompsFromZpid(zpid)
-      // console.log(data)
-
+      const dataZillow = yield call(Zillow.getComps, zpid);
+      yield put({ type: 'getZillow', dataZillow})
     }
   },
   subscriptions: {
-
     setup({ dispatch }) {
       console.log('store is connected and listening');
-      // dispatch({ type: 'queryZillow' });
-      // console.log('dispatched')
     },
   },
-  // subscriptions: {},
 };
-
-// var smartselect = {
-//     app: {},
-//     map: {},
-//     graph: {},
-// };

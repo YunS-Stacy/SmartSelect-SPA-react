@@ -26,6 +26,11 @@ const styles ={
 }
 
 export default class LayerToggle extends Component {
+  state = {
+      parcelVis: 'none',
+      footVis: 'visible',
+      blueVis: 'none',
+    };
   handleBuilding (e, bool){
     const layerName = 'footprint';
     let layerVis = bool === true ? 'visible' : 'none';
@@ -70,6 +75,8 @@ export default class LayerToggle extends Component {
   }
 
   handlechangeStyle(e, value){
+    const map = this.props.initialMap;
+
     let layerId = value;
     let mapStyle;
     switch (value) {
@@ -92,6 +99,7 @@ export default class LayerToggle extends Component {
     });
   }
   render(){
+    console.log('calculatelayertoggle update')
     const map = this.props.initialMap;
     map.setLayoutProperty('3d-buildings', 'visibility', this.props.footVis);
     map.setLayoutProperty('3d-blueprint', 'visibility', this.props.blueVis);

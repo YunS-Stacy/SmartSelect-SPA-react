@@ -46,28 +46,20 @@ export default class LayerToggle extends Component {
   }
 
   handleStyleChange(e, value){
-
-    let layerId = value;
-    console.log(value);
     let mapStyle;
     switch (value) {
-
       case 'customized':
-      console.log(value);
       mapStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy?';
       break;
       case 'satellite':
       mapStyle = 'mapbox://styles/yunshi/cj0u96uwe009w2rqryu8r7bg8?'
       break;
-
       case 'light':
       mapStyle = 'mapbox://styles/yunshi/cj0u990c700fm2smr7yvnv1c5?'
       break;
-
       default:
       mapStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy?'
       break;
-
     };
 
     this.props.dispatch({

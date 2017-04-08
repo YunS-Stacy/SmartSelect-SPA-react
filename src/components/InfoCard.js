@@ -16,21 +16,16 @@ const paperStyle = {
 
 export default class InfoCard extends Component {
   render(){
-
     return (
-
       <Paper
         zDepth={3}
         style={paperStyle}
       >
-        <Spin>
+        {/* <Spin>
           <div style={{width: '100%', height: '100%', padding:'1em'}}>
             fdafdafdsafdas
-
           </div>
-
-        </Spin>
-
+        </Spin> */}
       </Paper>
             );
           }

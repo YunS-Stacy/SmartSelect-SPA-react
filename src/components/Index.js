@@ -110,21 +110,23 @@ export default class Index extends React.Component {
             calData={this.props.calData}
             height={this.props.height}
             initialMap={this.props.initialMap}
+            dispatch={this.props.dispatch}
           />
           <LayerToggle
             parcelVis={this.props.parcelVis}
             footVis={this.props.footVis}
             blueVis={this.props.blueVis}
-            dispatch={this.props.dispatch}
             initialMap={this.props.initialMap}
-            height={this.props.height}/>
+            height={this.props.height}
+            dispatch={this.props.dispatch}
+          />
         </div>
 
       )
     }
   }
   componentWillReceiveProps(nextProps){
-    if(nextProps.mode==='mode-query'){
+    if(nextProps.mode !== 'mode-welcome'){
       jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'visible');
     } else{
       jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'hidden');
@@ -142,9 +144,17 @@ export default class Index extends React.Component {
           {/* <RosePlot/>  */}
           <Mapping
             initialMap={this.props.initialMap}
+            mapStyle={this.props.mapStyle}
+            mapZoom={this.props.mapZoom}
+            mapCenter={this.props.mapCenter}
+            mapBearing={this.props.mapBearing}
+            mapPitch={this.props.mapPitch}
+            calData={this.props.calData}
+            height={this.props.height}
+            dataZillow={this.props.dataZillow}
             dispatch={this.props.dispatch}
-            {...this.props}
           />
+
           <Nav
             dispatch={this.props.dispatch}
             mode={this.props.mode} id="nav" key="nav" isMode={this.state.isMode}/>
