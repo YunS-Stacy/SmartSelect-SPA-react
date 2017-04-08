@@ -12,13 +12,14 @@ function IndexPage({dispatch, loading, smartselect}) {
 };
 
 function mapStateToProps(state){
-  const { mapLoaded, mapPitch, mapZoom, mapBearing, mapStyle, parcelVis, footVis, blueVis, calData, height, dataZillow, blueprint,
-    askCalculate, initialMap, mode} = state.smartselect;
+  const { mapLoaded, mapPitch, mapZoom, mapCenter, mapBearing, mapStyle, parcelVis, footVis, blueVis, calData, height, dataZillow, blueprint,
+    askCalculate, map, mode} = state.smartselect;
   return {
     loading: state.loading.models.smartselect,
     mapLoaded,
     mapPitch,
     mapZoom,
+    mapCenter,
     mapBearing,
     mapStyle,
     parcelVis,
@@ -27,7 +28,7 @@ function mapStateToProps(state){
     calData,
     height,
     dataZillow,
-    initialMap,
+    map,
     askCalculate,
     mode,
     blueprint

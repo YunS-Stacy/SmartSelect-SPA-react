@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import jquery from 'jquery';
 import mapboxgl from 'mapbox-gl';
-import Pubsub from 'pubsub-js';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -69,10 +68,9 @@ export default class MappingPanel extends Component{
 		if (!this.state.loading) {
 			this.dummyAsync(() => this.setState({
 				loading: false,
-				stepIndex: stepIndex + 1,
 				finished: stepIndex >= 4,
 			}));
-		}
+		};
 	}
 
 	handlePrev = () => {
@@ -80,12 +78,12 @@ export default class MappingPanel extends Component{
 		if (!this.state.loading) {
 			this.dummyAsync(() => this.setState({
 				loading: false,
-				stepIndex: stepIndex - 1,
 			}));
 		}
 	}
 
 	renderStepActions(step) {
+
 		return (
 			<div style={{margin: '1em 0 0 2em', float: 'right'}}>
 				{step > 0 && (
@@ -104,129 +102,18 @@ export default class MappingPanel extends Component{
 			</div>
 		);
 	}
-	getStepContent(stepIndex) {
-		switch (stepIndex) {
-
-
-	case 3:
-	return (
-		<p>
-			Find your site!
-		</p>
-	);
-	case 4:
-	return (
-		<div style={{display:'inline-flex'}}>
-			<div style ={{fontSize: '0.9em'}}>
-				Find out stories behind the model! or share your thoughts with me?
-			</div>
-			<br></br>
-			{/* <div style={{
-				display: 'inline-flex',
-				width: '9em',
-				justifyContent: 'space-around'
-				}}>
-				<FloatingActionButton
-				backgroundColor={'#49c4db'}
-				>
-				<AvLibraryBooks />
-				</FloatingActionButton>
-				<FloatingActionButton
-				backgroundColor={'#49c4db'}
-
-				>
-				<CommunicationChat />
-				</FloatingActionButton>
-			</div> */}
-
-		</div>
-);
-default:
-return 'Something went wrong';
-}
-}
-
-renderContent() {
-	const {finished, stepIndex} = this.state;
-	if (finished) {
-		return (
-			<div>
-				<p  style={{
-					fontSize: '0.9em',
-					justifyContent: 'center',
-					display: 'flex'
-				}}>
-					<a
-						href="#"
-						onClick={(event) => {
-							event.preventDefault();
-							this.setState({stepIndex: 0, finished: false});
-						}}
-					>
-						Click here
-					</a>   to reset the example.
-				</p>
-			</div>
-		);
+componentWillUpdate(nextProps,nextState){
+	if(this.props.mode==='mode-query' && nextState.stepIndex === 2){
+		console.log('panel enter build-mode');
+		this.props.dispatch({
+			type: 'smartselect/changeMode',
+			mode: 'mode-build',
+		})
 	}
-
-	return (
-		<div style={{
-			display: 'flex',
-			justifyContent: 'center'
-		}}>
-			<div className='row clearfix'
-				style={{
-					width: '75%',
-					display: 'flex',
-					justifyContent:'center'
-				}}>
-				<div>
-					{/* {this.getStepContent(stepIndex)} */}
-				</div>
-
-			</div>
-			{/* <div
-				className='row clearfix'
-				style={{display:'flex', margin: '2em -8em 0 0'}}
-				>
-				<IconButton
-				tooltip="Back"
-				tooltipPosition='top-center'
-				disabled={stepIndex === 0}
-				onTouchTap={this.handlePrev}
-				// style={{marginRight: 12}}
-				>
-				<NavigationChevronLeft />
-				</IconButton>
-				<IconButton
-				tooltip={stepIndex === 5 ? 'Finish' : 'Next'}
-				tooltipPosition='top-center'
-				onTouchTap={this.handleNext}
-				>
-				<NavigationChevronRight />
-				</IconButton>
-
-			</div> */}
-		</div>
-
-);
 }
-
-
 
 render() {
-
-	// console.log(this.props.mode==='mode-query');
-	if(this.props.mode==='mode-query'){
-		jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'visible');
-	} else{
-		jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'hidden');
-	}
 	const {loading, stepIndex} = this.state;
-
-
-
 	return (
 		<Paper style={paperStyle} zDepth={3}>
 			<div style={{margin: 'auto'}}>

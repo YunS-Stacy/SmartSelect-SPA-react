@@ -106,10 +106,10 @@ export default class Index extends React.Component {
     } else {
       return (
         <div>
-          <MappingPanel {...this.props}
+          <MappingPanel
+            mode={this.props.mode}
             calData={this.props.calData}
             height={this.props.height}
-            initialMap={this.props.initialMap}
             dispatch={this.props.dispatch}
           />
           <LayerToggle
@@ -124,13 +124,13 @@ export default class Index extends React.Component {
       )
     }
   }
-  componentWillReceiveProps(nextProps){
-    if(nextProps.mode !== 'mode-welcome'){
-      jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'visible');
-    } else{
-      jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'hidden');
-    }
-  }
+  // componentWillReceiveProps(nextProps){
+  //   if(nextProps.mode !== 'mode-welcome'){
+  //     jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'visible');
+  //   } else{
+  //     jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'hidden');
+  //   }
+  // }
 
   render() {
 
@@ -142,8 +142,9 @@ export default class Index extends React.Component {
 
           {/* <RosePlot/>  */}
           <Mapping
-            initialMap={this.props.initialMap}
+            map={this.props.map}
             mapStyle={this.props.mapStyle}
+            mapCenter={this.props.mapCenter}
             mapZoom={this.props.mapZoom}
             mapBearing={this.props.mapBearing}
             mapPitch={this.props.mapPitch}
@@ -155,6 +156,7 @@ export default class Index extends React.Component {
             footVis={this.props.footVis}
             blueVis={this.props.blueVis}
             blueprint={this.props.blueprint}
+            mode={this.props.mode}
           />
 
           <Nav

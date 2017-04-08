@@ -5,11 +5,23 @@ import { parseString } from 'xml2js';
 import Zillow from '../utils/get_zillow';
 import _ from 'lodash';
 import turf from 'turf';
+import mapboxgl from 'mapbox-gl';
+import MapboxDraw from 'mapbox-gl-draw';
 
 export default {
   namespace: 'smartselect',
   state: {
-    draw:{},
+    scaleControl: new mapboxgl.ScaleControl({unit: 'imperial'}),
+    geolocateControl: new mapboxgl.GeolocateControl(),
+    naviControl: new mapboxgl.NavigationControl(),
+    draw: new MapboxDraw({
+      displayControlsDefault: true,
+      controls: {
+        polygon: true,
+        trash: true
+      },
+    }),
+    // draw:{},
     blueprint: {
       'type': 'Feature',
       'geometry': {
@@ -19,10 +31,10 @@ export default {
     },
     // Three mode: 'mode-welcome', 'mode-query', 'mode-build'
     mode: 'mode-welcome',
-    initialMap: {},
+    map: {},
     mapLoaded: false,
     mapCenter: [-75.1639, 39.9522],
-    mapPitch: 65,
+    mapPitch: [65],
     mapZoom: [14],
     mapBearing: 9.2,
     mapStyle:'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy',
@@ -115,7 +127,7 @@ export default {
     },
     mapLoaded(state, datum){
 
-      return { ...state, mapLoaded: true, initialMap: datum.initialMap,draw:datum.draw};
+      return { ...state, mapLoaded: true, map: datum.map,draw:datum.draw};
     },
 
     changeVis(state, datum){
@@ -137,42 +149,57 @@ export default {
     },
 
     changeMode(state, datum){
-      const newMode = datum.mode;
-      let newStyle, newPitch, newZoom, newCenter, newBearing, newFootVis, newParcelVis, newBlueVis;
-      switch (newMode) {
-        case 'mode-query':
-        newStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy';
-        newPitch = 0;
-        newZoom =[16];
-        newCenter = [-75.1639, 39.9522];
-        newBearing = 0;
-        newFootVis = 'none';
-        newParcelVis = 'visible';
-        newBlueVis = 'visible';
-        break;
+      const map = state.map;
+      const mode = datum.mode;
+      let {mapStyle, mapPitch, mapZoom, mapCenter, mapBearing, footVis, parcelVis, blueVis} = state
+      switch (mode) {
         case 'mode-welcome':
-        newStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy';
-        newPitch = 65;
-        newZoom =[14];
-        newCenter = [-75.1639, 39.9522];
-        newBearing = 9.2;
-        newFootVis = 'visible';
-        newParcelVis = 'none';
-        newBlueVis = 'none';
+        mapPitch = [65];
+        mapZoom =[14];
+        mapCenter = [-75.1639, 39.9522];
+        mapBearing = 9.2;
+        footVis = 'visible';
+        parcelVis = 'none';
+        blueVis = 'none';
+        map.removeControl(state.scaleControl);
+        map.removeControl(state.geolocateControl);
+        map.removeControl(state.naviControl);
+        map.removeControl(state.draw);
+        break;
 
+        case 'mode-query':
+        mapPitch = [0];
+        mapZoom =[16];
+        mapBearing = 0;
+        footVis = 'none';
+        parcelVis = 'visible';
+        map.addControl(state.scaleControl,'bottom-right');
+        map.addControl(state.geolocateControl,'bottom-right');
+        map.addControl(state.naviControl,'bottom-right');
+        map.addControl(state.draw,'bottom-right');
+        break;
+
+        case 'mode-build':
+        console.log('entering mode-build')
+        mapPitch = [65];
+        mapZoom =[14];
+        mapBearing = 9.2;
+        parcelVis = 'none';
+        blueVis = 'visible';
         break;
         default:
         break;
       }
+
       // zoom number must extract the number first, cannot tell [14] === [14] is true
-      return { ...state, mode: newMode, mapStyle: newStyle, mapPitch: newPitch,
-        mapZoom: [newZoom], mapCenter: newCenter, mapBearing: newBearing,
-        footVis: newFootVis, parcelVis: newParcelVis, blueVis: newBlueVis};
+      return { ...state, mode, mapStyle, mapPitch,
+        mapZoom, mapCenter, mapBearing,
+        footVis, parcelVis, blueVis};
       },
 
       getZillow(state, datum){
-        const newDataZillow = datum.dataZillow;
-        return { ...state, dataZillow: newDataZillow }
+
+        return { ...state, dataZillow: datum.dataZillow }
       }
     },
 

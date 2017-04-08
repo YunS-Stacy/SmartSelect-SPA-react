@@ -23,11 +23,6 @@ const style = {
 };
 
 export default class MainButton extends Component{
-  constructor(props) {
-    super(props);
-    // console.log('mainbuttonProps',props);
-  }
-
 	renderContent(){
 		if(this.props.mapLoaded === true){
       // console.log('map is loaded');

@@ -11,7 +11,7 @@ import _ from 'lodash';
 import Pubsub from 'pubsub-js';
 
 import Snackbar from 'material-ui/Snackbar';
-import { Icon, Button } from 'antd';
+import { Icon, Button, Slider } from 'antd';
 
 import InfoCard from './InfoCard';
 
@@ -22,7 +22,6 @@ export default class Mapping extends Component {
     super(props);
     this.state={
       ptsPairs: '',
-
       compsPts:{
           'type': 'Feature',
           'geometry': {
@@ -43,10 +42,6 @@ export default class Mapping extends Component {
       popupCoords: [0,0],
       popupMessage: '',
       zpid: '',
-      map: {},
-      scaleControl: new mapboxgl.ScaleControl({unit: 'imperial'}),
-      geolocateControl: new mapboxgl.GeolocateControl(),
-      naviControl: new mapboxgl.NavigationControl(),
       draw: new MapboxDraw({
         displayControlsDefault: true,
         controls: {
@@ -70,7 +65,7 @@ export default class Mapping extends Component {
         return (
           <Marker
             // onClick={(e)=>{console.log('marker', coord);
-            // this.props.initialMap.querySourceFeatures  ('compsPts', [parameters])}}
+            // this.props.map.querySourceFeatures  ('compsPts', [parameters])}}
             key={`marker${i}`} className={`marker${i}`}
             coordinates={coord} >
             <Button disabled={i===0?true:false} shape='circle' size='large'>
@@ -81,13 +76,6 @@ export default class Mapping extends Component {
       });
     }
   }
-
-  renderZillowPopup(){
-    if(this.state.showInfoCard === true){
-      return <InfoCard/>
-    }
-  };
-  //
   // handleClick(map, e){
   //   let features = map.queryRenderedFeatures(e.point, { layers: ['aptParcel'] });
   //   // if the features have no info, return nothing
@@ -127,48 +115,31 @@ export default class Mapping extends Component {
         zpid: feature.properties['zpid'],
       });
     }
-
   }
 
-  componentDidMount(){
-    console.log('check load time')
-
-  }
   handleLoaded(map){
-
-    //
-    map.addControl(this.state.scaleControl,'bottom-right');
-    map.addControl(this.state.geolocateControl,'bottom-right');
-    map.addControl(this.state.naviControl,'bottom-right');
-    map.addControl(this.state.draw,'bottom-right');
-    this.handleHeight = PubSub.subscribe('askforExtrude', function(){
-  
-    }.bind(this));
-
-
-    jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'hidden');
-
     setTimeout(()=>{
       this.props.dispatch({
         type: "smartselect/mapLoaded",
-        initialMap: map,
+        map: map,
         draw: this.state.draw,
       });
     }, 1000);
   }
 
   componentWillReceiveProps(nextProps){
+    const map = this.props.map;
 
-    const map = this.props.initialMap;
-    if(nextProps.mode !== this.props.mode){
-      console.log('reset the map')
-      this.setState({
-        popupCoords: [0,0],
-        popupMessage: '',
-      });
-      map.getSource('compsLines').setData(this.state.comps.lines);
-      map.getSource('compsPts').setData(this.state.comps.pts);
-    }
+    //
+    // if(nextProps.mode === mode-welcome){
+    //   console.log('reset the map')
+    //   this.setState({
+    //     popupCoords: [0,0],
+    //     popupMessage: '',
+    //   });
+    //   map.getSource('compsLines').setData(this.state.comps.lines);
+    //   map.getSource('compsPts').setData(this.state.comps.pts);
+    // }
 
     if(nextProps.dataZillow !== this.props.dataZillow ){
       const dataType = typeof nextProps.dataZillow;
@@ -207,23 +178,10 @@ export default class Mapping extends Component {
         break;
       }
 
-      if(nextProps.mapStyle !== this.props.mapStyle || nextProps.mode !== this.props.mode){
-        map.removeControl(this.state.scaleControl);
-        map.removeControl(this.state.geolocateControl);
-        map.removeControl(this.state.naviControl);
-        map.removeControl(this.state.draw);
-      };
-
-      // this.props.initialMap.addControl(new mapboxgl.ScaleControl({unit: 'imperial'}),'bottom-right');
-      // this.props.initialMap.addControl(new mapboxgl.GeolocateControl(),'bottom-right');
-      // this.props.initialMap.addControl(new mapboxgl.NavigationControl(),'bottom-right');
-      // this.props.initialMap.addControl(this.state.draw,'bottom-right');
-      //
       // jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'hidden');
     }
   }
   render(){
-    console.log('calculate update times')
     const {props} = this;
     const mapPosition= this.props.mode === 'mode-welcome' ? 'fixed' : 'absolute';
     // const mapInteractive = this.props.mode === 'mode-welcome' ? false : true;
@@ -233,7 +191,7 @@ export default class Mapping extends Component {
         style={this.props.mapStyle}
         accessToken="pk.eyJ1IjoieXVuc2hpIiwiYSI6ImNpeHczcjA3ZDAwMTMyd3Btb3Fzd3hpODIifQ.SWiqUD9o_DkHZuJBPIEHPA"
         zoom = {this.props.mapZoom}
-        center={[-75.1639, 39.9522]}
+        center={this.props.mapCenter}
         bearing={this,props.mapBearing}
         pitch={this.props.mapPitch}
         containerStyle={{
@@ -243,6 +201,7 @@ export default class Mapping extends Component {
         }}
         onStyleLoad={(map)=>{this.handleLoaded(map)}}
         onMouseMove={(map, e)=>{this.handleMouseMove(map, e)}}
+        onMouseUp={(map, e)=> {console.log(map); this.props.dispatch({type: 'smartselect/changeCenter', mapCenter: map.getCenter()})}}
       >
         {/* {this.reAddlayer()}
         {/* parcelLayer */}
@@ -251,19 +210,19 @@ export default class Mapping extends Component {
           type= "fill"
           sourceId='composite'
           layerOptions={{
-              'minzoom': 15,
-              'source-layer': 'unionParcel'
+                'minzoom': 15,
+                'source-layer': 'unionParcel'
           }}
           paint={{
             'fill-color': {
-                property: 'unit_price',
-                type: 'exponential',
-                stops:
-                [
+                  property: 'unit_price',
+                  type: 'exponential',
+                  stops:
+                  [
                   [0, '#1d91c0'],
                   [2500000, '#7fcdbb'],
                   [5000000, '#febe12'],
-                ]
+                  ]
             }
           }}
           layout={{visibility: this.props.parcelVis}}
@@ -304,12 +263,12 @@ export default class Mapping extends Component {
         <GeoJSONLayer
           data={this.props.blueprint}
           layerOptions={{
-            'minzoom': 12
+              'minzoom': 12
           }}
           fillExtrusionPaint={{
-            'fill-extrusion-color': '#fbb217',
-            'fill-extrusion-height': this.props.height*0.3048,
-            'fill-extrusion-opacity': 0.8
+              'fill-extrusion-color': '#fbb217',
+              'fill-extrusion-height': this.props.height*0.3048,
+              'fill-extrusion-opacity': 0.8
           }}
           fillExtrusionLayout={{'visibility': this.props.blueVis}}
         />
@@ -317,10 +276,10 @@ export default class Mapping extends Component {
         <GeoJSONLayer
           data={this.state.compsPts}
           layerOptions={{
-            // 'minzoom': 12
+              // 'minzoom': 12
           }}
           circlePaint={{
-            'circle-color': '#ff9d00',
+              'circle-color': '#ff9d00',
 
           }}
           circleLayout={{'visibility': 'visible'}}
@@ -329,14 +288,13 @@ export default class Mapping extends Component {
         <GeoJSONLayer
           data={this.state.compsLines}
           layerOptions={{
-            // 'minzoom': 12
+              // 'minzoom': 12
           }}
           linePaint={{
-            'line-color': '#ff9d00',
+              'line-color': '#ff9d00',
           }}
           lineLayout={{'visibility': 'visible'}}
-        /> */}
-
+        />
         <Popup
           coordinates={this.state.popupCoords}
           anchor='bottom'
@@ -356,6 +314,7 @@ export default class Mapping extends Component {
         </Popup>
         {this.renderInfoCard()}
         {this.renderZillowMarker()}
+        <Slider range step={1} defaultValue={[20, 50]} style={{zIndex: 9999, position: 'absolute', width: '100vw', bottom: '0', height: '4px', backgroundColor: 'transparent'}}/>
         <Snackbar
           open={this.props.calData.point}
           message={'Sorry, we can not measure a point!'}
