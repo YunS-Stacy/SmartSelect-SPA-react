@@ -2,14 +2,22 @@
 import request from '../utils/request';
 import fetch from 'dva/fetch';
 import { parseString } from 'xml2js';
-import Zillow from '../utils/get_zillow';
+
+
+import Zillow from '../services/fetchZillow';
+import * as fetchData from '../services/fetchData';
+
+
 import _ from 'lodash';
 import turf from 'turf';
 import mapboxgl from 'mapbox-gl';
 import MapboxDraw from 'mapbox-gl-draw';
+import g2, {Stat, Frame} from 'g2';
+
 
 export default {
   namespace: 'smartselect',
+
   state: {
     scaleControl: new mapboxgl.ScaleControl({unit: 'imperial'}),
     geolocateControl: new mapboxgl.GeolocateControl(),
@@ -55,6 +63,9 @@ export default {
     },
     height: 0,
     dataZillow: [],
+    dataSlider: [],
+    dataInitialized: false,
+    parcelRange: [],
   },
 
   reducers: {
@@ -62,6 +73,7 @@ export default {
       const newStyle = datum.mapStyle;
       return { ...state, mapStyle: newStyle};
     },
+
 
 
     askCalculate(state){
@@ -109,9 +121,9 @@ export default {
       return { ...state, calData: calculatedValue};
     },
 
-        buildingHeight(state, datum){
-          return { ...state, height: datum.height};
-        },
+    buildingHeight(state, datum){
+      return { ...state, height: datum.height};
+    },
     askExtrude(state, datum){
       const height = datum.height;
       let data = state.draw.getAll();
@@ -125,9 +137,11 @@ export default {
         return { ...state, height: height}
       }
     },
-    mapLoaded(state, datum){
-
-      return { ...state, mapLoaded: true, map: datum.map,draw:datum.draw};
+    asyncLoaded(state){
+      return { ...state, mapLoaded: true };
+    },
+    mapSetup(state, datum){
+      return { ...state, map: datum.datum.map,draw: datum.datum.draw};
     },
 
     changeVis(state, datum){
@@ -197,23 +211,63 @@ export default {
         footVis, parcelVis, blueVis};
       },
 
-      getZillow(state, datum){
-
+    getZillow(state, datum){
         return { ...state, dataZillow: datum.dataZillow }
-      }
-    },
-
-    effects: {
-
-      *queryZillow( datum, { call, put }){
-        const zpid = datum.zpid;
-        const dataZillow = yield call(Zillow.getComps, zpid);
-        yield put({ type: 'getZillow', dataZillow})
-      }
-    },
-    subscriptions: {
-      setup({ dispatch }) {
-        console.log('store is connected and listening');
       },
+
+    getSlider(state, datum){
+      const response = datum.res.data.rows
+      const frame = new Frame(response);
+      const filterData = Frame.filter(frame, function(obj, index) {
+        return obj.refprice < 600000;
+      });
+      const tempData = Frame.sort(filterData, 'refprice');
+
+      const data = tempData.toJSON();
+
+      return { ...state, dataSlider: data, dataInitialized: true }
     },
-  };
+    //
+    // checkData(state){
+    //   console.log(state.dataInitialized)
+    //   if(state.dataInitialized){console.log('is true')}
+    //   else{ console.log('is false')};
+    //
+    // },
+    filterParcel(state, datum){
+      console.log('state tree',datum);
+      const priceRange = datum.priceRange;
+      return {...state, priceRange}
+
+    }
+  },
+
+
+
+  effects: {
+    *mapLoad(datum, {call,put}){
+      yield put({ type: 'mapSetup', datum})
+      // yield put({ type: 'getSlider', res})
+      const res = yield call(fetchData.slider)
+      yield put({ type: 'getSlider', res})
+
+    },
+
+    //
+    // getInitialData(datum, { call, put }){
+    //
+    // }
+
+    *queryZillow(datum, {call, put}){
+      const zpid = datum.zpid;
+      const dataZillow = yield call(Zillow.getComps, zpid);
+      yield put({ type: 'getZillow', dataZillow})
+    }
+  },
+  subscriptions: {
+    setup({ dispatch}) {
+      console.log('store is connected and listening');
+
+    },
+  },
+};

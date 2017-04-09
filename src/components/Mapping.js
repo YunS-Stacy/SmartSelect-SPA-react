@@ -13,6 +13,8 @@ import Pubsub from 'pubsub-js';
 import Snackbar from 'material-ui/Snackbar';
 import { Icon, Button, Slider } from 'antd';
 
+import Paper from 'material-ui/Paper';
+
 import InfoCard from './InfoCard';
 
 
@@ -116,15 +118,24 @@ export default class Mapping extends Component {
       });
     }
   }
+  // this.props.dispatch({
+  //   type: "smartselect/getInitialData"
+  // });
+
 
   handleLoaded(map){
+    this.props.dispatch({
+      type: "smartselect/mapLoad",
+      map: map,
+      draw: this.state.draw,
+    });
+
     setTimeout(()=>{
       this.props.dispatch({
-        type: "smartselect/mapLoaded",
-        map: map,
-        draw: this.state.draw,
+        type: "smartselect/asyncLoaded"
       });
-    }, 1000);
+
+    }, 5000);
   }
 
   componentWillReceiveProps(nextProps){
@@ -219,9 +230,9 @@ export default class Mapping extends Component {
                   type: 'exponential',
                   stops:
                   [
-                  [0, '#1d91c0'],
-                  [2500000, '#7fcdbb'],
-                  [5000000, '#febe12'],
+                  [10150, '#1d91c0'],
+                  [6000000, '#7fcdbb'],
+                  [12090000, '#febe12'],
                   ]
             }
           }}
@@ -314,7 +325,8 @@ export default class Mapping extends Component {
         </Popup>
         {this.renderInfoCard()}
         {this.renderZillowMarker()}
-        <Slider range step={1} defaultValue={[20, 50]} style={{zIndex: 9999, position: 'absolute', width: '100vw', bottom: '0', height: '4px', backgroundColor: 'transparent'}}/>
+
+
         <Snackbar
           open={this.props.calData.point}
           message={'Sorry, we can not measure a point!'}

@@ -21,6 +21,7 @@ import CommunicationChat from 'material-ui/svg-icons/communication/chat';
 import NavigationChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 
+
 const paperStyle = {
 	"position": 'absolute',
 	"width": '25vw',
@@ -103,7 +104,7 @@ export default class MappingPanel extends Component{
 		);
 	}
 componentWillUpdate(nextProps,nextState){
-	if(this.props.mode==='mode-query' && nextState.stepIndex === 2){
+	if(this.props.mode==='mode-query' && nextState.stepIndex === 3){
 		console.log('panel enter build-mode');
 		this.props.dispatch({
 			type: 'smartselect/changeMode',
@@ -136,6 +137,17 @@ render() {
 					</Step>
 					<Step>
 						<StepButton onTouchTap={() => this.setState({stepIndex: 1})}>
+							Compare
+						</StepButton>
+						<StepContent>
+							<p>
+								Find you some comps!
+							</p>
+							{this.renderStepActions(1)}
+						</StepContent>
+					</Step>
+					<Step>
+						<StepButton onTouchTap={() => this.setState({stepIndex: 2})}>
 							Measure
 						</StepButton>
 						<StepContent>
@@ -184,11 +196,11 @@ render() {
 								<div style={{width: '0.5em'}}></div>
 							</div>
 
-							{this.renderStepActions(1)}
+							{this.renderStepActions(2)}
 						</StepContent>
 					</Step>
 					<Step>
-						<StepButton onTouchTap={() => this.setState({stepIndex: 2})}>
+						<StepButton onTouchTap={() => this.setState({stepIndex: 3})}>
 							Build
 						</StepButton>
 						<StepContent>
@@ -237,20 +249,10 @@ render() {
 								</div>
 								<br></br>
 							</div>
-							{this.renderStepActions(2)}
-						</StepContent>
-					</Step>
-					<Step>
-						<StepButton onTouchTap={() => this.setState({stepIndex: 3})}>
-							Compare
-						</StepButton>
-						<StepContent>
-							<p>
-								Find you some comps!
-							</p>
 							{this.renderStepActions(3)}
 						</StepContent>
 					</Step>
+
 					<Step>
 						<StepButton onTouchTap={() => this.setState({stepIndex: 4})}>
 							Decide

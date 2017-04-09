@@ -2988,6 +2988,10 @@ function-bind@^1.0.2, function-bind@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
+g2-plugin-slider@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/g2-plugin-slider/-/g2-plugin-slider-1.1.1.tgz#b4c98ce100cf22b2186247c3e7c574e0fbf4c976"
+
 g2-react@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/g2-react/-/g2-react-1.2.0.tgz#edc97b63e00f0103dcc7049bfd7b19872bb0231a"

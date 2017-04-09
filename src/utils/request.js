@@ -1,17 +1,7 @@
 import fetch from 'dva/fetch';
 
-import {parseString} from 'xml2js';
-
-// boilerplate
 function parseJSON(response) {
-
-  return response.toJSON()
-  // .json();
-}
-
-function parseXML(response) {
-  return parseString(response)
-  // .json();
+  return response.json();
 }
 
 function checkStatus(response) {
@@ -31,15 +21,10 @@ function checkStatus(response) {
  * @param  {object} [options] The options we want to pass to "fetch"
  * @return {object}           An object containing either "data" or "err"
  */
-
 export default function request(url, options) {
   return fetch(url, options)
     .then(checkStatus)
-    .then(console.log('hey'))
-    .then(function(response){console.log(response)})
-    .then(response => response.text())
-    .then(parseXML)
-    // .then(parseJSON)
+    .then(parseJSON)
     .then(data => ({ data }))
     .catch(err => ({ err }));
 }

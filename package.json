@@ -28,6 +28,7 @@
     "dva-loading": "^0.2.0",
     "enquire": "0.0.2",
     "g2": "^2.2.6",
+    "g2-plugin-slider": "^1.1.1",
     "g2-react": "^1.2.0",
     "intro.js": "^2.5.0",
     "leaflet": "^1.0.3",

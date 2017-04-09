@@ -1,5 +1,26 @@
 import request from '../utils/request';
+import { PAGE_SIZE } from '../constants';
 
-export function fetch( ) {
-  return request(`https://gist.githubusercontent.com/yunshi-stacy/dedcd037381f619bbca233a1c83c4d61/raw/47955aa0165504a63286857a5f23cc5b65732ba9/philadelphia_crime_points.geojson`);
+export function fetch({ page }) {
+  return request(`/api/users?_page=${page}&_limit=${PAGE_SIZE}`);
+}
+
+export function remove(id) {
+  return request(`/api/users/${id}`, {
+    method: 'DELETE',
+  });
+}
+
+export function patch(id, values) {
+  return request(`/api/users/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(values),
+  });
+}
+
+export function create(values) {
+  return request('/api/users', {
+    method: 'POST',
+    body: JSON.stringify(values),
+  });
 }
