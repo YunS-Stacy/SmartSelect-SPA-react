@@ -63,7 +63,16 @@ export default class LayerToggle extends Component {
       styleName: value
     });
   }
+  disableButton(){
+    if(this.props.mode === 'mode-build'){
+      return true
+    } else {
+      return false
+    }
+  }
+
   render(){
+    console.log('layer toggle ',this.props.mode !== 'mode-build')
     return (
       <Paper
         zDepth={3}
@@ -79,19 +88,19 @@ export default class LayerToggle extends Component {
               value="customized"
               label="CUSTOMIZED"
               labelStyle={styles.label}
-              // style={styles.radioButton}
+              disabled = {this.disableButton()}
             />
             <RadioButton
               value="light"
               label="LIGHT"
               labelStyle={styles.label}
-              // style={styles.radioButton}
+              disabled = {this.props.mode === 'mode-build' ? true : false}
             />
             <RadioButton
               value="satellite"
               label="SATELLITE"
               labelStyle={styles.label}
-              // style={styles.radioButton}
+              disabled = {this.props.mode === 'mode-build' ? true : false}
             />
           </RadioButtonGroup>
         </div>
@@ -114,7 +123,7 @@ export default class LayerToggle extends Component {
             labelStyle={styles.label}
             onCheck = {this.handleBlueprint.bind(this)}
             checked = {this.props.blueVis === 'visible' ? true : false}
-            disabled = {this.props.height === 0 ? true : false}
+            disabled = {this.props.mode !== 'mode-build' ? true : false}
           />
         </div>
       </Paper>

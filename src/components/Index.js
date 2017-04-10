@@ -84,9 +84,6 @@ export default class Index extends React.Component {
     if(this.props.mode === 'mode-welcome'){
       return (
         <div>
-
-
-
           <Map
             dispatch={this.props.dispatch}
             mapLoaded={this.props.mapLoaded}
@@ -110,18 +107,7 @@ export default class Index extends React.Component {
       )
     } else {
       return (
-
         <div>
-
-          {/* <QuerySlider
-            data={this.props.dataSlider}
-            height={130}
-            width={400}
-            plotCfg={{margin: [10,30,40,60]}}
-            forceFit={true}
-            dispatch={this.props.dispatch}
-          style={{visibility: this.props.mode==='mode-query' ? 'visible':'hidden'}}/> */}
-
           <MappingPanel
             dataSlider={this.props.dataSlider}
 
@@ -131,6 +117,7 @@ export default class Index extends React.Component {
             dispatch={this.props.dispatch}
           />
           <LayerToggle
+            mode={this.props.mode}
             parcelVis={this.props.parcelVis}
             footVis={this.props.footVis}
             blueVis={this.props.blueVis}

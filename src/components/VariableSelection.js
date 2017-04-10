@@ -9,33 +9,9 @@ import Corrplot from '../components/Corrplot'
 
 export default class VariableSelection extends Component {
 
-  static propTypes = {
-    id: React.PropTypes.string,
-  };
-
-  static defaultProps = {
-    className: 'background',
-  };
-
-  getBlockChildren = (item, i) =>(
-    <li key={i} id={`${this.props.id}-block${i}`}>
-      <h3>{item.title}</h3>
-      <p>{item.content}</p>
-    </li>);
-
     render() {
       const props = { ...this.props };
       delete props.isMode;
-      // const dataSource = [
-      //   { title: 'About', content: aboutContent
-      //   // , icon: 'https://zos.alipayobjects.com/rmsportal/YPMsLQuCEXtuEkmXTTdk.png'
-      // },
-      //   { title: 'Problem', content: problemContent },
-      //   { title: 'Solution', content: solutionContent },
-      //
-      // ];
-      // const listChildren = dataSource.map(this.getBlockChildren);
-
       return (
         <div
           id = 'Info'
@@ -59,7 +35,6 @@ export default class VariableSelection extends Component {
               component="ul" type="bottom" key="block" leaveReverse
               id={`${props.id}-contentWrapper`}
             >
-              {/* {listChildren} */}
               <Corrplot />
             </QueueAnim>
           </OverPack>

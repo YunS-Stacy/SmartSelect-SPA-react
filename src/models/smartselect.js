@@ -208,9 +208,7 @@ export default {
         break;
 
         case 'mode-build':
-        console.log('entering mode-build')
         mapPitch = [65];
-        mapZoom =[14];
         mapBearing = 9.2;
         parcelVis = 'none';
         blueVis = 'visible';
@@ -249,7 +247,6 @@ export default {
     //
     // },
     filterParcel(state, datum){
-      console.log('state tree',datum);
       const parcelRange = datum.parcelRange;
       return {...state, parcelRange}
 

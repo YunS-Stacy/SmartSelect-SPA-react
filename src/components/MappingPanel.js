@@ -128,16 +128,12 @@ renderSlider(stepIndex){
 		if(this.props.mode==='mode-query' ){
 			switch (nextState.stepIndex) {
 				case 1:
-
-				console.log('panel change style');
 				this.props.dispatch({
 					type: 'smartselect/changeStyle',
 					styleName: 'light',
 				});
-
 				break;
 				case 3:
-				console.log('panel enter build-mode');
 				this.props.dispatch({
 					type: 'smartselect/changeMode',
 					mode: 'mode-build',

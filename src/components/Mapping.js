@@ -137,10 +137,63 @@ export default class Mapping extends Component {
 
     }, 5000);
   }
+tempLayer = () => {
+  switch (this.props.mode) {
+      case 'mode-query':
+      return (
+        <div>
+          // {/* compsPts */}
+          <GeoJSONLayer
+            data={this.state.compsPts}
+            layerOptions={{
+                // 'minzoom': 12
+            }}
+            circlePaint={{
+                'circle-color': '#ff9d00',
 
+            }}
+            circleLayout={{'visibility': 'visible'}}
+          />
+          // {/* compsLines */}
+          <GeoJSONLayer
+            data={this.state.compsLines}
+            layerOptions={{
+                // 'minzoom': 12
+            }}
+            linePaint={{
+                'line-color': '#ff9d00',
+            }}
+            lineLayout={{'visibility': 'visible'}}
+          />
+
+        </div>
+
+      )
+    case 'mode-build':
+    return (
+      // blueprintLayer
+        <GeoJSONLayer
+          data={this.props.blueprint}
+          layerOptions={{
+              'minzoom': 12
+          }}
+          fillExtrusionPaint={{
+              'fill-extrusion-color': '#fbb217',
+              'fill-extrusion-height': this.props.height * 0.3048,
+              'fill-extrusion-opacity': 0.8,
+          }}
+          fillExtrusionLayout={{'visibility': this.props.blueVis}}
+        />
+      )
+    default:
+      return <div></div>
+  }
+
+
+}
   componentWillReceiveProps(nextProps){
     const map = this.props.map;
-
+    //
     //
     // if(nextProps.mode === mode-welcome){
     //   console.log('reset the map')
@@ -278,49 +331,16 @@ export default class Mapping extends Component {
           }}
           layout={{'visibility': this.props.footVis}}
         />
-        {/* blueprintLayer */}
-        <GeoJSONLayer
-          data={this.props.blueprint}
-          layerOptions={{
-              'minzoom': 12
-          }}
-          fillExtrusionPaint={{
-              'fill-extrusion-color': '#fbb217',
-              'fill-extrusion-height': this.props.height * 0.3048,
-              'fill-extrusion-opacity': 0.8,
-          }}
-          fillExtrusionLayout={{'visibility': this.props.blueVis}}
-        />
-        {/* compsPts */}
-        <GeoJSONLayer
-          data={this.state.compsPts}
-          layerOptions={{
-              // 'minzoom': 12
-          }}
-          circlePaint={{
-              'circle-color': '#ff9d00',
+        
+        {this.tempLayer()}
 
-          }}
-          circleLayout={{'visibility': 'visible'}}
-        />
-        {/* compsLines */}
-        <GeoJSONLayer
-          data={this.state.compsLines}
-          layerOptions={{
-              // 'minzoom': 12
-          }}
-          linePaint={{
-              'line-color': '#ff9d00',
-          }}
-          lineLayout={{'visibility': 'visible'}}
-        />
         <Popup
           coordinates={this.state.popupCoords}
           anchor='bottom'
           // onMouseLeave={(e)=>{e.preventDefault();this.setState({popupCoords: [0,0], popupMessage: ''})}}
           // onClick={(e)=>{console.log(e); this.setState({popupCoords: [0,0]})}}
         >
-          <h5><strong>PARCEL INFO:</strong></h5>
+          <h5><strong>PARCEL INFO</strong></h5>
           <Button onClick={(e)=>{e.preventDefault();this.setState({popupCoords: [0,0]})}}icon="close" size='small' style={{right: '0.5em',top:'0.5em',position: 'absolute',padding: 0,width: '1.4em',height: '1.4em'}}/>
           <ul>
             <li><strong>Address: </strong>{this.state.popupMessage.address}</li>
