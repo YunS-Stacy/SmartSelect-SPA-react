@@ -65,13 +65,26 @@ export default {
     dataZillow: [],
     dataSlider: [],
     dataInitialized: false,
-    parcelRange: [],
+    parcelRange: [0,600000],
   },
 
   reducers: {
     changeStyle(state, datum){
-      const newStyle = datum.mapStyle;
-      return { ...state, mapStyle: newStyle};
+      let {mapStyle} = state;
+      switch (datum.styleName) {
+        case 'customized':
+        mapStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy';
+        break;
+        case 'satellite':
+        mapStyle = 'mapbox://styles/yunshi/cj0u96uwe009w2rqryu8r7bg8';
+        break;
+        case 'light':
+        mapStyle = 'mapbox://styles/yunshi/cj0u990c700fm2smr7yvnv1c5';
+        break;
+        default:
+        break;
+      };
+      return { ...state, mapStyle};
     },
 
 
@@ -182,15 +195,12 @@ export default {
         break;
 
         case 'mode-query':
+        mapStyle=
         mapPitch = [0];
         mapZoom =[16];
         mapBearing = 0;
         footVis = 'none';
         parcelVis = 'visible';
-        map.addControl(state.scaleControl,'bottom-right');
-        map.addControl(state.geolocateControl,'bottom-right');
-        map.addControl(state.naviControl,'bottom-right');
-        map.addControl(state.draw,'bottom-right');
         break;
 
         case 'mode-build':
@@ -200,6 +210,7 @@ export default {
         mapBearing = 9.2;
         parcelVis = 'none';
         blueVis = 'visible';
+        map.addControl(state.draw,'bottom-right');
         break;
         default:
         break;
@@ -236,8 +247,8 @@ export default {
     // },
     filterParcel(state, datum){
       console.log('state tree',datum);
-      const priceRange = datum.priceRange;
-      return {...state, priceRange}
+      const parcelRange = datum.parcelRange;
+      return {...state, parcelRange}
 
     }
   },

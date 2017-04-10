@@ -113,16 +113,18 @@ export default class Index extends React.Component {
 
         <div>
 
-          <QuerySlider
+          {/* <QuerySlider
             data={this.props.dataSlider}
             height={130}
             width={400}
             plotCfg={{margin: [10,30,40,60]}}
             forceFit={true}
             dispatch={this.props.dispatch}
-            style={{visibility: this.props.mode==='mode-query' ? 'visible':'hidden'}}/>
+          style={{visibility: this.props.mode==='mode-query' ? 'visible':'hidden'}}/> */}
 
           <MappingPanel
+            dataSlider={this.props.dataSlider}
+
             mode={this.props.mode}
             calData={this.props.calData}
             height={this.props.height}
@@ -173,7 +175,7 @@ export default class Index extends React.Component {
             blueVis={this.props.blueVis}
             blueprint={this.props.blueprint}
             mode={this.props.mode}
-            priceRange={this.props.priceRange}
+            parcelRange={this.props.parcelRange}
           />
 
           <Nav

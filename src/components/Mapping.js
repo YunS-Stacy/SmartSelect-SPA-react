@@ -25,18 +25,18 @@ export default class Mapping extends Component {
     this.state={
       ptsPairs: '',
       compsPts:{
-          'type': 'Feature',
-          'geometry': {
-            'type': 'MultiPoint',
-            'coordinates': [[0,0],[0,0]]
-          }
+        'type': 'Feature',
+        'geometry': {
+          'type': 'MultiPoint',
+          'coordinates': [[0,0],[0,0]]
+        }
       },
       compsLines:{
-          'type': 'Feature',
-          'geometry': {
-            'type': 'MultiLineString',
-            'coordinates': [[[0,0],[0,0]]]
-          }
+        'type': 'Feature',
+        'geometry': {
+          'type': 'MultiLineString',
+          'coordinates': [[[0,0],[0,0]]]
+        }
       },
 
       showInfoCard: false,
@@ -109,7 +109,7 @@ export default class Mapping extends Component {
         popupCoords: mapboxgl.LngLat.convert([feature.properties['lon'],feature.properties['lat']]),
         popupMessage: {
           address: address,
-          refPrice: feature.properties['sold_witho'].toFixed(2),
+          refPrice: feature.properties['refprice'].toFixed(2),
           source: feature.properties['predicted'] === 1 ? 'Predicted Value' : 'Record from Latest Transaction',
           zoning: feature.properties['zoning'],
           opa: feature.properties['opa_accoun'],
@@ -212,7 +212,7 @@ export default class Mapping extends Component {
         }}
         onStyleLoad={(map)=>{this.handleLoaded(map)}}
         onMouseMove={(map, e)=>{this.handleMouseMove(map, e)}}
-        onMouseUp={(map, e)=> {console.log(map); this.props.dispatch({type: 'smartselect/changeCenter', mapCenter: map.getCenter()})}}
+        onMouseUp={(map, e)=> {this.props.dispatch({type: 'smartselect/changeCenter', mapCenter: map.getCenter()})}}
       >
         {/* {this.reAddlayer()}
         {/* parcelLayer */}
@@ -221,19 +221,27 @@ export default class Mapping extends Component {
           type= "fill"
           sourceId='composite'
           layerOptions={{
-                'minzoom': 15,
-                'source-layer': 'unionParcel'
+              'minzoom': 10,
+              'source-layer': 'finalParcel',
+              'filter': ["all", [">=", 'refprice', this.props.parcelRange[0]], ["<=", 'refprice', this.props.parcelRange[1]]]
           }}
           paint={{
             'fill-color': {
-                  property: 'unit_price',
-                  type: 'exponential',
-                  stops:
-                  [
-                  [10150, '#1d91c0'],
-                  [6000000, '#7fcdbb'],
-                  [12090000, '#febe12'],
-                  ]
+                property: 'refprice',
+                type: 'interval',
+                stops:
+                [
+                  [69100, 'rgba(12, 44, 132, 0.7)'],
+                  [94200, 'rgba(34, 94, 168, 0.7)'],
+                  [119000, 'rgba(29, 145, 192, 0.7)'],
+                  [141167.2895, 'rgba(65, 182, 196, 0.7)'],
+                  [166690, 'rgba(127, 205, 187, 0.7)'],
+                  [191400, 'rgba(254, 190, 18, 0.7)'],
+                  [225681.8558, 'rgba(238, 131, 110, 0.7)'],
+                  [285000, 'rgba(232, 92, 65, 0.7)'],
+                  [386939.4174, 'rgba(219, 58, 27, 0.7)'],
+                  [600000, 'rgba(170, 45, 23, 0.7)'],
+                ]
             }
           }}
           layout={{visibility: this.props.parcelVis}}
@@ -278,8 +286,8 @@ export default class Mapping extends Component {
           }}
           fillExtrusionPaint={{
               'fill-extrusion-color': '#fbb217',
-              'fill-extrusion-height': this.props.height*0.3048,
-              'fill-extrusion-opacity': 0.8
+              'fill-extrusion-height': this.props.height * 0.3048,
+              'fill-extrusion-opacity': 0.8,
           }}
           fillExtrusionLayout={{'visibility': this.props.blueVis}}
         />
@@ -321,12 +329,9 @@ export default class Mapping extends Component {
             <li><Button icon='search' onClick={(e)=>{e.preventDefault();this.setState({showInfoCard: true});this.props.dispatch({type: 'smartselect/queryZillow', zpid: this.state.zpid})}}>
             Get Comps (Zillow)</Button></li>
           </ul>
-
         </Popup>
         {this.renderInfoCard()}
         {this.renderZillowMarker()}
-
-
         <Snackbar
           open={this.props.calData.point}
           message={'Sorry, we can not measure a point!'}

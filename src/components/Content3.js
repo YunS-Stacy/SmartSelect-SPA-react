@@ -31,7 +31,7 @@ class Content extends React.Component {
         animation={liAnim}
         key={i}
         id={`${props.id}-${id}`}
-      >
+              >
         <TweenOne
           animation={{ x: '-=10', opacity: 0, type: 'from', ease: 'easeOutQuad' }}
           className="img"

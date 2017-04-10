@@ -21,6 +21,8 @@ import CommunicationChat from 'material-ui/svg-icons/communication/chat';
 import NavigationChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 
+import QuerySlider from './QuerySlider';
+
 
 const paperStyle = {
 	"position": 'absolute',
@@ -70,6 +72,7 @@ export default class MappingPanel extends Component{
 			this.dummyAsync(() => this.setState({
 				loading: false,
 				finished: stepIndex >= 4,
+				stepIndex: stepIndex + 1,
 			}));
 		};
 	}
@@ -79,6 +82,7 @@ export default class MappingPanel extends Component{
 		if (!this.state.loading) {
 			this.dummyAsync(() => this.setState({
 				loading: false,
+				stepIndex: stepIndex - 1,
 			}));
 		}
 	}
@@ -103,19 +107,54 @@ export default class MappingPanel extends Component{
 			</div>
 		);
 	}
-componentWillUpdate(nextProps,nextState){
-	if(this.props.mode==='mode-query' && nextState.stepIndex === 3){
-		console.log('panel enter build-mode');
-		this.props.dispatch({
-			type: 'smartselect/changeMode',
-			mode: 'mode-build',
-		})
+renderSlider(stepIndex){
+
+		if(stepIndex === 1){
+			return (
+				<QuerySlider
+					data={this.props.dataSlider}
+					height={130}
+					width={400}
+					plotCfg={{margin: [10,30,40,60]}}
+					forceFit={true}
+					dispatch={this.props.dispatch}
+				/>
+			)
+		} else {return <div></div>}
 	}
-}
+
+
+	componentWillUpdate(nextProps,nextState){
+		if(this.props.mode==='mode-query' ){
+			switch (nextState.stepIndex) {
+				case 1:
+
+				console.log('panel change style');
+				this.props.dispatch({
+					type: 'smartselect/changeStyle',
+					styleName: 'light',
+				});
+
+				break;
+				case 3:
+				console.log('panel enter build-mode');
+				this.props.dispatch({
+					type: 'smartselect/changeMode',
+					mode: 'mode-build',
+				});
+				break;
+				default:
+				break;
+			}
+		}
+	}
 
 render() {
 	const {loading, stepIndex} = this.state;
+
 	return (
+	<div>
+		{this.renderSlider(stepIndex)}
 		<Paper style={paperStyle} zDepth={3}>
 			<div style={{margin: 'auto'}}>
 				<Stepper
@@ -125,23 +164,26 @@ render() {
 				>
 					<Step>
 						<StepButton onTouchTap={() => this.setState({stepIndex: 0})}>
-							Find
+							Intro
 						</StepButton>
 						<StepContent>
+							<Button style={{display: 'inline-block', float:'right'}}>Replay</Button>
 
-							<p>
-								Switch the satellite layer on to get a clear idea
+							<p style={{whiteSpace: 'pre-line'}}>
+								{`Welcome!
+
+								Click "Next" to find your next INVESTMENT!`}
 							</p>
 							{this.renderStepActions(0)}
 						</StepContent>
 					</Step>
 					<Step>
 						<StepButton onTouchTap={() => this.setState({stepIndex: 1})}>
-							Compare
+							Find
 						</StepButton>
 						<StepContent>
 							<p>
-								Find you some comps!
+								Don't forget to use the slider below to search for the suitable parcel.
 							</p>
 							{this.renderStepActions(1)}
 						</StepContent>
@@ -280,6 +322,7 @@ render() {
 
 			</div>
 		</Paper>
+	</div>
 		);
 	}
 };
