@@ -70,7 +70,7 @@ export default {
 
   reducers: {
     changeStyle(state, datum){
-      let {mapStyle} = this.state;
+      let {mapStyle} = state;
       switch (datum.styleName) {
         case 'customized':
         mapStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy';
