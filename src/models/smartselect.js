@@ -70,7 +70,7 @@ export default {
 
   reducers: {
     changeStyle(state, datum){
-      let {mapStyle} = state;
+      let {mapStyle} = this.state;
       switch (datum.styleName) {
         case 'customized':
         mapStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy';
@@ -86,6 +86,7 @@ export default {
       };
       return { ...state, mapStyle};
     },
+
 
 
 
@@ -195,12 +196,15 @@ export default {
         break;
 
         case 'mode-query':
-        mapStyle=
         mapPitch = [0];
         mapZoom =[16];
         mapBearing = 0;
         footVis = 'none';
         parcelVis = 'visible';
+        map.addControl(state.scaleControl,'bottom-right');
+        map.addControl(state.geolocateControl,'bottom-right');
+        map.addControl(state.naviControl,'bottom-right');
+        map.addControl(state.draw,'bottom-right');
         break;
 
         case 'mode-build':
@@ -210,7 +214,6 @@ export default {
         mapBearing = 9.2;
         parcelVis = 'none';
         blueVis = 'visible';
-        map.addControl(state.draw,'bottom-right');
         break;
         default:
         break;
