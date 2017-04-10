@@ -6,6 +6,7 @@ import enquire from 'enquire.js';
 import { scrollScreen } from 'rc-scroll-anim';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Snackbar from 'material-ui/Snackbar';
 
 import Nav from '../components/Nav';
 import Mapping from '../components/Mapping';
@@ -56,6 +57,7 @@ export default class Index extends React.Component {
     super(props);
     this.state = {
       isMode: false,
+      snackStatus: false,
     };
   }
 
@@ -65,6 +67,12 @@ export default class Index extends React.Component {
     this.enquireScreen((isMode) => {
       this.setState({ isMode });
     });
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.setState({
+      snackStatus: nextProps.snackMessage !==this.props.snackMessage ? true : false
+    })
   }
 
   enquireScreen = (cb) => {
@@ -110,12 +118,12 @@ export default class Index extends React.Component {
         <div>
           <MappingPanel
             dataSlider={this.props.dataSlider}
-
             mode={this.props.mode}
             calData={this.props.calData}
             height={this.props.height}
             dispatch={this.props.dispatch}
           />
+          <InfoCard style={{height: '50vh'}}/>
           <LayerToggle
             mode={this.props.mode}
             parcelVis={this.props.parcelVis}
@@ -123,6 +131,16 @@ export default class Index extends React.Component {
             blueVis={this.props.blueVis}
             height={this.props.height}
             dispatch={this.props.dispatch}
+          />
+          <Snackbar
+            open={this.state.snackStatus}
+            message={this.props.snackMessage}
+            autoHideDuration={5000}
+            bodyStyle={{
+              padding: '1em',
+              maxHeight: '6em',
+              lineHeight: '2em',
+            }}
           />
         </div>
 
@@ -148,6 +166,7 @@ export default class Index extends React.Component {
           {/* <RosePlot/>  */}
           <Mapping
             map={this.props.map}
+            maxBounds={this.props.maxBounds}
             mapStyle={this.props.mapStyle}
             mapCenter={this.props.mapCenter}
             mapZoom={this.props.mapZoom}
@@ -155,7 +174,7 @@ export default class Index extends React.Component {
             mapPitch={this.props.mapPitch}
             calData={this.props.calData}
             height={this.props.height}
-            dataZillow={this.props.dataZillow}
+            // dataZillow={this.props.dataZillow}
             dispatch={this.props.dispatch}
             parcelVis={this.props.parcelVis}
             footVis={this.props.footVis}
@@ -163,6 +182,9 @@ export default class Index extends React.Component {
             blueprint={this.props.blueprint}
             mode={this.props.mode}
             parcelRange={this.props.parcelRange}
+            popupInfo={this.props.popupInfo}
+            compsLines={this.props.compsLines}
+            compsPts={this.props.compsPts}
           />
 
           <Nav

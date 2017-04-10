@@ -14,6 +14,7 @@ function IndexPage({dispatch, loading, smartselect}) {
 function mapStateToProps(state){
   const {
     mapLoaded,
+    maxBounds,
     mapPitch,
     mapZoom,
     mapCenter,
@@ -24,16 +25,21 @@ function mapStateToProps(state){
     blueVis,
     calData,
     height,
-    dataZillow,
+    // dataZillow,
     map,
     askCalculate,
     mode,
     blueprint,
     dataSlider,
     parcelRange,
+    snackMessage,
+    popupInfo,
+    compsLines,
+      compsPts,
   } = state.smartselect;
   return {
     mapLoaded,
+    maxBounds,
     mapPitch,
     mapZoom,
     mapCenter,
@@ -44,13 +50,18 @@ function mapStateToProps(state){
     blueVis,
     calData,
     height,
-    dataZillow,
+    // dataZillow,
     map,
     askCalculate,
     mode,
     blueprint,
-  dataSlider,
-  parcelRange,
+    dataSlider,
+    parcelRange,
+    snackMessage,
+    popupInfo,
+    compsLines,
+    compsPts,
+
   };
 }
 

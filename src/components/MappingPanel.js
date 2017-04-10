@@ -305,20 +305,10 @@ render() {
 					</Step>
 				</Stepper>
 
-				<Snackbar
-					open={this.props.calData.num > 1 ? true : false}
-					message={'You have drawn ' + this.props.calData.num + ' things. We will calculate only the last of each type of shapes.'}
-					autoHideDuration={5000}
-					bodyStyle={{
-						padding: '1em',
-						minHeight: '6em',
-						lineHeight: '2em',
-					}}
-				/>
 
-			</div>
-		</Paper>
-	</div>
+				</div>
+			</Paper>
+		</div>
 		);
-	}
-};
+		}
+		};
