@@ -80,9 +80,26 @@ export default {
       opa: '',
       zpid: '',
     },
-
+    // tableInfo: {
+    //   address: '',
+    //   lastSoldDate: '',
+    //   lastSoldPrice: '',
+    //   zestimate: '',
+    //   monthChange: '',
+    //   valueHigh: '',
+    //   valueLow: '',
+    // },
+    tableStatus: 'hidden',
+    tableMessage: {
+      address: '',
+      lastSoldDate: '',
+      lastSoldPrice: '',
+      zestimate: '',
+      monthChange: '',
+      valueHigh: '',
+      valueLow: '',
+    },
   },
-
   reducers: {
     clearPopup(state){
       return { ...state,   popupInfo: {
@@ -99,7 +116,6 @@ export default {
   showPopup(state, datum){
     let {popupInfo} = state;
     const feature = datum.feature;
-
     let address = feature.properties['location'];
     address = _.toLower(feature.properties['location']);
     address = _.startCase(address); // handle the upper and lowercase
@@ -113,6 +129,12 @@ export default {
       zpid: feature.properties['zpid'],
     }
     return { ...state, popupInfo }
+  },
+  showTable(state, datum){
+    let {tableStatus, tableMessage} = state;
+    tableMessage = datum.feature;
+    tableStatus = datum.tableStatus;
+    return { ...state, tableStatus, tableMessage }
   },
   changeStyle(state, datum){
     let {mapStyle} = state;
@@ -131,10 +153,6 @@ export default {
     };
     return { ...state, mapStyle};
   },
-
-
-
-
   askCalculate(state){
     const data = state.draw.getAll();
     const num = data.features.length;

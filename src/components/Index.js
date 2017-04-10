@@ -13,14 +13,14 @@ import Mapping from '../components/Mapping';
 import MappingPanel from '../components/MappingPanel';
 import LayerToggle from '../components/LayerToggle';
 import InfoCard from '../components/InfoCard';
-import QuerySlider from './QuerySlider';
-
-
-
 import Map from '../components/Map';
 import Background from '../components/Background';
 import LocalMarket from '../components/LocalMarket';
 import VariableSelection from '../components/VariableSelection';
+
+import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 
 // import Section3 from '../components/Section3';
@@ -116,6 +116,25 @@ export default class Index extends React.Component {
     } else {
       return (
         <div>
+
+          <Card style={{
+            position: 'absolute',
+            right:'16em',
+          visibility: this.props.tableStatus}}>
+            <CardHeader style={{paddingBottom: 0}}
+              title="COMPS INFO"
+            />
+            <CardText style={{paddingTop: '1em', fontSize: '0.95em'}}>
+              <ul >
+                <li><strong>Address: </strong>{this.props.tableMessage.address}</li>
+                <li><strong>Last Sold Price: </strong>${this.props.tableMessage.lastSoldPrice}, <em>{this.props.tableMessage.lastSoldDate}</em></li>
+                <li><strong>Zestimate: </strong>{this.props.tableMessage.zestimate}</li>
+                <li><strong>Value Range: </strong>${this.props.tableMessage.valueLow} - ${this.props.tableMessage.valueHigh}</li>
+                <li><strong>Month Change: </strong>{this.props.tableMessage.monthChange}</li>
+              </ul>
+            </CardText>
+          </Card>
+
           <MappingPanel
             dataSlider={this.props.dataSlider}
             mode={this.props.mode}
@@ -123,7 +142,6 @@ export default class Index extends React.Component {
             height={this.props.height}
             dispatch={this.props.dispatch}
           />
-          <InfoCard style={{height: '50vh'}}/>
           <LayerToggle
             mode={this.props.mode}
             parcelVis={this.props.parcelVis}

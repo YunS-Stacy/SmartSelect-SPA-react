@@ -42,18 +42,21 @@ export default class Mapping extends Component {
 
   renderMarker(){
     return this.props.compsPts.map((item, i)=>{
-      console.log( 'compspts', item)
       return (
         <Feature
           coordinates={item.geometry.coordinates}
           key={i}
           properties = {item.properties}
-          onMouseEnter={(e)=>{console.log('see marker',e.feature.properties)}}
+          onMouseEnter={(e)=>{
+            this.props.map.getCanvas().style.cursor = 'pointer';
+            this.props.dispatch({type: 'smartselect/showTable', feature: e.feature.properties, tableStatus: 'visible'});
+          }}
+          onMouseLeave={(e)=>{
+            this.props.dispatch({type: 'smartselect/showTable', feature: '', tableStatus: 'hidden'});
+          }}
         />
       )
-
     })
-
   }
 
   renderLines(){
@@ -65,40 +68,23 @@ export default class Mapping extends Component {
           key={i}
         />
       )
-
     })
-
   }
-      handleMouseMove(map, e){
-        //changing the cursor style to 'pointer'
+handleMouseMove(map, e){
+  //changing the cursor style to 'pointer'
 
-        let parcel = map.queryRenderedFeatures(e.point, { layers: ['aptParcel'] });
-        map.getCanvas().style.cursor = (parcel.length) ? 'pointer' : '';
-        if (parcel.length) {
-          console.log(parcel[0].layer.id)
-
-          switch (parcel[0].layer.id) {
-            case 'aptParcel':
-            this.props.dispatch({type: 'smartselect/showPopup', feature: parcel[0]})
-            break;
-            case 'geojson-4-symbol':
-            // this.props.dispatch({type: 'smartselect/showPopup', feature: parcel[0]})
-            break;
-            default:
-            break;
-          }
-        }
-
-      }
-      // this.props.dispatch({
-        //   type: "smartselect/getInitialData"
-        // });
+  let parcel = map.queryRenderedFeatures(e.point, { layers: ['aptParcel'] });
+  map.getCanvas().style.cursor = (parcel.length) ? 'pointer' : '';
+  if (parcel.length) {
+      this.props.dispatch({type: 'smartselect/showPopup', feature: parcel[0]})
+  }
+}
 
 componentDidUpdate(){
-  console.log(this.props.compsPts)
+  // console.log(this.props.compsPts)
 const map =this.props.map;
 const layer = map.getLayer('compsPoints');
-console.log('check layer', layer)
+// console.log('check layer', layer)
 
 }
         handleLoaded(map){
@@ -122,10 +108,6 @@ console.log('check layer', layer)
           const map = this.props.map;
         }
         render(){
-          // console.log('datazillow', this.props.dataZillow.compsPts)
-          console.log('compsPts', this.props.compsPts);
-          // console.log('see equal', this.props.dataZillow.compsPts === this.props.compsPts)
-
           const {props} = this;
           const mapPosition= this.props.mode === 'mode-welcome' ? 'fixed' : 'absolute';
           // const mapInteractive = this.props.mode === 'mode-welcome' ? false : true;
@@ -282,7 +264,7 @@ console.log('check layer', layer)
                   <li><strong>Address: </strong>{this.props.popupInfo.address}</li>
                   <li><strong>Ref. Price: </strong>${this.props.popupInfo.refPrice}</li>
                   <li style={{float: 'right', fontSize: '0.9em'}}><em><strong>Source: </strong>{this.props.popupInfo.source}</em></li>
-                  <li><Button icon='search' onClick={(e)=>{e.preventDefault();this.setState({showInfoCard: true});this.props.dispatch({type: 'smartselect/queryZillow', zpid: this.props.popupInfo.zpid})}}>
+                  <li><Button icon='search' onClick={(e)=>{e.preventDefault();this.props.dispatch({type: 'smartselect/queryZillow', zpid: this.props.popupInfo.zpid})}}>
                   Get Comps (Zillow)</Button></li>
                 </ul>
               </Popup>

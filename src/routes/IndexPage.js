@@ -25,7 +25,6 @@ function mapStateToProps(state){
     blueVis,
     calData,
     height,
-    // dataZillow,
     map,
     askCalculate,
     mode,
@@ -34,8 +33,10 @@ function mapStateToProps(state){
     parcelRange,
     snackMessage,
     popupInfo,
+    tableStatus,
+    tableMessage,
     compsLines,
-      compsPts,
+    compsPts,
   } = state.smartselect;
   return {
     mapLoaded,
@@ -50,7 +51,6 @@ function mapStateToProps(state){
     blueVis,
     calData,
     height,
-    // dataZillow,
     map,
     askCalculate,
     mode,
@@ -59,9 +59,10 @@ function mapStateToProps(state){
     parcelRange,
     snackMessage,
     popupInfo,
+    tableStatus,
+    tableMessage,
     compsLines,
     compsPts,
-
   };
 }
 
