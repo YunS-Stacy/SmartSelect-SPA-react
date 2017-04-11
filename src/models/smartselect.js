@@ -14,7 +14,6 @@ import mapboxgl from 'mapbox-gl';
 import MapboxDraw from 'mapbox-gl-draw';
 import g2, {Stat, Frame} from 'g2';
 
-
 export default {
   namespace: 'smartselect',
 
@@ -31,11 +30,16 @@ export default {
     }),
     // draw:{},
     blueprint: {
-      'type': 'Feature',
-      'geometry': {
-        'type': 'Polygon',
-        'coordinates': [[[0,0],[0,0],[0,0],[0,0]]]
-      },
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Polygon",
+            "coordinates": [[[0,0],[0,0],[0,0],[0,0]]]
+          }
+        }
+      ]
     },
     // Three mode: 'mode-welcome', 'mode-query', 'mode-build'
     mode: 'mode-welcome',
@@ -48,7 +52,7 @@ export default {
     mapZoom: [14],
     mapBearing: 9.2,
     mapStyle:'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy',
-    mapInteractive: false,
+    styleName: 'customized',
     footVis: 'visible',
     blueVis: 'none',
     parcelVis: 'none',
@@ -137,8 +141,10 @@ export default {
     return { ...state, tableStatus, tableMessage }
   },
   changeStyle(state, datum){
-    let {mapStyle} = state;
-    switch (datum.styleName) {
+    let {mapStyle, styleName} = state;
+    styleName = datum.styleName;
+    console.log('changeing the style')
+    switch (styleName) {
       case 'customized':
       mapStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy';
       break;
@@ -151,7 +157,7 @@ export default {
       default:
       break;
     };
-    return { ...state, mapStyle};
+    return { ...state, mapStyle, styleName};
   },
   askCalculate(state){
     const data = state.draw.getAll();
@@ -201,13 +207,14 @@ export default {
       return datum.geometry.type === 'Polygon' || datum.geometry.type === 'MultiPolygon';
     });
     if (data.features.length > 0){
+      console.log(data)
       return { ...state, blueprint: data, height: height}
     } else {
       return { ...state, height: height}
     }
   },
-  asyncLoaded(state){
-    return { ...state, mapLoaded: true };
+  asyncLoaded(state, datum){
+    return { ...state, mapLoaded: datum.mapLoaded };
   },
   mapSetup(state, datum){
     return { ...state, map: datum.datum.map,draw: datum.datum.draw};
@@ -232,47 +239,80 @@ export default {
   },
 
   changeMode(state, datum){
+    console.log(datum)
     const map = state.map;
     const mode = datum.mode;
-    let {mapStyle, mapPitch, mapZoom, mapCenter, mapBearing, footVis, parcelVis, blueVis} = state
+    let {mapStyle, styleName, mapPitch, mapZoom, mapCenter, mapBearing, footVis, parcelVis, blueVis, popupCoords,tableStatus} = state
     switch (mode) {
       case 'mode-welcome':
-      mapPitch = [65];
-      mapZoom =[14];
-      mapCenter = [-75.1639, 39.9522];
-      mapBearing = 9.2;
-      footVis = 'visible';
-      parcelVis = 'none';
-      blueVis = 'none';
-      map.removeControl(state.scaleControl);
-      map.removeControl(state.geolocateControl);
-      map.removeControl(state.naviControl);
-      map.removeControl(state.draw);
-      break;
-      case 'mode-query':
-      mapPitch = [0];
-      mapZoom =[16];
-      mapBearing = 0;
-      footVis = 'none';
-      parcelVis = 'visible';
-      map.addControl(state.scaleControl,'bottom-right');
-      map.addControl(state.geolocateControl,'bottom-right');
-      map.addControl(state.naviControl,'bottom-right');
-      map.addControl(state.draw,'bottom-right');
+      if(state.mode !== 'mode-welcome'){
+        mapPitch = [65];
+        mapZoom =[14];
+        mapCenter = [-75.1639, 39.9522];
+        mapBearing = 9.2;
+        footVis = 'visible';
+        parcelVis = 'none';
+        blueVis = 'none';
+        map.removeControl(state.scaleControl);
+        map.removeControl(state.geolocateControl);
+        map.removeControl(state.naviControl);
+        map.removeControl(state.draw);
+        popupCoords = [0,0];
+        tableStatus = 'hidden';
+      }
       break;
 
+      case 'mode-intro':
+      if(state.mode !== 'mode-intro'){
+        mapPitch = [0];
+        mapZoom =[16];
+        mapBearing = 0;
+        footVis = 'none';
+        parcelVis = 'none';
+        if(state.mode === 'mode-welcome'){
+          map.addControl(state.scaleControl,'bottom-right');
+          map.addControl(state.geolocateControl,'bottom-right');
+          map.addControl(state.naviControl,'bottom-right');
+          map.addControl(state.draw,'bottom-right');
+        }
+      }
+      break;
+
+      case 'mode-query':
+      //make sure comes from the previous step
+      if (state.mode !== 'mode-query'){
+        footVis = 'none';
+        parcelVis = 'visible';
+
+      };
+      break;
       case 'mode-build':
-      mapPitch = [65];
-      mapBearing = 9.2;
-      parcelVis = 'none';
-      blueVis = 'visible';
+      if (state.mode !== 'mode-build'){
+        popupCoords = [0,0];
+        tableStatus = 'hidden';
+        mapPitch = [65];
+        mapBearing = 9.2;
+        parcelVis = 'none';
+        blueVis = 'visible';
+      };
+      break;
+      case 'mode-decide':
+      if (state.mode !== 'mode-decide'){
+        popupCoords = [0,0];
+        tableStatus = 'hidden';
+        mapPitch = [65];
+        mapBearing = 9.2;
+        parcelVis = 'none';
+        blueVis = 'visible';
+        footVis = 'visible';
+      };
       break;
       default:
       break;
     }
 
     // zoom number must extract the number first, cannot tell [14] === [14] is true
-    return { ...state, mode, mapStyle, mapPitch,
+    return { ...state, mode, mapPitch,
       mapZoom, mapCenter, mapBearing,
       footVis, parcelVis, blueVis};
     },
@@ -294,8 +334,6 @@ export default {
           return turf.point(_.values(item.coord),{...item, i});
         })
         // set the point data
-        // compsPts = turf.featureCollection(tempPts);
-        //try only array
         compsPts = tempPts
         // add the origin to create bbox contains all features
         const origin = turf.point(popupInfo.coords); //convert to array
@@ -332,25 +370,14 @@ export default {
     filterParcel(state, datum){
       const parcelRange = datum.parcelRange;
       return {...state, parcelRange}
-
     }
   },
-
-
-
   effects: {
     *mapLoad(datum, {call,put}){
-      yield put({ type: 'mapSetup', datum})
-      // yield put({ type: 'getSlider', res})
+    yield put({ type: 'mapSetup', datum})
       const res = yield call(fetchData.slider)
       yield put({ type: 'getSlider', res})
-
     },
-
-    //
-    // getInitialData(datum, { call, put }){
-    //
-    // }
 
     *queryZillow(datum, {call, put}){
       const zpid = datum.zpid;

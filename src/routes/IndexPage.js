@@ -20,6 +20,7 @@ function mapStateToProps(state){
     mapCenter,
     mapBearing,
     mapStyle,
+    styleName,
     parcelVis,
     footVis,
     blueVis,
@@ -37,6 +38,7 @@ function mapStateToProps(state){
     tableMessage,
     compsLines,
     compsPts,
+
   } = state.smartselect;
   return {
     mapLoaded,
@@ -46,6 +48,7 @@ function mapStateToProps(state){
     mapCenter,
     mapBearing,
     mapStyle,
+    styleName,
     parcelVis,
     footVis,
     blueVis,

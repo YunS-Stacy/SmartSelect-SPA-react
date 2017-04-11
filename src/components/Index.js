@@ -20,7 +20,12 @@ import VariableSelection from '../components/VariableSelection';
 
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Card, CardHeader,CardTitle, CardText} from 'material-ui/Card';
+import { Button, Spin} from 'antd';
+import TrendingDown from 'material-ui/svg-icons/action/trending-down';
+import TrendingUp from 'material-ui/svg-icons/action/trending-up';
+
+
 
 
 // import Section3 from '../components/Section3';
@@ -92,57 +97,48 @@ export default class Index extends React.Component {
     if(this.props.mode === 'mode-welcome'){
       return (
         <div>
-          <Map
-            dispatch={this.props.dispatch}
-            mapLoaded={this.props.mapLoaded}
-            mode={this.props.mode}
-            id="map" key="map" isMode={this.state.isMode}/>
-          <Background id="background" key="background" isMode={this.state.isMode}
-            className='background' style= {{height: '50vh'}}/>
-          <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}/>
-          <VariableSelection id="variableselection" key="variableselection" isMode={this.state.isMode}/>
+            <Map
+              dispatch={this.props.dispatch}
+              mapLoaded={this.props.mapLoaded}
+              mode={this.props.mode}
+              id="map" key="map" isMode={this.state.isMode}/>
+            <Background id="background" key="background" isMode={this.state.isMode}
+              className='background' style= {{height: '50vh'}}/>
+            <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}/>
+            <VariableSelection id="variableselection" key="variableselection" isMode={this.state.isMode}/>
 
-          {/* <Section3 id="content_2_0" key="content_2_0" isMode={this.state.isMode}/> */}
-          {/* <Predictors id="content_2_1" key="content_2_1"/> */}
-          {/* <Section4 id="section_4_0" key="section_4_0" isMode={this.state.isMode}/> */}
-          {/* <Content2 id="content_3_0" key="content_3_0" isMode={this.state.isMode}/> */}
-          {/* <Content3 id="content_4_0" key="content_4_0" isMode={this.state.isMode}/> */}
+            {/* <Section3 id="content_2_0" key="content_2_0" isMode={this.state.isMode}/> */}
+            {/* <Predictors id="content_2_1" key="content_2_1"/> */}
+            {/* <Section4 id="section_4_0" key="section_4_0" isMode={this.state.isMode}/> */}
+            {/* <Content2 id="content_3_0" key="content_3_0" isMode={this.state.isMode}/> */}
+            {/* <Content3 id="content_4_0" key="content_4_0" isMode={this.state.isMode}/> */}
 
-          <Footer id="footer" key="footer" isMode={this.state.isMode}/>
-          {/* <Point key="list" ref="list" data={['map', 'content_2_0', 'content_3_0', 'content_4_0', 'content_9_0']} /> */}
-          <Point key="list" ref="list" data={['map', 'background', 'localmarket', 'variableselection']} />
-        </div>
+            <Footer id="footer" key="footer" isMode={this.state.isMode}/>
+            {/* <Point key="list" ref="list" data={['map', 'content_2_0', 'content_3_0', 'content_4_0', 'content_9_0']} /> */}
+            <Point key="list" ref="list" data={['map', 'background', 'localmarket', 'variableselection']} />
+          </div>
       )
     } else {
       return (
         <div>
-
-          <Card style={{
-            position: 'absolute',
-            right:'16em',
-          visibility: this.props.tableStatus}}>
-            <CardHeader style={{paddingBottom: 0}}
-              title="COMPS INFO"
-            />
-            <CardText style={{paddingTop: '1em', fontSize: '0.95em'}}>
-              <ul >
-                <li><strong>Address: </strong>{this.props.tableMessage.address}</li>
-                <li><strong>Last Sold Price: </strong>${this.props.tableMessage.lastSoldPrice}, <em>{this.props.tableMessage.lastSoldDate}</em></li>
-                <li><strong>Zestimate: </strong>{this.props.tableMessage.zestimate}</li>
-                <li><strong>Value Range: </strong>${this.props.tableMessage.valueLow} - ${this.props.tableMessage.valueHigh}</li>
-                <li><strong>Month Change: </strong>{this.props.tableMessage.monthChange}</li>
-              </ul>
-            </CardText>
-          </Card>
-
+          <InfoCard
+            tableStatus={this.props.tableStatus}
+            tableMessage={this.props.tableMessage}
+          />
           <MappingPanel
             dataSlider={this.props.dataSlider}
             mode={this.props.mode}
             calData={this.props.calData}
             height={this.props.height}
             dispatch={this.props.dispatch}
+            mapLoaded={this.props.mapLoaded}
           />
+          {/* <Spin
+  					spinning={!this.props.mapLoaded}
+  					delay={500}
+          style={{top: '13vh', right: '-40vw', position: 'absolute'}}> */}
           <LayerToggle
+            styleName={this.props.styleName}
             mode={this.props.mode}
             parcelVis={this.props.parcelVis}
             footVis={this.props.footVis}
@@ -150,6 +146,7 @@ export default class Index extends React.Component {
             height={this.props.height}
             dispatch={this.props.dispatch}
           />
+          {/* </Spin> */}
           <Snackbar
             open={this.state.snackStatus}
             message={this.props.snackMessage}
@@ -182,29 +179,36 @@ export default class Index extends React.Component {
           {/* <RosePlotPhilly /> */}
 
           {/* <RosePlot/>  */}
-          <Mapping
-            map={this.props.map}
-            maxBounds={this.props.maxBounds}
-            mapStyle={this.props.mapStyle}
-            mapCenter={this.props.mapCenter}
-            mapZoom={this.props.mapZoom}
-            mapBearing={this.props.mapBearing}
-            mapPitch={this.props.mapPitch}
-            calData={this.props.calData}
-            height={this.props.height}
-            // dataZillow={this.props.dataZillow}
-            dispatch={this.props.dispatch}
-            parcelVis={this.props.parcelVis}
-            footVis={this.props.footVis}
-            blueVis={this.props.blueVis}
-            blueprint={this.props.blueprint}
-            mode={this.props.mode}
-            parcelRange={this.props.parcelRange}
-            popupInfo={this.props.popupInfo}
-            compsLines={this.props.compsLines}
-            compsPts={this.props.compsPts}
-          />
-
+          <Spin
+            spinning={!this.props.mapLoaded}
+            delay={500}
+            size='large'
+            style={{
+              visibility: this.props.mode === 'mode-welcome' ? 'hidden' : 'visible',
+              top: '50vh',
+            }}>
+            <Mapping
+              map={this.props.map}
+              maxBounds={this.props.maxBounds}
+              mapStyle={this.props.mapStyle}
+              mapCenter={this.props.mapCenter}
+              mapZoom={this.props.mapZoom}
+              mapBearing={this.props.mapBearing}
+              mapPitch={this.props.mapPitch}
+              calData={this.props.calData}
+              height={this.props.height}
+              dispatch={this.props.dispatch}
+              parcelVis={this.props.parcelVis}
+              footVis={this.props.footVis}
+              blueVis={this.props.blueVis}
+              blueprint={this.props.blueprint}
+              mode={this.props.mode}
+              parcelRange={this.props.parcelRange}
+              popupInfo={this.props.popupInfo}
+              compsLines={this.props.compsLines}
+              compsPts={this.props.compsPts}
+            />
+          </Spin>
           <Nav
             dispatch={this.props.dispatch}
             mode={this.props.mode} id="nav" key="nav" isMode={this.state.isMode}/>

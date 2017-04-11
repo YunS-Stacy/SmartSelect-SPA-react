@@ -1,38 +1,31 @@
 import React, { Component } from 'react';
-import Paper from 'material-ui/Paper';
-import FlatButton from 'material-ui/FlatButton';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import {Spin} from 'antd';
-
+import {Card, CardHeader, CardText} from 'material-ui/Card';
+import TrendingDown from 'material-ui/svg-icons/action/trending-down';
+import TrendingUp from 'material-ui/svg-icons/action/trending-up';
 
 export default class InfoCard extends Component {
-
- paperStyle= {
-    width: '13.7em',
-    height: '50vh',
-    flexDirection: 'column',
-    position: 'absolute',
-    top: '9vh',
-    right: '17em',
-    borderRadius: '5px',
-    zIndex: 9,
-    visibility: this.props.visibility
-  }
   render(){
-
-    console.log(this.props.visibility, 'vy info card')
+    const message = this.props.tableMessage;
+    console.log(message.monthChange,'monthchange')
     return (
-      <Paper
-        zDepth={3}
-        style={this.paperStyle}
-      >
-        <div>{this.props.tableMessage.address}</div>
-        {/* <Spin>
-          <div style={{width: '100%', height: '100%', padding:'1em'}}>
-            fdafdafdsafdas
-          </div>
-        </Spin> */}
-      </Paper>
-            );
-          }
+      <Card style={{
+        position: 'absolute',
+        right:'16em',
+        width: '20em',
+      visibility: this.props.tableStatus}}>
+        <CardHeader style={{paddingBottom: 0}}
+          title="COMPS INFO"
+        />
+        <CardText style={{paddingTop: '1em', fontSize: '0.95em'}}>
+          <ul style={{lineHeight: '2.1em'}}>
+            <li><strong>Address: </strong>{message.address}</li>
+            <li><strong>Last Sold Price: </strong>{message.lastSoldPrice ? `$${message.lastSoldPrice}, ` : `No Data Available`}<em>{message.lastSoldDate}</em></li>
+            <li><strong>Zestimate: </strong>{message.zestimate ? `$${message.zestimate}` : `No Data Available`}</li>
+            <li><strong>Value Range: </strong>{(message.valueLow && message.valueHigh) ? `$${message.valueLow} - $${message.valueHigh}` : `No Data Available`}</li>
+            <li><strong>Month Change: </strong>{message.monthChange >= 0 ? <TrendingUp style={{width: '18px', height: '18px'}}/>: <TrendingDown style={{width: '18px', height: '18px'}}/>}{message.monthChange >= 0 ? ` Price Up`: ` Price Down`}</li>
+          </ul>
+        </CardText>
+      </Card>
+    );
+  }
 };

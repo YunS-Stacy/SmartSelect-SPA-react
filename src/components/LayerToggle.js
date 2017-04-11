@@ -14,14 +14,13 @@ const styles ={
     width: '13.7em',
     flexDirection: 'column',
     position: 'absolute',
-    top: '9vh',
-    right: '1vw',
+    top: '5.5em',
+    right: '1em',
     borderRadius: '5px'
   },
   group: {
     marginLeft: '0.5em',
     marginTop: '0.2em'
-
   }
 }
 
@@ -69,10 +68,11 @@ export default class LayerToggle extends Component {
         zDepth={3}
         style={styles.paper}
       >
+
         <div style={styles.group}>
           <RadioButtonGroup
             name="mapStyle"
-            defaultSelected="customized"
+            valueSelected={this.props.styleName}
             onChange={this.handlechangeStyle.bind(this)}
           >
             <RadioButton
@@ -114,7 +114,7 @@ export default class LayerToggle extends Component {
             labelStyle={styles.label}
             onCheck = {this.handleBlueprint.bind(this)}
             checked = {this.props.blueVis === 'visible' ? true : false}
-            disabled = {this.props.mode !== 'mode-build' ? true : false}
+            // disabled = {this.props.mode !== 'mode-build' ? true : false}
           />
         </div>
       </Paper>

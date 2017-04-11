@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import jquery from 'jquery';
 import mapboxgl from 'mapbox-gl';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
-import {Button} from 'antd';
+import { Button, Spin} from 'antd';
 import Paper from 'material-ui/Paper';
 import { Step, Stepper, StepLabel, StepButton, StepContent } from 'material-ui/Stepper';
 
@@ -15,7 +14,6 @@ import ExpandTransition from 'material-ui/internal/ExpandTransition';
 import Slider from 'material-ui/Slider';
 import Snackbar from 'material-ui/Snackbar';
 
-
 import AvLibraryBooks from 'material-ui/svg-icons/av/library-books';
 import CommunicationChat from 'material-ui/svg-icons/communication/chat';
 import NavigationChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
@@ -23,26 +21,20 @@ import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left
 
 import QuerySlider from './QuerySlider';
 
-
 const paperStyle = {
 	"position": 'absolute',
 	"width": '25vw',
 	"margin": '0',
-	'top':'7vh',
 	"padding": '0 0 2em 0',
 	"backgroundColor": 'rgba(255,255,255,0.8)',
 }
 
 export default class MappingPanel extends Component{
 	state={
-				loading: false,
-				finished: false,
-				stepIndex: 0,
-				slider: 50,
-
-				// that's for the notice(snackbar)
-				message: 'Default',
-				open: false,
+		loading: false,
+		finished: false,
+		stepIndex: 0,
+		slider: 50,
 	}
 
 	handleCalculate = () => {
@@ -88,7 +80,6 @@ export default class MappingPanel extends Component{
 	}
 
 	renderStepActions(step) {
-
 		return (
 			<div style={{margin: '1em 0 0 2em', float: 'right'}}>
 				{step > 0 && (
@@ -107,8 +98,7 @@ export default class MappingPanel extends Component{
 			</div>
 		);
 	}
-renderSlider(stepIndex){
-
+	renderSlider(stepIndex){
 		if(stepIndex === 1){
 			return (
 				<QuerySlider
@@ -123,192 +113,205 @@ renderSlider(stepIndex){
 		} else {return <div></div>}
 	}
 
-
 	componentWillUpdate(nextProps,nextState){
-		if(this.props.mode==='mode-query' ){
-			switch (nextState.stepIndex) {
-				case 1:
-				this.props.dispatch({
-					type: 'smartselect/changeStyle',
-					styleName: 'light',
-				});
-				break;
-				case 3:
+		switch (nextState.stepIndex) {
+			case 1:
+			this.props.dispatch({
+				type: 'smartselect/changeStyle',
+				styleName: 'light',
+			});
+			if(this.props.mode !== 'mode-query'){
+				setTimeout(()=>{
+					this.props.dispatch({
+						type: 'smartselect/changeMode',
+						mode: 'mode-query',
+					});
+				},1000)
+			}
+			break;
+			case 3:
+			if(this.props.mode !== 'mode-build'){
 				this.props.dispatch({
 					type: 'smartselect/changeMode',
 					mode: 'mode-build',
-				});
-				break;
-				default:
-				break;
+				})
 			}
+			break;
+			case 4:
+			if(this.props.mode !== 'mode-decide'){
+				this.props.dispatch({
+					type: 'smartselect/changeMode',
+					mode: 'mode-decide',
+				});
+				setTimeout(()=>{
+					this.props.dispatch({
+						type: 'smartselect/changeStyle',
+						styleName: 'customized',
+					})
+				},1000)
+			}
+			break;
+			default:
+			break;
 		}
 	}
+	render() {
+		const {loading, stepIndex} = this.state;
+		return (
+			<div>
+				{this.renderSlider(stepIndex)}
 
-render() {
-	const {loading, stepIndex} = this.state;
+				<Paper style={paperStyle} zDepth={3}>
+					<Spin
+						spinning={true}
 
-	return (
-	<div>
-		{this.renderSlider(stepIndex)}
-		<Paper style={paperStyle} zDepth={3}>
-			<div style={{margin: 'auto'}}>
-				<Stepper
-					activeStep={stepIndex}
-					linear={false}
-					orientation="vertical"
-				>
-					<Step>
-						<StepButton onTouchTap={() => this.setState({stepIndex: 0})}>
-							Intro
-						</StepButton>
-						<StepContent>
-							<Button style={{display: 'inline-block', float:'right'}}>Replay</Button>
+						// spinning={!this.props.mapLoaded}
+						delay={500}
+						size='large'
+						style={{top: '30vh', left: '-38vw', position: 'absolute'}}>
+						<Stepper
+							activeStep={stepIndex}
+							linear={true}
+							orientation="vertical">
+							<Step>
+								<StepButton onTouchTap={() => this.setState({stepIndex: 0})}>
+									Intro
+								</StepButton>
+								<StepContent>
+									<Button style={{display: 'inline-block', float:'right'}}>Replay</Button>
 
-							<p style={{whiteSpace: 'pre-line'}}>
-								{`Welcome!
+									<p style={{whiteSpace: 'pre-line'}}>
+										{`Welcome!
 
-								Click "Next" to find your next INVESTMENT!`}
-							</p>
-							{this.renderStepActions(0)}
-						</StepContent>
-					</Step>
-					<Step>
-						<StepButton onTouchTap={() => this.setState({stepIndex: 1})}>
-							Find
-						</StepButton>
-						<StepContent>
-							<p>
-								Don't forget to use the slider below to search for the suitable parcel.
-							</p>
-							{this.renderStepActions(1)}
-						</StepContent>
-					</Step>
-					<Step>
-						<StepButton onTouchTap={() => this.setState({stepIndex: 2})}>
-							Measure
-						</StepButton>
-						<StepContent>
-							<div>
-								<p>
-									Draw and measure your footprint.
-									<br></br>
-									<Button onClick = {this.handleCalculate}>CALCULATE</Button>
-									<br></br>
-									<em>
-										*If you don't like it, clean and draw another one!
-									</em>
+												Click "Next" to find your next INVESTMENT!`}
+									</p>
+									{this.renderStepActions(0)}
+								</StepContent>
+							</Step>
+							<Step>
+								<StepButton onTouchTap={() => this.setState({stepIndex: 1})}>
+									Find
+								</StepButton>
+								<StepContent>
+									<p>
+										Don't forget to use the slider below to search for the suitable parcel.
+									</p>
+									{this.renderStepActions(1)}
+								</StepContent>
+							</Step>
+							<Step>
+								<StepButton onTouchTap={() => this.setState({stepIndex: 2})}>
+									Measure
+								</StepButton>
+								<StepContent>
+									<div>
+										<p>
+											Draw and measure your footprint.
+											<br></br>
+											<Button onClick = {this.handleCalculate}>CALCULATE</Button>
+											<br></br>
+											<em>
+												*If you don't like it, clean and draw another one!
+											</em>
+											<br></br>
+											<span style={{
+														fontSize:'1.3em',
+														fontWeight:'600',
+														color: '#2c9ab7'
+											}}>
+											Polygon</span>
+											<br></br>
+											&ensp;Perimeter: <strong style={{fontSize: '1.2em'}}>{this.props.calData.polygon.length}</strong> miles
+											<br></br>
+											&ensp;Area: <strong style={{fontSize: '1.2em'}}>{this.props.calData.polygon.area}</strong> square foot
 
-									<br></br>
-									<span style={{
-										fontSize:'1.3em',
-										fontWeight:'600',
-										color: '#2c9ab7'
+											<br></br>
+											<span style={{
+														fontSize:'1.3em',
+														fontWeight:'600',
+														color: '#2c9ab7'
+											}}>
+												Line
+											</span>
+											<br></br>
+											&ensp;Length: <strong style={{fontSize: '1.2em'}}>{this.props.calData.line.length}</strong> miles
+										</p>
+									</div>
+									<div
+										style={{display:'flex', justifyContent:'space-around', float: 'right', flexDirection: 'column',
+										width: '40%', float: 'right'}}>
+										<div style={{width: '0.5em'}}></div>
+									</div>
+									{this.renderStepActions(2)}
+								</StepContent>
+							</Step>
+							<Step>
+								<StepButton onTouchTap={() => this.setState({stepIndex: 3})}>
+									Build
+								</StepButton>
+								<StepContent>
+									<div style={{
+											display:'inline-flex',
 									}}>
-									Polygon</span>
-									<br></br>
-									&ensp;Perimeter: <strong style={{fontSize: '1.2em'}}>{this.props.calData.polygon.length}</strong> miles
-									<br></br>
-									&ensp;Area: <strong style={{fontSize: '1.2em'}}>{this.props.calData.polygon.area}</strong> square foot
+										<Slider
+											axis='y'
+											min={0}
+											max={3500}
+											step={1}
+											defaultValue={2000}
+											value={this.state.slider}
+											onChange={this.handleSlider}
+											style={{
+													position: 'absolute',
+													height: '8em',
+											}}
+											sliderStyle={{
+													position: 'absolute',
+													height: '6em',
+													paddingBottom: 0,
+													top: '1em',
+													left: '1em'
+											}}
+										/>
+										<span style={{fontSize: '0.8em', height: '10em', width: '6em'}}>(Unit: Foot)</span>
+										<div style={{
+												justifyContent: 'center',
+												alignItems: 'flex-end',
+												float:'right',
+												textAlign: 'center'
+										}}>
+											<em>Use the slider to set the height</em><br></br><br></br>
+											Your building will be
+											<br></br>
+											<span style={{
+													fontSize:'1.5em',
+													fontWeight:'600',
+													color: '#2c9ab7'
+											}}>{this.props.height} </span>
+											feet!
+										</div>
+										<br></br>
+									</div>
+									{this.renderStepActions(3)}
+								</StepContent>
+							</Step>
+							<Step>
+								<StepButton onTouchTap={() => this.setState({stepIndex: 4})}>
+									Decide
+								</StepButton>
+								<StepContent>
+									<p>
+										Decision time!
 
-									<br></br>
-									<span style={{
-										fontSize:'1.3em',
-										fontWeight:'600',
-										color: '#2c9ab7'
-									}}>
-										Line
-									</span>
-									<br></br>
-									&ensp;Length: <strong style={{fontSize: '1.2em'}}>{this.props.calData.line.length}</strong> miles
+									</p>
+									{this.renderStepActions(4)}
+								</StepContent>
+							</Step>
+						</Stepper>
+					</Spin>
 
-								</p>
-
-
-
-							</div>
-
-							<div
-								style={{display:'flex', justifyContent:'space-around', float: 'right', flexDirection: 'column',
-								width: '40%', float: 'right'}}>
-								<div style={{width: '0.5em'}}></div>
-							</div>
-
-							{this.renderStepActions(2)}
-						</StepContent>
-					</Step>
-					<Step>
-						<StepButton onTouchTap={() => this.setState({stepIndex: 3})}>
-							Build
-						</StepButton>
-						<StepContent>
-							<div style={{
-								display:'inline-flex',
-							}}>
-								<Slider
-									axis='y'
-									min={0}
-									max={3500}
-									step={1}
-									defaultValue={2000}
-									value={this.state.slider}
-									onChange={this.handleSlider}
-									style={{
-										position: 'absolute',
-										height: '8em',
-									}}
-									sliderStyle={{
-										position: 'absolute',
-										height: '6em',
-										paddingBottom: 0,
-										top: '1em',
-										left: '1em'
-									}}
-								/>
-								<span style={{fontSize: '0.8em', height: '10em', width: '6em'}}>(Unit: Foot)</span>
-
-								<div style={{
-									justifyContent: 'center',
-									alignItems: 'flex-end',
-									float:'right',
-									textAlign: 'center'
-								}}>
-									<em>Use the slider to set the height</em><br></br><br></br>
-									Your building will be
-									<br></br>
-									<span style={{
-										fontSize:'1.5em',
-										fontWeight:'600',
-										color: '#2c9ab7'
-									}}>{this.props.height} </span>
-									feet!
-
-
-								</div>
-								<br></br>
-							</div>
-							{this.renderStepActions(3)}
-						</StepContent>
-					</Step>
-
-					<Step>
-						<StepButton onTouchTap={() => this.setState({stepIndex: 4})}>
-							Decide
-						</StepButton>
-						<StepContent>
-							<p>
-								Decision time!
-
-							</p>
-							{this.renderStepActions(4)}
-						</StepContent>
-					</Step>
-				</Stepper>
-
-
+					</Paper>
 				</div>
-			</Paper>
-		</div>
-		);
-		}
-		};
+	);
+}
+};
