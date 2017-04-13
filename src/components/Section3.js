@@ -25,7 +25,7 @@ export default class Section3 extends React.Component {
         {...props}
         className={`content-template-wrapper content-half-wrapper content2_0-wrapper`}
         style={{
-          height:'55vh',
+          height:'60vh',
         }}
       >
         <OverPack
@@ -72,9 +72,6 @@ export default class Section3 extends React.Component {
               paddingRight: '7vw'
             }}
           >
-            <h1 key="h1" id={`${props.id}-title`}>
-              Data
-            </h1>
             <h3 key="h3" id={`${props.id}-title`}
               style={{
                 lineHeight: '32px',
@@ -82,10 +79,10 @@ export default class Section3 extends React.Component {
                 marginBottom: '10px',
                 fontSize: '24px',
                 fontWeight: 400
-              }}>Find the Missing Piece</h3>
+              }}>Find the Missing Data</h3>
             <p style={{fontSize: '1.5em'}}
               key="p" id={`${props.id}-content`}>
-              Almost 50% of the data from the OPA dataset is missing, so I turned to Zillow to find the apartment conditions.
+              As mentioned, public data sources for real estate are complicated with >30% missing values.
             </p>
           </QueueAnim>
         </OverPack>

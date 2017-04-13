@@ -24,18 +24,15 @@ import { Button, Spin} from 'antd';
 import TrendingDown from 'material-ui/svg-icons/action/trending-down';
 import TrendingUp from 'material-ui/svg-icons/action/trending-up';
 
-// import Section3 from '../components/Section3';
-// import Section4 from '../components/Section4';
-//
-// import Content2 from '../components/Content2';
-// import Content3 from '../components/Content3';
+import Section3 from '../components/Section3';
+import Section4 from '../components/Section4';
+
+import Content2 from '../components/Content2';
+import Content3 from '../components/Content3';
 import Footer from '../components/Footer';
 import Point from '../components/Point';
 // import App from '../components/Tutorial';
 import Predictors from '../components/Predictors';
-// import Corrplot from '../components/Corrplot';
-// import RosePlot from '../components/RosePlot';
-// import RosePlotPhilly from '../components/RosePlotPhilly';
 
 // Goggle MD
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -94,20 +91,22 @@ export default class Index extends React.Component {
             id="map" key="map" isMode={this.state.isMode}/>
           <Background id="background" key="background" isMode={this.state.isMode}
             className='background' style= {{height: '50vh'}}/>
-          <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode} style= {{padding: '5em 0'}}/>
+          <Section3 id="content_2_0" key="content_2_0" isMode={this.state.isMode}/>
 
+          <Section4 id="section_4_0" key="section_4_0" isMode={this.state.isMode}/>
+
+          <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode} style= {{padding: '5em 0'}}/>
           <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}/>
           <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode} style= {{padding: '5em 0'}}/>
 
 
-          {/* <Section3 id="content_2_0" key="content_2_0" isMode={this.state.isMode}/> */}
-          {/* <Predictors id="content_2_1" key="content_2_1"/> */}
-          {/* <Section4 id="section_4_0" key="section_4_0" isMode={this.state.isMode}/> */}
+          {/* <Predictors id="content_2_1" key="content_2_1" isMode={this.state.isMode}/> */}
+
           {/* <Content2 id="content_3_0" key="content_3_0" isMode={this.state.isMode}/> */}
           {/* <Content3 id="content_4_0" key="content_4_0" isMode={this.state.isMode}/> */}
 
           <Footer id="footer" key="footer" isMode={this.state.isMode}/>
-          <Point key="list" ref="list" data={['map', 'background', 'processoverview', 'localmarket', 'variableselection']} />
+          <Point key="list" ref="list" data={['map', 'background', 'content_2_0', 'section_4_0', 'processoverview', 'localmarket', 'variableselection']} />
         </div>
       )
     } else {

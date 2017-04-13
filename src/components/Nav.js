@@ -31,7 +31,18 @@ export default class Navigation extends React.Component {
         </Navbar.Header>
         <Navbar.Collapse >
           <Nav style={{fontSize: '1.2em'}}>
-            <NavItem onClick={(e) => {e.preventDefault(); if(props.mode !== 'mode-welcome'){props.dispatch({type: 'smartselect/changeMode', mode: 'mode-welcome'})}}} href="#">{firstNavItem}</NavItem>
+            <NavItem onClick={(e) => {
+              e.preventDefault();
+              if(props.mode !== 'mode-welcome'){
+                props.dispatch({type: 'smartselect/changeMode', mode: 'mode-welcome'});
+                setTimeout(()=>{
+                  props.dispatch({
+                    type: 'smartselect/changeStyle',
+                    styleName: 'customized',
+                  })
+                },1000)
+              }
+            }} href="#">{firstNavItem}</NavItem>
             {navChildren}
           </Nav>
 

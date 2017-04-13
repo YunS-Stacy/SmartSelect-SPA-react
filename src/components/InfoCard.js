@@ -21,7 +21,7 @@ export default class InfoCard extends Component {
             <li><strong>Last Sold Price: </strong>{message.lastSoldPrice ? `$${message.lastSoldPrice}, ` : `No Data Available`}<em>{message.lastSoldDate}</em></li>
             <li><strong>Zestimate: </strong>{message.zestimate ? `$${message.zestimate}` : `No Data Available`}</li>
             <li><strong>Value Range: </strong>{(message.valueLow && message.valueHigh) ? `$${message.valueLow} - $${message.valueHigh}` : `No Data Available`}</li>
-            <li><strong>Month Change: </strong>{message.monthChange >= 0 ? <TrendingUp style={{width: '18px', height: '18px'}}/>: <TrendingDown style={{width: '18px', height: '18px'}}/>}{message.monthChange >= 0 ? ` Price Up`: ` Price Down`}</li>
+            <li><strong>Monthly Trend: </strong>{message.monthChange >= 0 ? <TrendingUp style={{width: '18px', height: '18px'}}/>: <TrendingDown style={{width: '18px', height: '18px'}}/>}{message.monthChange >= 0 ? ` Price Up`: ` Price Down`}</li>
           </ul>
         </CardText>
       </Card>

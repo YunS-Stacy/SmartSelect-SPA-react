@@ -15,7 +15,7 @@ export default class Section4 extends React.Component {
         replay
         playScale={[0.3, 0.1]}
         {...props}
-        // hideProps={{ icon: { reverse: true } }}
+        style={{height: '60vh'}}
       >
         <QueueAnim
           type={['bottom', 'top']}
@@ -29,9 +29,15 @@ export default class Section4 extends React.Component {
             key="title"
             id={`${props.id}-title`}
           >
-            <blockquote>
-              Explore <strong> YOUR </strong> next commercial real estate investment in Philadelphia.
-            </blockquote>
+            <h2 style={{
+              textAlign: 'center',
+              color: 'white',
+              fontSize: '5em',
+              whiteSpace: 'nowrap',
+              fontWeight: 100
+            }}>
+              About Model
+            </h2>
           </span>
         </QueueAnim>
         <TweenOne

@@ -126,6 +126,7 @@ export default class Mapping extends Component {
           width: "100vw",
           position: mapPosition,
         }}
+        movingMethod='easeTo'
         maxBounds={this.props.maxBounds}
         onStyleLoad={(map)=>{this.handleLoaded(map)}}
         onMouseMove={(map, e)=>{this.handleMouseMove(map, e)}}

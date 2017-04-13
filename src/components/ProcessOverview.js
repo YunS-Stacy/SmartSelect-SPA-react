@@ -19,7 +19,7 @@ export default class ProcessOverview extends Component {
     : { x: 30, opacity: 0, type: 'from', ease: 'easeOutQuad' };
     return (
       <div {...props} className="content-template-wrapper processoverview-wrapper"
-        style={{height: '135vh', padding: '0 2vw'}}
+        style={{height: '150vh', padding: '0 2vw', paddingTop: '10vh'}}
       >
         <OverPack
           className={`content-template ${props.className}`}
