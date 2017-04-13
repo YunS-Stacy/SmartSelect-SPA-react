@@ -58,7 +58,7 @@ export default class LocalMarket extends Component {
     const imgAnim = isMode ? { y: 30, opacity: 0, delay: 400, type: 'from', ease: 'easeOutQuad' }
     : { x: 30, opacity: 0, type: 'from', ease: 'easeOutQuad' };
     return (
-      <div {...props} className="content-template-wrapper localmarket-wrapper" style={{overflow: 'auto'}}>
+      <div {...props} className="content-template-wrapper localmarket-wrapper" style={{height: '110vh'}}>
         <OverPack
           className={`content-template ${props.className}`}
           location={props.id}

@@ -171,7 +171,9 @@ export default {
     const num = data.features.length;
     let {calData, snackMessage} = state;
     calData.num = num;
-    snackMessage = `You have drawn ${num} things. We will calculate only the last of each type of shapes.`
+    if (num > 1){
+      snackMessage = `You have drawn ${num} things. We will calculate only the last of each type of shapes.`
+    }
     _.each(data.features,(datum)=>{
       let type = datum.geometry.type;
       switch (type) {
@@ -234,6 +236,7 @@ export default {
       case 'footprint':
       return { ...state, footVis: newVis};
       case 'blueprint':
+      console.log('blueprint change to', newVis);
       return { ...state, blueVis: newVis};
       case 'vacant':
       return { ...state, vacantVis: newVis};
@@ -325,7 +328,11 @@ export default {
         mapBearing = 9.2;
         parcelVis = 'none';
         blueVis = 'visible';
-        footVis = 'none';
+        vacantVis = 'none';
+      };
+      break;
+      case 'mode-decide':
+      if (state.mode !== 'mode-decide'){
       };
       break;
       default:
@@ -377,7 +384,7 @@ export default {
         routeLines = [routePts, ...routeLines, popupInfo.coords];
         const tempBbox = turf.lineString(routeLines);
         const bounds = turf.bbox(tempBbox);
-        map.fitBounds(bounds, {padding: 200});
+        map.fitBounds(bounds, {padding: 500});
       } else{
         snackMessage = `Sorry, we don't find any route!`
       }
@@ -428,6 +435,7 @@ export default {
       const {zpid} = datum;
       yield put({ type: 'asyncLoaded', mapLoaded: false});
       const dataZillow = yield call(Zillow.getComps, zpid);
+      console.log(dataZillow);
       yield put({ type: 'getZillow', dataZillow});
       yield put({ type: 'asyncLoaded', mapLoaded: true});
 

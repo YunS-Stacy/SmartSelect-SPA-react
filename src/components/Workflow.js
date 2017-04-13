@@ -160,7 +160,7 @@ export default class Workflow extends Component {
   state = {
     data: [
       {
-        "name": "Suggested Price",
+        "name": "Predicted Price",
         "children": [
           {
             "name": "Dataset Input",
@@ -292,7 +292,7 @@ export default class Workflow extends Component {
             ]
           }
         ]
-      }
+      },
     ],
     forceFit: true,
     width: 1000,

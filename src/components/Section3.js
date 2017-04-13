@@ -79,7 +79,7 @@ export default class Section3 extends React.Component {
                 marginBottom: '10px',
                 fontSize: '24px',
                 fontWeight: 400
-              }}>Find the Missing Data</h3>
+              }}>Find the Missing Piece</h3>
             <p style={{fontSize: '1.5em'}}
               key="p" id={`${props.id}-content`}>
               As mentioned, public data sources for real estate are complicated with >30% missing values.

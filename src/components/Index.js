@@ -63,7 +63,7 @@ export default class Index extends React.Component {
 
   componentWillReceiveProps(nextProps){
     this.setState({
-      snackStatus: nextProps.snackMessage !==this.props.snackMessage ? true : false
+      snackStatus: nextProps.snackMessage !== this.props.snackMessage ? true : false
     })
   }
 
@@ -91,12 +91,15 @@ export default class Index extends React.Component {
             id="map" key="map" isMode={this.state.isMode}/>
           <Background id="background" key="background" isMode={this.state.isMode}
             className='background' style= {{height: '50vh'}}/>
+          {/* missing value */}
           <Section3 id="content_2_0" key="content_2_0" isMode={this.state.isMode}/>
+          <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}/>
 
+
+          {/* banner */}
           <Section4 id="section_4_0" key="section_4_0" isMode={this.state.isMode}/>
 
           <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode} style= {{padding: '5em 0'}}/>
-          <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}/>
           <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode} style= {{padding: '5em 0'}}/>
 
 
@@ -106,7 +109,7 @@ export default class Index extends React.Component {
           {/* <Content3 id="content_4_0" key="content_4_0" isMode={this.state.isMode}/> */}
 
           <Footer id="footer" key="footer" isMode={this.state.isMode}/>
-          <Point key="list" ref="list" data={['map', 'background', 'content_2_0', 'section_4_0', 'processoverview', 'localmarket', 'variableselection']} />
+          <Point key="list" ref="list" data={['map', 'background', 'content_2_0', 'localmarket', 'section_4_0', 'processoverview', 'variableselection']} />
         </div>
       )
     } else {

@@ -22,7 +22,7 @@ export default class InfoCard extends Component {
     return (
       <div style={{display: 'inline-flex'}}>
         <TextField
-          style={{fontSize: '1.1em', width: '85%'}}
+          style={{fontSize: '1.1em', width: '15vw'}}
           hintText="Search for Address"
           value={this.state.address}
           onChange={this.handleChange}

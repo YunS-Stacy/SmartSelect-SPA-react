@@ -35,7 +35,6 @@ export default class LayerToggle extends Component {
     })
   }
 
-
   handleBlueprint (e, bool){
     const layerName = 'blueprint';
     const layerVis = bool === true ? 'visible' : 'none';
@@ -121,7 +120,7 @@ export default class LayerToggle extends Component {
             onCheck = {this.handleVacant.bind(this)}
             checked = {this.props.vacantVis === 'visible' ? true : false}
             disabled = {this.props.mode === 'mode-intro' ? true : false}
-            
+
           />
           <Checkbox
             label="3D BUILDING LAYER"

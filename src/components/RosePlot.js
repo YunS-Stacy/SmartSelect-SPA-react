@@ -48,7 +48,7 @@ export default class RosePlot extends Component {
 			return (<div></div>);
 		} else {
 			return (
-				<div>
+				<div style={{paddingLeft: '5em'}}>
 					<Chart
 						data={this.props.data}
 						width={this.state.width}
