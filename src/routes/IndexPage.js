@@ -3,7 +3,7 @@ import { connect } from 'dva';
 
 import Index from '../components/Index';
 
-function IndexPage({dispatch, loading, smartselect}) {
+function IndexPage({dispatch, smartselect}) {
   return (
     <Index
       dispatch = {dispatch}
@@ -38,6 +38,8 @@ function mapStateToProps(state){
     tableMessage,
     compsLines,
     compsPts,
+    routeLines,
+    routePts,
 
   } = state.smartselect;
   return {
@@ -66,6 +68,8 @@ function mapStateToProps(state){
     tableMessage,
     compsLines,
     compsPts,
+    routeLines,
+    routePts,
   };
 }
 

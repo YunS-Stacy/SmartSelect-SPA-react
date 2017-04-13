@@ -6,6 +6,21 @@
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@mapbox/gl-matrix/-/gl-matrix-0.0.1.tgz#e5126aab4d64c36b81c7a97d0ae0dddde5773d2b"
 
+"@mapbox/mapbox-gl-directions@^3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@mapbox/mapbox-gl-directions/-/mapbox-gl-directions-3.1.1.tgz#7cc60104de8b70e936935b07d16cafa0e197d165"
+  dependencies:
+    deep-assign "^2.0.0"
+    lodash.debounce "^4.0.6"
+    lodash.isequal "^4.2.0"
+    lodash.template "^4.2.5"
+    polyline "^0.2.0"
+    redux "^3.5.2"
+    redux-thunk "^2.1.0"
+    suggestions "1.3.0"
+    turf-extent "^1.0.4"
+    xtend "4.0.1"
+
 "@mapbox/shelf-pack@^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@mapbox/shelf-pack/-/shelf-pack-3.0.0.tgz#44e284c8336eeda1e9dbbb1d61954c70e26e5766"
@@ -2082,6 +2097,12 @@ decamelize@^1.0.0, decamelize@^1.1.1, decamelize@^1.1.2:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
 
+deep-assign@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/deep-assign/-/deep-assign-2.0.0.tgz#ebe06b1f07f08dae597620e3dd1622f371a1c572"
+  dependencies:
+    is-obj "^1.0.0"
+
 deep-eql@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/deep-eql/-/deep-eql-2.0.1.tgz#2d5e54d261d24672a2bcedc9b6f1937fba258bc2"
@@ -2988,6 +3009,10 @@ function-bind@^1.0.2, function-bind@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
+fuzzy@^0.1.1:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/fuzzy/-/fuzzy-0.1.3.tgz#4c76ec2ff0ac1a36a9dccf9a00df8623078d4ed8"
+
 g2-react@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/g2-react/-/g2-react-1.2.0.tgz#edc97b63e00f0103dcc7049bfd7b19872bb0231a"
@@ -3618,6 +3643,10 @@ is-number@^2.0.2, is-number@^2.1.0:
   dependencies:
     kind-of "^3.0.2"
 
+is-obj@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-1.0.1.tgz#3e4729ac1f5fde025cd7d83a896dab9f4f67db0f"
+
 is-path-cwd@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/is-path-cwd/-/is-path-cwd-1.0.0.tgz#d225ec23132e89edd38fda767472e62e65f1106d"
@@ -3986,6 +4015,10 @@ lodash._isiterateecall@^3.0.0:
   version "3.0.9"
   resolved "https://registry.yarnpkg.com/lodash._isiterateecall/-/lodash._isiterateecall-3.0.9.tgz#5203ad7ba425fae842460e696db9cf3e6aac057c"
 
+lodash._reinterpolate@~3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
+
 lodash.camelcase@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz#b28aa6288a2b9fc651035c7711f65ab6190331a6"
@@ -4002,7 +4035,7 @@ lodash.create@3.1.1:
     lodash._basecreate "^3.0.0"
     lodash._isiterateecall "^3.0.0"
 
-lodash.debounce@^4.0.0, lodash.debounce@^4.0.8:
+lodash.debounce@^4.0.0, lodash.debounce@^4.0.6, lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
 
@@ -4049,6 +4082,19 @@ lodash.merge@^4.6.0:
 lodash.set@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
+
+lodash.template@^4.2.5:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/lodash.template/-/lodash.template-4.4.0.tgz#e73a0385c8355591746e020b99679c690e68fba0"
+  dependencies:
+    lodash._reinterpolate "~3.0.0"
+    lodash.templatesettings "^4.0.0"
+
+lodash.templatesettings@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/lodash.templatesettings/-/lodash.templatesettings-4.1.0.tgz#2b4d4e95ba440d915ff08bc899e4553666713316"
+  dependencies:
+    lodash._reinterpolate "~3.0.0"
 
 lodash.throttle@^4.0.0, lodash.throttle@^4.1.1:
   version "4.1.1"
@@ -4099,6 +4145,21 @@ magic-string@^0.14.0:
   dependencies:
     vlq "^0.2.1"
 
+mapbox-gl-directions@^3.0.3:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/mapbox-gl-directions/-/mapbox-gl-directions-3.0.3.tgz#e64db6bc48f1acf1b68b0e22045ace0f8690ae4b"
+  dependencies:
+    deep-assign "^2.0.0"
+    lodash.debounce "^4.0.6"
+    lodash.isequal "^4.2.0"
+    lodash.template "^4.2.5"
+    polyline "^0.2.0"
+    redux "^3.5.2"
+    redux-thunk "^2.1.0"
+    suggestions "1.3.0"
+    turf-extent "^1.0.4"
+    xtend "4.0.1"
+
 mapbox-gl-draw@^0.16.0:
   version "0.16.0"
   resolved "https://registry.yarnpkg.com/mapbox-gl-draw/-/mapbox-gl-draw-0.16.0.tgz#c6c7912336780177810b4adbbb2265a118b16cf0"
@@ -4110,6 +4171,15 @@ mapbox-gl-draw@^0.16.0:
     hat "0.0.3"
     lodash.isequal "^4.2.0"
     point-geometry "0.0.0"
+    xtend "^4.0.1"
+
+mapbox-gl-geocoder@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/mapbox-gl-geocoder/-/mapbox-gl-geocoder-2.0.1.tgz#4776f9c5fd770e756006a5ac1849e529a8d1de94"
+  dependencies:
+    lodash.debounce "^4.0.6"
+    mapbox "1.0.0-beta5"
+    suggestions "^1.3.1"
     xtend "^4.0.1"
 
 mapbox-gl-supported@^1.2.0:
@@ -4171,6 +4241,12 @@ mapbox-gl@^0.35.0:
     vector-tile "^1.3.0"
     vt-pbf "^2.0.2"
     webworkify "^1.4.0"
+
+mapbox@1.0.0-beta5:
+  version "1.0.0-beta5"
+  resolved "https://registry.yarnpkg.com/mapbox/-/mapbox-1.0.0-beta5.tgz#6342f98df74464fdca007bf19e58ec24133f0d66"
+  dependencies:
+    rest "^2.0.0"
 
 material-ui@^0.17.1:
   version "0.17.1"
@@ -4760,6 +4836,10 @@ pluralize@^1.2.1:
 point-geometry@0.0.0, point-geometry@^0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/point-geometry/-/point-geometry-0.0.0.tgz#6fcbcad7a803b6418247dd6e49c2853c584daff7"
+
+polyline@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/polyline/-/polyline-0.2.0.tgz#4f2b716ca81134a6cbaa488975d236ecb1cc2840"
 
 postcss-calc@^5.2.0:
   version "5.3.1"
@@ -5831,7 +5911,11 @@ redux-saga@^0.14.0:
   version "0.14.6"
   resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.14.6.tgz#bc409aa0edaa4a7234759041cc70da62f37c6f13"
 
-redux@^3.6.0:
+redux-thunk@^2.1.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
+
+redux@^3.5.2, redux@^3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/redux/-/redux-3.6.0.tgz#887c2b3d0b9bd86eca2be70571c27654c19e188d"
   dependencies:
@@ -5980,6 +6064,10 @@ resolve@^1.1.5, resolve@^1.1.6:
   resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.3.2.tgz#1f0442c9e0cbb8136e87b9305f932f46c7f28235"
   dependencies:
     path-parse "^1.0.5"
+
+rest@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/rest/-/rest-2.0.0.tgz#6dfadf66a405c49cfbd5b4bd25b59fd29cd861bc"
 
 restore-cursor@^1.0.1:
   version "1.0.1"
@@ -6498,6 +6586,20 @@ style-utils@~0.1.10, style-utils@~0.1.13:
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/style-utils/-/style-utils-0.1.13.tgz#9df5c750daa41865f2238fd16f6e12b93a0a26a0"
 
+suggestions@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/suggestions/-/suggestions-1.3.0.tgz#0398d52c4315f356591bbcde0733fccf2bfe1567"
+  dependencies:
+    fuzzy "^0.1.1"
+    xtend "^4.0.0"
+
+suggestions@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/suggestions/-/suggestions-1.3.1.tgz#20903db5c31b5ccfcb4f55877750d9715eef4e56"
+  dependencies:
+    fuzzy "^0.1.1"
+    xtend "^4.0.0"
+
 supercluster@^2.0.1, supercluster@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/supercluster/-/supercluster-2.3.0.tgz#87ab56081bbea9a1d724df5351ee9e8c3af2f48b"
@@ -6803,6 +6905,12 @@ turf-explode@^3.0.12:
     turf-helpers "^3.0.12"
     turf-meta "^3.0.12"
 
+turf-extent@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/turf-extent/-/turf-extent-1.0.4.tgz#9f28ce11af916ada88862a062074658ba3fe0f01"
+  dependencies:
+    turf-meta "^1.0.2"
+
 turf-flip@^3.0.12:
   version "3.0.12"
   resolved "https://registry.yarnpkg.com/turf-flip/-/turf-flip-3.0.12.tgz#deb868177b9ff3bb310c5d41aaac61a9156a3cbb"
@@ -6876,6 +6984,10 @@ turf-line-slice@^3.0.12:
     turf-distance "^3.0.12"
     turf-helpers "^3.0.12"
     turf-point-on-line "^3.0.12"
+
+turf-meta@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/turf-meta/-/turf-meta-1.0.2.tgz#74d4c495938eb24772a70b31a157ee3d4fd6ba1b"
 
 turf-meta@^3.0.12:
   version "3.0.12"
@@ -7523,7 +7635,7 @@ xmlhttprequest@1:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
 
-xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.1:
+xtend@4.0.1, xtend@^4.0.0, xtend@^4.0.1, xtend@~4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
 

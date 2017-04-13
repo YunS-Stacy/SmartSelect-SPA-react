@@ -30,7 +30,7 @@ export default class LocalMarket extends Component {
 
     componentWillMount(){
       const self = this;
-      axios.get('https://gist.githubusercontent.com/YunS-Stacy/3be63ace8a257281a54e9eb79b374702/raw/ad5e983567072d8ba0e8bdbe4a018b86616fedc9/useRoseChart.json')
+      axios.get('https://smartselect-34c02.firebaseio.com/localMarket.json')
       .then(function (response) {
         let data = response.data;
         let frame = new Frame(data);
@@ -65,12 +65,6 @@ export default class LocalMarket extends Component {
       render() {
         const props = { ...this.props };
         const isMode = props.isMode;
-        const dataSource = [
-          { img: 'https://zos.alipayobjects.com/rmsportal/NKBELAOuuKbofDD.png', title: '技术', content: '丰富的技术组件，简单组装即可快速搭建金融级应用，丰富的技术组件，简单组装即可快速搭建金融级应用。' },
-          { img: 'https://zos.alipayobjects.com/rmsportal/xMSBjgxBhKfyMWX.png', title: '融合', content: '解放业务及技术生产力，推动金融服务底层创新，推动金融服务底层创新。\n解放业务及技术生产力，推动金融服务底层创新。' },
-          { img: 'https://zos.alipayobjects.com/rmsportal/MNdlBNhmDBLuzqp.png', title: '开发', content: '符合金融及要求的安全可靠、高可用、高性能的服务能力，符合金融及要求的安全可靠、高可用、高性能的服务能力。' },
-        ];
-        const ulChildren = dataSource.map(this.getBlockChildren);
         delete props.isMode;
         const queue = isMode ? 'bottom' : 'left';
         const imgAnim = isMode ? { y: 30, opacity: 0, delay: 400, type: 'from', ease: 'easeOutQuad' }

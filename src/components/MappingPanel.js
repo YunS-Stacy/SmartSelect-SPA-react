@@ -7,7 +7,7 @@ import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
 import { Button, Spin} from 'antd';
 import Paper from 'material-ui/Paper';
-import { Step, Stepper, StepLabel, StepButton, StepContent } from 'material-ui/Stepper';
+import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
 
 import FlatButton from 'material-ui/FlatButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
@@ -19,7 +19,8 @@ import CommunicationChat from 'material-ui/svg-icons/communication/chat';
 import NavigationChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 
-import QuerySlider from './QuerySlider';
+import QuerySlider from '../components/QuerySlider';
+import SearchInput from '../components/SearchInput';
 
 const paperStyle = {
 	"position": 'absolute',
@@ -129,6 +130,12 @@ export default class MappingPanel extends Component{
 				},1000)
 			}
 			break;
+			case 2:
+			this.props.dispatch({
+				type: 'smartselect/changeMode',
+				mode: 'mode-measure',
+			});
+			break
 			case 3:
 			if(this.props.mode !== 'mode-build'){
 				this.props.dispatch({
@@ -136,20 +143,33 @@ export default class MappingPanel extends Component{
 					mode: 'mode-build',
 				})
 			}
+			if(this.props.footVis !== 'visible'){
+				this.props.dispatch({
+					type: 'smartselect/changeVis',
+					layerName: 'footprint',
+					layerVis: 'none',
+				});
+			}
+			setTimeout(()=>{
+				this.props.dispatch({
+					type: 'smartselect/changeStyle',
+					styleName: 'customized',
+				})
+			},1000)
 			break;
 			case 4:
-			if(this.props.mode !== 'mode-decide'){
 				this.props.dispatch({
-					type: 'smartselect/changeMode',
-					mode: 'mode-decide',
+					type: 'smartselect/changeVis',
+					layerName: 'footprint',
+					layerVis: 'visible',
 				});
-				setTimeout(()=>{
-					this.props.dispatch({
-						type: 'smartselect/changeStyle',
-						styleName: 'customized',
-					})
-				},1000)
-			}
+				// setTimeout(()=>{
+				// 	this.props.dispatch({
+				// 		type: 'smartselect/changeStyle',
+				// 		styleName: 'customized',
+				// 	})
+				// },1000)
+
 			break;
 			default:
 			break;
@@ -163,9 +183,7 @@ export default class MappingPanel extends Component{
 
 				<Paper style={paperStyle} zDepth={3}>
 					<Spin
-						spinning={true}
-
-						// spinning={!this.props.mapLoaded}
+						spinning={!this.props.mapLoaded}
 						delay={500}
 						size='large'
 						style={{top: '30vh', left: '-38vw', position: 'absolute'}}>
@@ -174,9 +192,9 @@ export default class MappingPanel extends Component{
 							linear={true}
 							orientation="vertical">
 							<Step>
-								<StepButton onTouchTap={() => this.setState({stepIndex: 0})}>
+								<StepLabel>
 									Intro
-								</StepButton>
+								</StepLabel>
 								<StepContent>
 									<Button style={{display: 'inline-block', float:'right'}}>Replay</Button>
 
@@ -189,20 +207,21 @@ export default class MappingPanel extends Component{
 								</StepContent>
 							</Step>
 							<Step>
-								<StepButton onTouchTap={() => this.setState({stepIndex: 1})}>
+								<StepLabel>
 									Find
-								</StepButton>
+								</StepLabel>
 								<StepContent>
 									<p>
-										Don't forget to use the slider below to search for the suitable parcel.
+										Don't forget to use the slider below to define a price range.
 									</p>
+									<SearchInput dispatch={this.props.dispatch}/>
 									{this.renderStepActions(1)}
 								</StepContent>
 							</Step>
 							<Step>
-								<StepButton onTouchTap={() => this.setState({stepIndex: 2})}>
+								<StepLabel>
 									Measure
-								</StepButton>
+								</StepLabel>
 								<StepContent>
 									<div>
 										<p>
@@ -246,9 +265,9 @@ export default class MappingPanel extends Component{
 								</StepContent>
 							</Step>
 							<Step>
-								<StepButton onTouchTap={() => this.setState({stepIndex: 3})}>
+								<StepLabel>
 									Build
-								</StepButton>
+								</StepLabel>
 								<StepContent>
 									<div style={{
 											display:'inline-flex',
@@ -296,13 +315,12 @@ export default class MappingPanel extends Component{
 								</StepContent>
 							</Step>
 							<Step>
-								<StepButton onTouchTap={() => this.setState({stepIndex: 4})}>
+								<StepLabel>
 									Decide
-								</StepButton>
+								</StepLabel>
 								<StepContent>
 									<p>
 										Decision time!
-
 									</p>
 									{this.renderStepActions(4)}
 								</StepContent>

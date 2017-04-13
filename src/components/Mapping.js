@@ -4,6 +4,16 @@ import MapboxDraw from 'mapbox-gl-draw';
 import ReactMapboxGl, { GeoJSONLayer, Layer, Feature, ZoomControl, ScaleControl, Source, Popup, Marker} from "react-mapbox-gl";
 import turf from 'turf';
 
+import { mapbox } from '../services/config.json';
+
+import Search from 'material-ui/svg-icons/action/search';
+import LocalOffer from 'material-ui/svg-icons/maps/local-offer';
+import DirectionsCar from 'material-ui/svg-icons/maps/directions-car';
+import Business from 'material-ui/svg-icons/communication/business';
+
+
+import IconButton from 'material-ui/IconButton';
+
 // import MapboxDirections from '@mapbox/mapbox-gl-directions/src/directions';
 
 import jquery from 'jquery';
@@ -16,8 +26,6 @@ import Paper from 'material-ui/Paper';
 
 import InfoCard from './InfoCard';
 
-
-// mapboxgl.accessToken = 'pk.eyJ1IjoieXVuc2hpIiwiYSI6ImNpeHczcjA3ZDAwMTMyd3Btb3Fzd3hpODIifQ.SWiqUD9o_DkHZuJBPIEHPA';
 export default class Mapping extends Component {
   constructor(props) {
     super(props);
@@ -53,7 +61,6 @@ export default class Mapping extends Component {
   }
 
   renderLines(){
-    const origin = this.props.popupCoords;
     return this.props.compsLines.map((item, i)=>{
       return (
         <Feature
@@ -78,12 +85,12 @@ export default class Mapping extends Component {
   shouldComponentUpdate(nextProps){
     return nextProps.map === this.props.map;
   }
-  componentDidUpdate(){
+  componentDidUpdate(prevProps){
     const map =this.props.map;
     if(!map.loaded()){
       this.props.dispatch({
         type: "smartselect/asyncLoaded",
-        mapLoaded: false,
+        mapLoaded: map.loaded(),
       });
       let timer;
       const checker = ()=> {
@@ -91,9 +98,8 @@ export default class Mapping extends Component {
           clearInterval(timer);
           this.props.dispatch({
             type: "smartselect/asyncLoaded",
-            mapLoaded: true,
+            mapLoaded: map.loaded(),
           });
-          console.log(map.loaded());
         }
       };
       timer = setInterval(checker, 500);
@@ -113,7 +119,7 @@ export default class Mapping extends Component {
     return (
       <ReactMapboxGl
         style={this.props.mapStyle}
-        accessToken="pk.eyJ1IjoieXVuc2hpIiwiYSI6ImNpeHczcjA3ZDAwMTMyd3Btb3Fzd3hpODIifQ.SWiqUD9o_DkHZuJBPIEHPA"
+        accessToken={mapbox}
         zoom = {this.props.mapZoom}
         center={this.props.mapCenter}
         bearing={this,props.mapBearing}
@@ -193,18 +199,50 @@ export default class Mapping extends Component {
           layout={{'visibility': this.props.footVis}}
         />
         {/* blueprint */}
-        {((this.props.mode === 'mode-build') || (this.props.mode === 'mode-intro')) && (
+        {(this.props.mode === 'mode-build') && (this.props.styleName === 'customized') && (
           <GeoJSONLayer
             data={this.props.blueprint}
 
             fillExtrusionPaint={{
-                'fill-extrusion-color': '#fbb217',
-                'fill-extrusion-height': this.props.height * 0.3048,
-                'fill-extrusion-opacity': 0.8,
+                  'fill-extrusion-color': '#fbb217',
+                  'fill-extrusion-height': this.props.height * 0.3048,
+                  'fill-extrusion-opacity': 0.8,
             }}
-            // fillExtrusionLayout={{'visibility': this.props.blueVis}}
+            fillExtrusionLayout={{'visibility': this.props.blueVis}}
           />
         )}
+
+        {/* routePts */}
+        <Layer
+          id='routePoints'
+          type='circle'
+          paint={{
+            'circle-color': '#ee836e',
+          }}
+          layout={{
+                'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
+          }}
+        >
+          <Feature
+            coordinates={this.props.routePts}
+          />
+        </Layer>
+        {/* routeLines */}
+        <Layer
+          id='routeLines'
+          type='line'
+          paint={{
+              'line-color': '#ee836e',
+              'line-opacity': 0.8
+          }}
+          layout={{
+              'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
+          }}
+        >
+          <Feature
+            coordinates={this.props.routeLines}
+          />
+        </Layer>
         {/* compsLines */}
         <Layer
           id='compsLines'
@@ -213,12 +251,11 @@ export default class Mapping extends Component {
               'line-color': '#ff9d00',
           }}
           layout={{
-              'visibility': 'visible'
+              'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
           }}
         >
           {this.renderLines()}
         </Layer>
-
         {/* compsPts */}
         <Layer
           id='compsPoints'
@@ -230,19 +267,15 @@ export default class Mapping extends Component {
           layout={{
                 'icon-image': 'city-15',
                 'icon-allow-overlap': true,
-                'visibility': 'visible'
+                'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
           }}
-
         >
           {this.renderMarker()}
         </Layer>
-
-
         <Popup
           coordinates={this.props.popupInfo.coords}
           anchor='bottom'
-          // onMouseLeave={(e)=>{e.preventDefault();this.setState({popupCoords: [0,0], popupInfo.message: ''})}}
-          // onClick={(e)=>{console.log(e); this.setState({popupCoords: [0,0]})}}
+          style={{visibility: this.props.mode === 'mode-query' ? 'visible' : 'hidden', minWidth:'18em'}}
         >
           <h5><strong>PARCEL INFO</strong></h5>
           <Button onClick={(e)=>{e.preventDefault();this.props.dispatch({type:'smartselect/clearPopup'})}}icon="close" size='small' style={{right: '0.5em',top:'0.5em',position: 'absolute',padding: 0,width: '1.4em',height: '1.4em'}}/>
@@ -250,8 +283,18 @@ export default class Mapping extends Component {
             <li><strong>Address: </strong>{this.props.popupInfo.address}</li>
             <li><strong>Ref. Price: </strong>${this.props.popupInfo.refPrice}</li>
             <li style={{float: 'right', fontSize: '0.9em'}}><em><strong>Source: </strong>{this.props.popupInfo.source}</em></li>
-            <li><Button icon='search' onClick={(e)=>{e.preventDefault();this.props.dispatch({type: 'smartselect/queryZillow', zpid: this.props.popupInfo.zpid})}}>
-            Get Comps (Zillow)</Button></li>
+            <br />
+            <li style={{display:'flex', justifyContent:'space-around', padding:'0 10%'}}>
+              <IconButton tooltip="Get Comps (Zillow)" touch={true} tooltipPosition="bottom-center"
+                onTouchTap={()=>{this.props.dispatch({type: 'smartselect/queryZillow', zpid: this.props.popupInfo.zpid})}}
+              >
+                <Business />
+              </IconButton>
+              <IconButton tooltip="Get Directions" touch={true} tooltipPosition="bottom-center"
+                onTouchTap={()=>{this.props.dispatch({type: 'smartselect/geocodeRoute', dest: this.props.popupInfo.coords})}}>
+                <DirectionsCar />
+              </IconButton>
+            </li>
           </ul>
         </Popup>
 

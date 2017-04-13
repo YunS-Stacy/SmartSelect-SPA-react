@@ -15,6 +15,7 @@
     "primary-color": "#52bad5"
   },
   "dependencies": {
+    "@mapbox/mapbox-gl-directions": "^3.1.1",
     "@panorama/toolkit": "^0.1.7",
     "@turf/helpers": "^4.0.1",
     "antd": "^2.8.2",
@@ -32,7 +33,9 @@
     "intro.js": "^2.5.0",
     "leaflet": "^1.0.3",
     "mapbox-gl": "^0.34.0",
+    "mapbox-gl-directions": "^3.0.3",
     "mapbox-gl-draw": "^0.16.0",
+    "mapbox-gl-geocoder": "^2.0.1",
     "material-ui": "^0.17.1",
     "pubsub-js": "^1.5.6",
     "queue-async": "^1.2.1",
@@ -48,6 +51,7 @@
     "react-leaflet": "^1.1.4",
     "react-mapbox-gl": "^1.4.1",
     "react-tap-event-plugin": "^2.0.1",
+    "redux": "^3.6.0",
     "turf": "^3.0.14",
     "underscore": "^1.8.3",
     "xml2js": "^0.4.17"

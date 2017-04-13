@@ -1,6 +1,6 @@
-import _ from 'lodash';
 'use strict';
-const zwsId = 'X1-ZWz19df6l3etqj_64j9s'; // The Zillow Web Service Identifier.
+import _ from 'lodash';
+import {zillow} from './config.json'
 const {parseString} = require('xml2js');
 const Zillow = {};
 /**
@@ -11,7 +11,7 @@ const Zillow = {};
 */
 Zillow.getComps = function (zpid) {
   return new Promise(function (resolve, reject) {
-    const params = `zws-id=${zwsId}&zpid=${zpid}&count=3`;
+    const params = `zws-id=${zillow}&zpid=${zpid}&count=3`;
     const endpoint = `http://cors-anywhere.herokuapp.com/www.zillow.com/webservice/GetDeepComps.htm?`;
     fetch(`${endpoint}${params}`)
     .then(res => res.text())

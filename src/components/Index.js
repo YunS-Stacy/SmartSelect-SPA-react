@@ -25,9 +25,6 @@ import { Button, Spin} from 'antd';
 import TrendingDown from 'material-ui/svg-icons/action/trending-down';
 import TrendingUp from 'material-ui/svg-icons/action/trending-up';
 
-
-
-
 // import Section3 from '../components/Section3';
 // import Section4 from '../components/Section4';
 //
@@ -41,14 +38,8 @@ import Predictors from '../components/Predictors';
 // import RosePlot from '../components/RosePlot';
 // import RosePlotPhilly from '../components/RosePlotPhilly';
 
-
-
-
-
 // Goggle MD
 import injectTapEventPlugin from 'react-tap-event-plugin';
-// Needed for onTouchTap
-// http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
 import './less/antMotion_style.less';
@@ -97,14 +88,14 @@ export default class Index extends React.Component {
     if(this.props.mode === 'mode-welcome'){
       return (
         <div>
-            <Map
-              dispatch={this.props.dispatch}
-              mapLoaded={this.props.mapLoaded}
-              mode={this.props.mode}
-              id="map" key="map" isMode={this.state.isMode}/>
-            <Background id="background" key="background" isMode={this.state.isMode}
-              className='background' style= {{height: '50vh'}}/>
-            <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}/>
+          <Map
+            dispatch={this.props.dispatch}
+            mapLoaded={this.props.mapLoaded}
+            mode={this.props.mode}
+            id="map" key="map" isMode={this.state.isMode}/>
+          <Background id="background" key="background" isMode={this.state.isMode}
+            className='background' style= {{height: '50vh'}}/>
+          <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}/>
             <VariableSelection id="variableselection" key="variableselection" isMode={this.state.isMode}/>
 
             {/* <Section3 id="content_2_0" key="content_2_0" isMode={this.state.isMode}/> */}
@@ -153,7 +144,7 @@ export default class Index extends React.Component {
             autoHideDuration={5000}
             bodyStyle={{
               padding: '1em',
-              maxHeight: '6em',
+              minHeight: '6em',
               lineHeight: '2em',
             }}
           />
@@ -175,17 +166,14 @@ export default class Index extends React.Component {
     return(
       <MuiThemeProvider>
         <div className="templates-wrapper">
-          {/* <Corrplot /> */}
-          {/* <RosePlotPhilly /> */}
-
-          {/* <RosePlot/>  */}
           <Spin
             spinning={!this.props.mapLoaded}
             delay={500}
             size='large'
             style={{
               visibility: this.props.mode === 'mode-welcome' ? 'hidden' : 'visible',
-              top: '50vh',
+              top: '35vh',
+              right: '38vw'
             }}>
             <Mapping
               map={this.props.map}
@@ -207,9 +195,13 @@ export default class Index extends React.Component {
               popupInfo={this.props.popupInfo}
               compsLines={this.props.compsLines}
               compsPts={this.props.compsPts}
+              routeLines={this.props.routeLines}
+              routePts={this.props.routePts}
+              styleName={this.props.styleName}
             />
           </Spin>
           <Nav
+            className='nav'
             dispatch={this.props.dispatch}
             mode={this.props.mode} id="nav" key="nav" isMode={this.state.isMode}/>
           {this.renderContent()}

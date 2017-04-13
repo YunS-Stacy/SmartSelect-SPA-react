@@ -6,7 +6,6 @@ import TrendingUp from 'material-ui/svg-icons/action/trending-up';
 export default class InfoCard extends Component {
   render(){
     const message = this.props.tableMessage;
-    console.log(message.monthChange,'monthchange')
     return (
       <Card style={{
         position: 'absolute',

@@ -12,15 +12,23 @@ import _ from 'lodash';
 import turf from 'turf';
 import mapboxgl from 'mapbox-gl';
 import MapboxDraw from 'mapbox-gl-draw';
+import MapboxGeocoder from 'mapbox-gl-geocoder';
+
+
 import g2, {Stat, Frame} from 'g2';
+
+import { mapbox } from '../services/config';
 
 export default {
   namespace: 'smartselect',
-
   state: {
     scaleControl: new mapboxgl.ScaleControl({unit: 'imperial'}),
     geolocateControl: new mapboxgl.GeolocateControl(),
     naviControl: new mapboxgl.NavigationControl(),
+    // directionControl: new MapboxDirections({
+    //   accessToken: 'pk.eyJ1IjoieXVuc2hpIiwiYSI6ImNpeHczcjA3ZDAwMTMyd3Btb3Fzd3hpODIifQ.SWiqUD9o_DkHZuJBPIEHPA',
+    //   unit: 'metric',
+    // }),
     draw: new MapboxDraw({
       displayControlsDefault: true,
       controls: {
@@ -28,6 +36,9 @@ export default {
         trash: true
       },
     }),
+    geocoderControl: new MapboxGeocoder({
+    accessToken:  'pk.eyJ1IjoieXVuc2hpIiwiYSI6ImNpeHczcjA3ZDAwMTMyd3Btb3Fzd3hpODIifQ.SWiqUD9o_DkHZuJBPIEHPA'
+}),
     // draw:{},
     blueprint: {
       "type": "FeatureCollection",
@@ -70,6 +81,8 @@ export default {
     height: 0,
     compsLines:[],
     compsPts:[],
+    routeLines:[[],[]],
+    routePts:[],
     dataSlider: [],
     dataInitialized: false,
     parcelRange: [0,600000],
@@ -84,15 +97,6 @@ export default {
       opa: '',
       zpid: '',
     },
-    // tableInfo: {
-    //   address: '',
-    //   lastSoldDate: '',
-    //   lastSoldPrice: '',
-    //   zestimate: '',
-    //   monthChange: '',
-    //   valueHigh: '',
-    //   valueLow: '',
-    // },
     tableStatus: 'hidden',
     tableMessage: {
       address: '',
@@ -105,6 +109,9 @@ export default {
     },
   },
   reducers: {
+    showSnack(state, datum){
+      return {...state, snackMessage: datum.snackMessage}
+    },
     clearPopup(state){
       return { ...state,   popupInfo: {
         coords:[0,0],
@@ -143,7 +150,6 @@ export default {
   changeStyle(state, datum){
     let {mapStyle, styleName} = state;
     styleName = datum.styleName;
-    console.log('changeing the style')
     switch (styleName) {
       case 'customized':
       mapStyle = 'mapbox://styles/yunshi/cizrdgy3c00162rlr64v8jzgy';
@@ -207,7 +213,6 @@ export default {
       return datum.geometry.type === 'Polygon' || datum.geometry.type === 'MultiPolygon';
     });
     if (data.features.length > 0){
-      console.log(data)
       return { ...state, blueprint: data, height: height}
     } else {
       return { ...state, height: height}
@@ -234,15 +239,21 @@ export default {
     };
   },
 
+  changePitch(state, datum){
+    return { ...state, mapPitch: datum.mapPitch}
+  },
+
   changeCenter(state, datum){
     return { ...state, mapCenter: datum.mapCenter}
   },
 
   changeMode(state, datum){
-    console.log(datum)
     const map = state.map;
     const mode = datum.mode;
-    let {mapStyle, styleName, mapPitch, mapZoom, mapCenter, mapBearing, footVis, parcelVis, blueVis, popupCoords,tableStatus} = state
+    let {mapStyle, styleName, mapPitch, mapZoom, mapCenter, mapBearing,
+      compsLines,compsPts, parcelRange,
+      footVis, parcelVis, blueVis,
+      popupCoords,tableStatus, height} = state
     switch (mode) {
       case 'mode-welcome':
       if(state.mode !== 'mode-welcome'){
@@ -250,6 +261,8 @@ export default {
         mapZoom =[14];
         mapCenter = [-75.1639, 39.9522];
         mapBearing = 9.2;
+        height= 0,
+
         footVis = 'visible';
         parcelVis = 'none';
         blueVis = 'none';
@@ -264,11 +277,12 @@ export default {
 
       case 'mode-intro':
       if(state.mode !== 'mode-intro'){
+        footVis = 'none';
+        parcelVis = 'none';
         mapPitch = [0];
         mapZoom =[16];
         mapBearing = 0;
-        footVis = 'none';
-        parcelVis = 'none';
+
         if(state.mode === 'mode-welcome'){
           map.addControl(state.scaleControl,'bottom-right');
           map.addControl(state.geolocateControl,'bottom-right');
@@ -277,43 +291,48 @@ export default {
         }
       }
       break;
-
       case 'mode-query':
       //make sure comes from the previous step
       if (state.mode !== 'mode-query'){
         footVis = 'none';
         parcelVis = 'visible';
-
+        blueVis = 'none';
+        mapPitch = [0];
+        mapBearing = 0;
       };
+      break;
+      case 'mode-measure':
+      if(state.mode !== 'mode-measure'){
+        popupCoords = [0,0];
+        tableStatus = 'hidden';
+        compsLines=[];
+        compsPts=[];
+        parcelRange=[0,600000];
+        blueVis = 'none';
+        footVis = 'none';
+        parcelVis = 'visible';
+        mapPitch = [0];
+        mapBearing = 0;
+        height = 0;
+      }
       break;
       case 'mode-build':
       if (state.mode !== 'mode-build'){
-        popupCoords = [0,0];
-        tableStatus = 'hidden';
+        console.log('test mode build')
         mapPitch = [65];
         mapBearing = 9.2;
         parcelVis = 'none';
         blueVis = 'visible';
-      };
-      break;
-      case 'mode-decide':
-      if (state.mode !== 'mode-decide'){
-        popupCoords = [0,0];
-        tableStatus = 'hidden';
-        mapPitch = [65];
-        mapBearing = 9.2;
-        parcelVis = 'none';
-        blueVis = 'visible';
-        footVis = 'visible';
+        footVis = 'none';
       };
       break;
       default:
       break;
     }
-
     // zoom number must extract the number first, cannot tell [14] === [14] is true
     return { ...state, mode, mapPitch,
       mapZoom, mapCenter, mapBearing,
+      compsLines,compsPts, parcelRange,
       footVis, parcelVis, blueVis};
     },
 
@@ -349,6 +368,18 @@ export default {
       }
       return { ...state, compsLines, compsPts, snackMessage}
     },
+    getRoute(state, datum){
+      let {routeLines, snackMessage, routePts, popupInfo} = state;
+console.log(datum.res)
+      if(datum.res.code === 'Ok'){
+        routeLines = datum.res.routes[0].geometry.coordinates;
+        routeLines = [routePts, ...routeLines, popupInfo.coords]
+      } else{
+        snackMessage = `Sorry, we don't find any route!`
+      }
+      console.log(routeLines)
+      return { ...state, routeLines, snackMessage}
+    },
 
     getSlider(state, datum){
       const response = datum.res.data.rows
@@ -360,35 +391,61 @@ export default {
       const data = tempData.toJSON();
       return { ...state, dataSlider: data, dataInitialized: true }
     },
-    //
-    // checkData(state){
-    //   console.log(state.dataInitialized)
-    //   if(state.dataInitialized){console.log('is true')}
-    //   else{ console.log('is false')};
-    //
-    // },
+
+    getAddress(state, datum){
+      let {mapCenter, snackMessage,routePts} = state;
+      if(datum.res.status === 'OK'){
+        const coords = datum.res.results[0].geometry.location;
+        mapCenter = coords;
+        routePts = [coords['lng'], coords['lat']];
+        console.log(routePts)
+      } else {
+        snackMessage = `Sorry, we can't find the place!`
+      }
+      return { ...state, mapCenter,snackMessage, routePts}
+    },
+
+
     filterParcel(state, datum){
       const parcelRange = datum.parcelRange;
       return {...state, parcelRange}
-    }
+    },
+
+
   },
   effects: {
     *mapLoad(datum, {call,put}){
-    yield put({ type: 'mapSetup', datum})
-      const res = yield call(fetchData.slider)
-      yield put({ type: 'getSlider', res})
+      yield put({ type: 'mapSetup', datum});
+      const res = yield call(fetchData.slider);
+      yield put({ type: 'getSlider', res});
     },
 
     *queryZillow(datum, {call, put}){
-      const zpid = datum.zpid;
+      const {zpid} = datum;
       const dataZillow = yield call(Zillow.getComps, zpid);
-      yield put({ type: 'getZillow', dataZillow})
-    }
+      yield put({ type: 'getZillow', dataZillow});
+    },
+
+    *geocodeAddress(datum, {call, put}){
+      const {address} = datum;
+      const res = yield call(fetchData.geocode, address);
+      yield put({ type: 'getAddress', res: res.data});
+    },
+
+    *geocodeRoute(datum, {call, put, select}){
+      const {dest} = datum;
+      const origin = yield select(state => state.smartselect.routePts);
+      if(origin.length > 0){
+        const res = yield call(fetchData.direction, origin, dest);
+        yield put({ type: 'getRoute', res: res.data});
+      } else {
+        yield put({ type: 'showSnack', snackMessage: 'Please search for the address first!'})
+      }
+    },
   },
   subscriptions: {
     setup({ dispatch}) {
       console.log('store is connected and listening');
-
     },
   },
 };
