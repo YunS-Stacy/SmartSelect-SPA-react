@@ -196,8 +196,7 @@ export default class MappingPanel extends Component{
 									Intro
 								</StepLabel>
 								<StepContent>
-									<Button style={{display: 'inline-block', float:'right'}}>Replay</Button>
-
+									{/* <Button style={{display: 'inline-block', float:'right'}}>Replay</Button> */}
 									<p style={{whiteSpace: 'pre-line'}}>
 										{`Welcome!
 

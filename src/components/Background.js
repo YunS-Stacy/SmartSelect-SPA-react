@@ -7,10 +7,10 @@ import './css/background.css'
 
 const aboutContent = `Smart Select is a web application that allows you to navigate through the city,
                       find your next investment opportunity of apartments, and ... build it!`;
-const problemContent = `In real world, we may spend much time tweeking a long pro forma to estimate the "return" from the deal.
-                        However, what we assumed may not happen...`;
+const problemContent = `Pro forma is EXHAUSTING, and the data sources are complicated to collect,
+                        and may sometimes have a large proportion of the MISSING values.`;
 const solutionContent = `The final model used only "LOCATION" factors as predictors.
-                          Sometimes it is even more valuable to know what matters most the value than a number!`
+                          Everyone will have an easy access to get a suggested price for a parcel!`
 export default class Section2 extends React.Component {
   getBlockChildren = (item, i) =>(
     <li key={i} id={`${this.props.id}-block${i}`}>

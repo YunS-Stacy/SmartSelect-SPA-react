@@ -164,23 +164,21 @@ export default class Mapping extends Component {
         />
         {/* vacantLayer */}
 
-        {(this.props.mode === 'mode-query') &&(
-          <Layer
-            id="vacantParcel"
-            type= "fill"
-            sourceId='composite'
-            layerOptions={{
+        <Layer
+          id="vacantParcel"
+          type= "fill"
+          sourceId='composite'
+          layerOptions={{
                 'minzoom': 10,
                 'source-layer': 'vacantParcel',
                 'filter': ["<", 'Shape_Area', 10000],
-            }}
-            paint={{
+          }}
+          paint={{
                 "fill-color": '#aaa',
                 'fill-opacity': 0.8
-            }}
-            layout={{visibility: this.props.vacantVis}}
-          />
-        )}
+          }}
+          layout={{visibility: this.props.vacantVis}}
+        />
 
         {/* footprintLayer */}
         <Layer

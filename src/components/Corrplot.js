@@ -112,15 +112,12 @@ export default class Corrplot extends Component {
 							forceFit={this.state.forceFit} />
 					</div>
 					<div style={{width: '35vw', marginTop: '15vh', paddingRight: '2vw'}}>
-						<h3>Correlation Matix</h3>
+						<h3>Correlation Matrix</h3>
 						<p style={{fontSize: '1.4em'}}>Built a large dataset, it's time to find the least variables that describe the apartment price best.</p>
 						<br/>
-							<p style={{fontSize: '1.4em'}}>To find the relationship between variables, the correlation matrix may serve the goal well.</p>
-
+						<p style={{fontSize: '1.4em'}}>To find the relationship between variables, the correlation matrix may serve the goal well.</p>
 					</div>
-
 				</div>
-
 				);
 			}
 		}

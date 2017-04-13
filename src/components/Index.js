@@ -1,7 +1,5 @@
 import React from 'react';
-import jquery from 'jquery';
 
-// import ReactDOM from 'react-dom';
 import enquire from 'enquire.js';
 import { scrollScreen } from 'rc-scroll-anim';
 
@@ -17,10 +15,11 @@ import Map from '../components/Map';
 import Background from '../components/Background';
 import LocalMarket from '../components/LocalMarket';
 import VariableSelection from '../components/VariableSelection';
+import ModelSelection from '../components/ModelSelection';
+import ProcessOverview from '../components/ProcessOverview';
 
 import Paper from 'material-ui/Paper';
 import FlatButton from 'material-ui/FlatButton';
-import {Card, CardHeader,CardTitle, CardText} from 'material-ui/Card';
 import { Button, Spin} from 'antd';
 import TrendingDown from 'material-ui/svg-icons/action/trending-down';
 import TrendingUp from 'material-ui/svg-icons/action/trending-up';
@@ -95,19 +94,21 @@ export default class Index extends React.Component {
             id="map" key="map" isMode={this.state.isMode}/>
           <Background id="background" key="background" isMode={this.state.isMode}
             className='background' style= {{height: '50vh'}}/>
+          <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode} style= {{padding: '5em 0'}}/>
+
           <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}/>
-            <VariableSelection id="variableselection" key="variableselection" isMode={this.state.isMode}/>
+          <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode} style= {{padding: '5em 0'}}/>
 
-            {/* <Section3 id="content_2_0" key="content_2_0" isMode={this.state.isMode}/> */}
-            {/* <Predictors id="content_2_1" key="content_2_1"/> */}
-            {/* <Section4 id="section_4_0" key="section_4_0" isMode={this.state.isMode}/> */}
-            {/* <Content2 id="content_3_0" key="content_3_0" isMode={this.state.isMode}/> */}
-            {/* <Content3 id="content_4_0" key="content_4_0" isMode={this.state.isMode}/> */}
 
-            <Footer id="footer" key="footer" isMode={this.state.isMode}/>
-            {/* <Point key="list" ref="list" data={['map', 'content_2_0', 'content_3_0', 'content_4_0', 'content_9_0']} /> */}
-            <Point key="list" ref="list" data={['map', 'background', 'localmarket', 'variableselection']} />
-          </div>
+          {/* <Section3 id="content_2_0" key="content_2_0" isMode={this.state.isMode}/> */}
+          {/* <Predictors id="content_2_1" key="content_2_1"/> */}
+          {/* <Section4 id="section_4_0" key="section_4_0" isMode={this.state.isMode}/> */}
+          {/* <Content2 id="content_3_0" key="content_3_0" isMode={this.state.isMode}/> */}
+          {/* <Content3 id="content_4_0" key="content_4_0" isMode={this.state.isMode}/> */}
+
+          <Footer id="footer" key="footer" isMode={this.state.isMode}/>
+          <Point key="list" ref="list" data={['map', 'background', 'processoverview', 'localmarket', 'variableselection']} />
+        </div>
       )
     } else {
       return (
@@ -154,13 +155,6 @@ export default class Index extends React.Component {
       )
     }
   }
-  // componentWillReceiveProps(nextProps){
-  //   if(nextProps.mode !== 'mode-welcome'){
-  //     jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'visible');
-  //   } else{
-  //     jquery('.mapboxgl-ctrl-bottom-right').css('visibility', 'hidden');
-  //   }
-  // }
 
   render() {
 

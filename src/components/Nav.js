@@ -18,7 +18,7 @@ export default class Navigation extends React.Component {
     const props = { ...this.props };
     delete props.isMode;
     const firstNavItem= props.mode === 'mode-welcome' ? 'Home' : 'Back'
-    const navData = props.mode === 'mode-welcome' ? {Item1: 'Learn', Item2: 'Me', Item3: 'Chat'} : {}
+    const navData = props.mode === 'mode-welcome' ? {Item1: 'Background', Item2: 'About Model'} : {}
     const navChildren = Object.keys(navData)
     .map((item, i) => (<NavItem key={i} href={`#${navData[item]}`}>{navData[item]}</NavItem>));
 

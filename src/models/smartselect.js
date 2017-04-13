@@ -285,12 +285,11 @@ export default {
         mapPitch = [0];
         mapZoom =[16];
         mapBearing = 0;
-
         if(state.mode === 'mode-welcome'){
           map.addControl(state.scaleControl,'bottom-right');
-          map.addControl(state.geolocateControl,'bottom-right');
           map.addControl(state.naviControl,'bottom-right');
           map.addControl(state.draw,'bottom-right');
+          map.addControl(state.geolocateControl,'bottom-right');
         }
       }
       break;
@@ -322,7 +321,6 @@ export default {
       break;
       case 'mode-build':
       if (state.mode !== 'mode-build'){
-        console.log('test mode build')
         mapPitch = [65];
         mapBearing = 9.2;
         parcelVis = 'none';
@@ -373,14 +371,13 @@ export default {
       return { ...state, compsLines, compsPts, snackMessage}
     },
     getRoute(state, datum){
-      let {routeLines, snackMessage, routePts, popupInfo} = state;
+      let {routeLines, snackMessage, routePts, popupInfo, map} = state;
       if(datum.res.code === 'Ok'){
         routeLines = datum.res.routes[0].geometry.coordinates;
         routeLines = [routePts, ...routeLines, popupInfo.coords];
-        console.log(routeLines)
-        const tempBbox = turf.featureCollection(turf.lineString(routeLines));
+        const tempBbox = turf.lineString(routeLines);
         const bounds = turf.bbox(tempBbox);
-        map.fitBounds(bounds, {padding: 100});
+        map.fitBounds(bounds, {padding: 200});
       } else{
         snackMessage = `Sorry, we don't find any route!`
       }
@@ -446,7 +443,6 @@ export default {
 
     *geocodeRoute(datum, {call, put, select}){
       const {dest, methods} = datum;
-      console.log(methods, 'methods')
       yield put({ type: 'asyncLoaded', mapLoaded: false});
       const origin = yield select(state => state.smartselect.routePts);
       if(origin.length > 0){
