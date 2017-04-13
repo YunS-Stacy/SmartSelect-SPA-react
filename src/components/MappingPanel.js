@@ -115,6 +115,7 @@ export default class MappingPanel extends Component{
 	}
 
 	componentWillUpdate(nextProps,nextState){
+		console.log(nextProps.calData.polygon.length, 'from mapping panel')
 		switch (nextState.stepIndex) {
 			case 1:
 			this.props.dispatch({
@@ -135,7 +136,7 @@ export default class MappingPanel extends Component{
 				type: 'smartselect/changeMode',
 				mode: 'mode-measure',
 			});
-			break
+			console.log('mode-measure debugging')
 			case 3:
 			if(this.props.mode !== 'mode-build'){
 				this.props.dispatch({
@@ -177,6 +178,7 @@ export default class MappingPanel extends Component{
 	}
 	render() {
 		const {loading, stepIndex} = this.state;
+		console.log( this.props.calData.polygon.length )
 		return (
 			<div>
 				{this.renderSlider(stepIndex)}

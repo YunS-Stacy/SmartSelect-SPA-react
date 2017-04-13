@@ -202,6 +202,7 @@ export default {
         break;
       }
     });
+    console.log(calData);
     return { ...state, calData, snackMessage};
   },
 
@@ -278,6 +279,7 @@ export default {
         map.removeControl(state.draw);
         popupCoords = [0,0];
         tableStatus = 'hidden';
+        tableMessage = '';
       }
       break;
 
