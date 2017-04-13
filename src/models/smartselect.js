@@ -171,9 +171,7 @@ export default {
     const num = data.features.length;
     let {calData, snackMessage} = state;
     calData.num = num;
-    if (num > 1){
-      snackMessage = `You have drawn ${num} things. We will calculate only the last of each type of shapes.`
-    }
+      snackMessage = `You have drawn ${num} things. We will calculate only the last of each type of shapes.`;
     _.each(data.features,(datum)=>{
       let type = datum.geometry.type;
       switch (type) {
@@ -202,7 +200,6 @@ export default {
         break;
       }
     });
-    console.log(calData);
     return { ...state, calData, snackMessage};
   },
 
@@ -256,12 +253,11 @@ export default {
 
   changeMode(state, datum){
     const map = state.map;
-    const mode = datum.mode;
-    let {mapStyle, styleName, mapPitch, mapZoom, mapCenter, mapBearing,
+    let {mode, mapStyle, styleName, mapPitch, mapZoom, mapCenter, mapBearing,
       compsLines,compsPts, parcelRange,
       footVis, parcelVis, vacantVis, blueVis,
-      popupCoords,tableStatus, height} = state
-    switch (mode) {
+      popupCoords,tableStatus, tableMessage,height} = state
+    switch (datum.mode) {
       case 'mode-welcome':
       if(state.mode !== 'mode-welcome'){
         mapPitch = [65];
@@ -280,11 +276,14 @@ export default {
         popupCoords = [0,0];
         tableStatus = 'hidden';
         tableMessage = '';
+        mode = datum.mode;
       }
       break;
 
       case 'mode-intro':
       if(state.mode !== 'mode-intro'){
+        mode = datum.mode;
+
         footVis = 'none';
         parcelVis = 'none';
         mapPitch = [0];
@@ -301,6 +300,8 @@ export default {
       case 'mode-query':
       //make sure comes from the previous step
       if (state.mode !== 'mode-query'){
+        mode = datum.mode;
+
         footVis = 'none';
         parcelVis = 'visible';
         blueVis = 'none';
@@ -311,6 +312,8 @@ export default {
       break;
       case 'mode-measure':
       if(state.mode !== 'mode-measure'){
+        mode = datum.mode;
+
         popupCoords = [0,0];
         tableStatus = 'hidden';
         compsLines=[];
@@ -326,6 +329,8 @@ export default {
       break;
       case 'mode-build':
       if (state.mode !== 'mode-build'){
+        mode = datum.mode;
+
         mapPitch = [65];
         mapBearing = 9.2;
         parcelVis = 'none';
@@ -335,16 +340,19 @@ export default {
       break;
       case 'mode-decide':
       if (state.mode !== 'mode-decide'){
+        mode = datum.mode;
       };
       break;
       default:
       break;
     }
+    console.log('debug changing mode into', mode)
     // zoom number must extract the number first, cannot tell [14] === [14] is true
     return { ...state, mode, mapPitch,
       mapZoom, mapCenter, mapBearing,
       compsLines,compsPts, parcelRange,
-      footVis, vacantVis, parcelVis, blueVis};
+      footVis, vacantVis, parcelVis, blueVis,
+    tableMessage,tableStatus};
     },
 
     getZillow(state, datum){
@@ -437,7 +445,6 @@ export default {
       const {zpid} = datum;
       yield put({ type: 'asyncLoaded', mapLoaded: false});
       const dataZillow = yield call(Zillow.getComps, zpid);
-      console.log(dataZillow);
       yield put({ type: 'getZillow', dataZillow});
       yield put({ type: 'asyncLoaded', mapLoaded: true});
 

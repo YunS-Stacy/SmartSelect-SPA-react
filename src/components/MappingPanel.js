@@ -12,7 +12,6 @@ import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
 import FlatButton from 'material-ui/FlatButton';
 import ExpandTransition from 'material-ui/internal/ExpandTransition';
 import Slider from 'material-ui/Slider';
-import Snackbar from 'material-ui/Snackbar';
 
 import AvLibraryBooks from 'material-ui/svg-icons/av/library-books';
 import CommunicationChat from 'material-ui/svg-icons/communication/chat';
@@ -136,7 +135,7 @@ export default class MappingPanel extends Component{
 				type: 'smartselect/changeMode',
 				mode: 'mode-measure',
 			});
-			console.log('mode-measure debugging')
+			break;
 			case 3:
 			if(this.props.mode !== 'mode-build'){
 				this.props.dispatch({
@@ -243,7 +242,7 @@ export default class MappingPanel extends Component{
 											<br></br>
 											&ensp;Perimeter: <strong style={{fontSize: '1.2em'}}>{this.props.calData.polygon.length}</strong> miles
 											<br></br>
-											&ensp;Area: <strong style={{fontSize: '1.2em'}}>{this.props.calData.polygon.area}</strong> square foot
+											&ensp;Area: <strong style={{fontSize: '1.2em'}}>{this.props.calData.polygon.area}</strong> sqft
 
 											<br></br>
 											<span style={{

@@ -45,7 +45,6 @@ export default class Navigation extends React.Component {
             }} href="#">{firstNavItem}</NavItem>
             {navChildren}
           </Nav>
-
         </Navbar.Collapse>
       </Navbar>
     );
