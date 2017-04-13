@@ -56,6 +56,16 @@ export default class LayerToggle extends Component {
     })
   }
 
+  handleVacant (e, bool){
+    const layerName = 'vacant';
+    const layerVis = bool === true ? 'visible' : 'none';
+    this.props.dispatch({
+      type: 'smartselect/changeVis',
+      layerName: layerName,
+      layerVis: layerVis,
+    })
+  }
+
   handlechangeStyle(e, value){
     this.props.dispatch({
       type: 'smartselect/changeStyle',
@@ -102,19 +112,31 @@ export default class LayerToggle extends Component {
             labelStyle={styles.label}
             onCheck = {this.handleParcel.bind(this)}
             checked = {this.props.parcelVis === 'visible' ? true : false}
+            disabled = {this.props.mode === 'mode-intro' ? true : false}
+
+          />
+          <Checkbox
+            label="VACANT PARCEL"
+            labelStyle={styles.label}
+            onCheck = {this.handleVacant.bind(this)}
+            checked = {this.props.vacantVis === 'visible' ? true : false}
+            disabled = {this.props.mode === 'mode-intro' ? true : false}
+            
           />
           <Checkbox
             label="3D BUILDING LAYER"
             labelStyle={styles.label}
             onCheck = {this.handleBuilding.bind(this)}
             checked = {this.props.footVis === 'visible' ? true : false}
+            disabled = {this.props.mode === 'mode-intro' ? true : false}
+
           />
           <Checkbox
             label="YOUR BUILDING"
             labelStyle={styles.label}
             onCheck = {this.handleBlueprint.bind(this)}
             checked = {this.props.blueVis === 'visible' ? true : false}
-            // disabled = {this.props.mode !== 'mode-build' ? true : false}
+            disabled = {this.props.mode === 'mode-intro' ? true : false}
           />
         </div>
       </Paper>

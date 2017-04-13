@@ -67,6 +67,7 @@ export default {
     footVis: 'visible',
     blueVis: 'none',
     parcelVis: 'none',
+    vacantVis: 'none',
     calData: {
       polygon: {
         area: 0,
@@ -234,6 +235,8 @@ export default {
       return { ...state, footVis: newVis};
       case 'blueprint':
       return { ...state, blueVis: newVis};
+      case 'vacant':
+      return { ...state, vacantVis: newVis};
       default:
       break;
     };
@@ -252,7 +255,7 @@ export default {
     const mode = datum.mode;
     let {mapStyle, styleName, mapPitch, mapZoom, mapCenter, mapBearing,
       compsLines,compsPts, parcelRange,
-      footVis, parcelVis, blueVis,
+      footVis, parcelVis, vacantVis, blueVis,
       popupCoords,tableStatus, height} = state
     switch (mode) {
       case 'mode-welcome':
@@ -297,6 +300,7 @@ export default {
         footVis = 'none';
         parcelVis = 'visible';
         blueVis = 'none';
+        vacantVis = 'visible';
         mapPitch = [0];
         mapBearing = 0;
       };
@@ -333,7 +337,7 @@ export default {
     return { ...state, mode, mapPitch,
       mapZoom, mapCenter, mapBearing,
       compsLines,compsPts, parcelRange,
-      footVis, parcelVis, blueVis};
+      footVis, vacantVis, parcelVis, blueVis};
     },
 
     getZillow(state, datum){
@@ -370,14 +374,16 @@ export default {
     },
     getRoute(state, datum){
       let {routeLines, snackMessage, routePts, popupInfo} = state;
-console.log(datum.res)
       if(datum.res.code === 'Ok'){
         routeLines = datum.res.routes[0].geometry.coordinates;
-        routeLines = [routePts, ...routeLines, popupInfo.coords]
+        routeLines = [routePts, ...routeLines, popupInfo.coords];
+        console.log(routeLines)
+        const tempBbox = turf.featureCollection(turf.lineString(routeLines));
+        const bounds = turf.bbox(tempBbox);
+        map.fitBounds(bounds, {padding: 100});
       } else{
         snackMessage = `Sorry, we don't find any route!`
       }
-      console.log(routeLines)
       return { ...state, routeLines, snackMessage}
     },
 
@@ -398,7 +404,6 @@ console.log(datum.res)
         const coords = datum.res.results[0].geometry.location;
         mapCenter = coords;
         routePts = [coords['lng'], coords['lat']];
-        console.log(routePts)
       } else {
         snackMessage = `Sorry, we can't find the place!`
       }
@@ -415,37 +420,47 @@ console.log(datum.res)
   },
   effects: {
     *mapLoad(datum, {call,put}){
+      yield put({ type: 'asyncLoaded', mapLoaded: false});
       yield put({ type: 'mapSetup', datum});
       const res = yield call(fetchData.slider);
       yield put({ type: 'getSlider', res});
+      yield put({ type: 'asyncLoaded', mapLoaded: true});
     },
 
     *queryZillow(datum, {call, put}){
       const {zpid} = datum;
+      yield put({ type: 'asyncLoaded', mapLoaded: false});
       const dataZillow = yield call(Zillow.getComps, zpid);
       yield put({ type: 'getZillow', dataZillow});
+      yield put({ type: 'asyncLoaded', mapLoaded: true});
+
     },
 
     *geocodeAddress(datum, {call, put}){
       const {address} = datum;
+      yield put({ type: 'asyncLoaded', mapLoaded: false});
       const res = yield call(fetchData.geocode, address);
       yield put({ type: 'getAddress', res: res.data});
+      yield put({ type: 'asyncLoaded', mapLoaded: true});
     },
 
     *geocodeRoute(datum, {call, put, select}){
-      const {dest} = datum;
+      const {dest, methods} = datum;
+      console.log(methods, 'methods')
+      yield put({ type: 'asyncLoaded', mapLoaded: false});
       const origin = yield select(state => state.smartselect.routePts);
       if(origin.length > 0){
-        const res = yield call(fetchData.direction, origin, dest);
+        const res = yield call(fetchData.direction, origin, dest, methods);
         yield put({ type: 'getRoute', res: res.data});
       } else {
         yield put({ type: 'showSnack', snackMessage: 'Please search for the address first!'})
-      }
+      };
+      yield put({ type: 'asyncLoaded', mapLoaded: true});
+
     },
   },
   subscriptions: {
-    setup({ dispatch}) {
-      console.log('store is connected and listening');
+    setup({ dispatch, history }) {
     },
   },
 };

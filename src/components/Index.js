@@ -132,6 +132,7 @@ export default class Index extends React.Component {
             styleName={this.props.styleName}
             mode={this.props.mode}
             parcelVis={this.props.parcelVis}
+            vacantVis={this.props.vacantVis}
             footVis={this.props.footVis}
             blueVis={this.props.blueVis}
             height={this.props.height}
@@ -189,6 +190,7 @@ export default class Index extends React.Component {
               parcelVis={this.props.parcelVis}
               footVis={this.props.footVis}
               blueVis={this.props.blueVis}
+              vacantVis={this.props.vacantVis}
               blueprint={this.props.blueprint}
               mode={this.props.mode}
               parcelRange={this.props.parcelRange}

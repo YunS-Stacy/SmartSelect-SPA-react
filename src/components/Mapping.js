@@ -9,22 +9,19 @@ import { mapbox } from '../services/config.json';
 import Search from 'material-ui/svg-icons/action/search';
 import LocalOffer from 'material-ui/svg-icons/maps/local-offer';
 import DirectionsCar from 'material-ui/svg-icons/maps/directions-car';
+import DirectionsBus from 'material-ui/svg-icons/maps/directions-bus';
+import DirectionsBike from 'material-ui/svg-icons/maps/directions-bike';
+import DirectionsWalk from 'material-ui/svg-icons/maps/directions-walk';
+
+
+
 import Business from 'material-ui/svg-icons/communication/business';
 
 
 import IconButton from 'material-ui/IconButton';
 
-// import MapboxDirections from '@mapbox/mapbox-gl-directions/src/directions';
-
-import jquery from 'jquery';
 import _ from 'lodash';
-import Pubsub from 'pubsub-js';
-
-import { Icon, Button, Slider } from 'antd';
-
-import Paper from 'material-ui/Paper';
-
-import InfoCard from './InfoCard';
+import { Icon, Button } from 'antd';
 
 export default class Mapping extends Component {
   constructor(props) {
@@ -134,7 +131,6 @@ export default class Mapping extends Component {
         onMouseMove={(map, e)=>{this.handleMouseMove(map, e)}}
         onMouseUp={(map, e)=> {this.props.dispatch({type: 'smartselect/changeCenter', mapCenter: map.getCenter()})}}
       >
-        {/* {this.reAddlayer()}
         {/* parcelLayer */}
         <Layer
           id="aptParcel"
@@ -166,6 +162,26 @@ export default class Mapping extends Component {
           }}
           layout={{visibility: this.props.parcelVis}}
         />
+        {/* vacantLayer */}
+
+        {(this.props.mode === 'mode-query') &&(
+          <Layer
+            id="vacantParcel"
+            type= "fill"
+            sourceId='composite'
+            layerOptions={{
+                'minzoom': 10,
+                'source-layer': 'vacantParcel',
+                'filter': ["<", 'Shape_Area', 10000],
+            }}
+            paint={{
+                "fill-color": '#aaa',
+                'fill-opacity': 0.8
+            }}
+            layout={{visibility: this.props.vacantVis}}
+          />
+        )}
+
         {/* footprintLayer */}
         <Layer
           sourceId='composite'
@@ -217,7 +233,7 @@ export default class Mapping extends Component {
           id='routePoints'
           type='circle'
           paint={{
-            'circle-color': '#ee836e',
+            'circle-color': '#d93a1b',
           }}
           layout={{
                 'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
@@ -232,8 +248,9 @@ export default class Mapping extends Component {
           id='routeLines'
           type='line'
           paint={{
-              'line-color': '#ee836e',
-              'line-opacity': 0.8
+              'line-color': '#d93a1b',
+              'line-opacity': 0.5,
+              'line-width': 2,
           }}
           layout={{
               'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
@@ -284,16 +301,29 @@ export default class Mapping extends Component {
             <li><strong>Ref. Price: </strong>${this.props.popupInfo.refPrice}</li>
             <li style={{float: 'right', fontSize: '0.9em'}}><em><strong>Source: </strong>{this.props.popupInfo.source}</em></li>
             <br />
-            <li style={{display:'flex', justifyContent:'space-around', padding:'0 10%'}}>
-              <IconButton tooltip="Get Comps (Zillow)" touch={true} tooltipPosition="bottom-center"
-                onTouchTap={()=>{this.props.dispatch({type: 'smartselect/queryZillow', zpid: this.props.popupInfo.zpid})}}
-              >
-                <Business />
-              </IconButton>
-              <IconButton tooltip="Get Directions" touch={true} tooltipPosition="bottom-center"
-                onTouchTap={()=>{this.props.dispatch({type: 'smartselect/geocodeRoute', dest: this.props.popupInfo.coords})}}>
-                <DirectionsCar />
-              </IconButton>
+            <li style={{display:'flex', justifyContent:'space-around'}}>
+              <div>
+                <IconButton tooltip="Get Comps (Zillow)" tooltipPosition="bottom-center"
+                  onTouchTap={()=>{this.props.dispatch({type: 'smartselect/queryZillow', zpid: this.props.popupInfo.zpid})}}
+                >
+                  <Business />
+                </IconButton>
+              </div>
+
+              <div style={{marginLeft: '1em'}}>
+                <IconButton tooltip="Driving Directions" tooltipPosition="bottom-center"
+                  onTouchTap={()=>{this.props.dispatch({type: 'smartselect/geocodeRoute', dest: this.props.popupInfo.coords, methods: 'driving-traffic'})}}>
+                  <DirectionsCar />
+                </IconButton>
+                <IconButton tooltip="Public Transit Directions" tooltipPosition="bottom-center"
+                  onTouchTap={()=>{this.props.dispatch({type: 'smartselect/geocodeRoute', dest: this.props.popupInfo.coords, methods: 'cycling'})}}>
+                  <DirectionsBike />
+                </IconButton>
+                <IconButton tooltip="Cycling Directions" tooltipPosition="bottom-center"
+                  onTouchTap={()=>{this.props.dispatch({type: 'smartselect/geocodeRoute', dest: this.props.popupInfo.coords, methods: 'walking'})}}>
+                  <DirectionsWalk />
+                </IconButton>
+              </div>
             </li>
           </ul>
         </Popup>
