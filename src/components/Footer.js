@@ -1,15 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
 import TweenOne from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 import './css/footer.css';
 
 
-export default class Footer extends React.Component {
-
-  static defaultProps = {
-    className: 'footer',
-  };
-
+export default class Footer extends Component {
   render() {
     const props = { ...this.props };
     delete props.isMode;

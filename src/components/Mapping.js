@@ -35,6 +35,7 @@ export default class Mapping extends Component {
           trash: true
         },
       }),
+      map: {}
     };
   }
 
@@ -83,7 +84,7 @@ export default class Mapping extends Component {
     return nextProps.map === this.props.map;
   }
   componentDidUpdate(prevProps){
-    const map =this.props.map;
+    const map = this.state.map;
     if(!map.loaded()){
       this.props.dispatch({
         type: "smartselect/asyncLoaded",
@@ -103,6 +104,9 @@ export default class Mapping extends Component {
     };
   }
   handleLoaded(map){
+    this.setState({
+      map: map
+    });
     this.props.dispatch({
       type: "smartselect/mapLoad",
       map: map,

@@ -25,10 +25,6 @@ export default {
     scaleControl: new mapboxgl.ScaleControl({unit: 'imperial'}),
     geolocateControl: new mapboxgl.GeolocateControl(),
     naviControl: new mapboxgl.NavigationControl(),
-    // directionControl: new MapboxDirections({
-    //   accessToken: 'pk.eyJ1IjoieXVuc2hpIiwiYSI6ImNpeHczcjA3ZDAwMTMyd3Btb3Fzd3hpODIifQ.SWiqUD9o_DkHZuJBPIEHPA',
-    //   unit: 'metric',
-    // }),
     draw: new MapboxDraw({
       displayControlsDefault: true,
       controls: {
@@ -37,7 +33,7 @@ export default {
       },
     }),
     geocoderControl: new MapboxGeocoder({
-    accessToken:  'pk.eyJ1IjoieXVuc2hpIiwiYSI6ImNpeHczcjA3ZDAwMTMyd3Btb3Fzd3hpODIifQ.SWiqUD9o_DkHZuJBPIEHPA'
+    accessToken: mapbox
 }),
     // draw:{},
     blueprint: {
@@ -110,11 +106,11 @@ export default {
     },
   },
   reducers: {
-    showSnack(state, datum){
-      return {...state, snackMessage: datum.snackMessage}
+    showSnack(state, {snackMessage}){
+      return {...state, snackMessage}
     },
     clearPopup(state){
-      return { ...state,   popupInfo: {
+      return { ...state, popupInfo: {
         coords:[0,0],
         address: '',
         refPrice: 0,
@@ -203,8 +199,8 @@ export default {
     return { ...state, calData, snackMessage};
   },
 
-  buildingHeight(state, datum){
-    return { ...state, height: datum.height};
+  buildingHeight(state, {heihgt}){
+    return { ...state, height};
   },
   askExtrude(state, datum){
     const height = datum.height;
@@ -214,76 +210,89 @@ export default {
       return datum.geometry.type === 'Polygon' || datum.geometry.type === 'MultiPolygon';
     });
     if (data.features.length > 0){
-      return { ...state, blueprint: data, height: height}
+      return { ...state, blueprint: data, height}
     } else {
-      return { ...state, height: height}
+      return { ...state, height}
     }
   },
-  asyncLoaded(state, datum){
-    return { ...state, mapLoaded: datum.mapLoaded };
+  asyncLoaded(state, {mapLoaded}){
+    return { ...state, mapLoaded };
   },
-  mapSetup(state, datum){
-    return { ...state, map: datum.datum.map,draw: datum.datum.draw};
+  mapSetup(state, {map,draw}){
+    return { ...state, map, draw};
   },
 
-  changeVis(state, datum){
-    const newVis = datum.layerVis;
-    switch (datum.layerName) {
+  changeVis(state, {layerName, layerVis}){
+    switch (layerName) {
       case 'parcel':
-      return { ...state, parcelVis: newVis};
+      return { ...state, parcelVis: layerVis};
       case 'footprint':
-      return { ...state, footVis: newVis};
+      return { ...state, footVis: layerVis};
       case 'blueprint':
-      console.log('blueprint change to', newVis);
-      return { ...state, blueVis: newVis};
+      return { ...state, blueVis: layerVis};
       case 'vacant':
-      return { ...state, vacantVis: newVis};
+      return { ...state, vacantVis: layerVis};
       default:
       break;
     };
   },
 
-  changePitch(state, datum){
-    return { ...state, mapPitch: datum.mapPitch}
+  changePitch(state, {mapPitch}){
+    return { ...state, mapPitch}
   },
 
-  changeCenter(state, datum){
-    return { ...state, mapCenter: datum.mapCenter}
+  changeCenter(state, {mapCenter}){
+    return { ...state, mapCenter}
   },
 
-  changeMode(state, datum){
+  changeMode(state, {mode}){
     const map = state.map;
-    let {mode, mapStyle, styleName, mapPitch, mapZoom, mapCenter, mapBearing,
-      compsLines,compsPts, parcelRange,
+    let {
+      //set map
+      mapPitch, mapZoom, mapCenter, mapBearing,
+      //set data (cleaned if not mode-query)
+      compsLines, compsPts, routePts,routeLines, parcelRange, popupCoords,tableStatus, tableMessage,
+      //set data (cleaned after the full step)
+      calData, height, snackMessage,
+      //set layer
       footVis, parcelVis, vacantVis, blueVis,
-      popupCoords,tableStatus, tableMessage,height} = state
-    switch (datum.mode) {
+    } = state
+    switch (mode) {
       case 'mode-welcome':
       if(state.mode !== 'mode-welcome'){
+        //set map
         mapPitch = [65];
         mapZoom =[14];
         mapCenter = [-75.1639, 39.9522];
         mapBearing = 9.2;
-        height= 0,
-
+        //set data
+        calData = {
+          polygon: {
+            area: 0,
+            length: 0
+          },
+          line: {
+            length: 0
+          },
+          num: 0,
+          point: false,
+        };
+        height = 0;
+        snackMessage='';
+        //set layer
         footVis = 'visible';
         parcelVis = 'none';
         blueVis = 'none';
+        //remove control
         map.removeControl(state.scaleControl);
         map.removeControl(state.geolocateControl);
         map.removeControl(state.naviControl);
         map.removeControl(state.draw);
-        popupCoords = [0,0];
-        tableStatus = 'hidden';
-        tableMessage = '';
-        mode = datum.mode;
       }
       break;
 
       case 'mode-intro':
       if(state.mode !== 'mode-intro'){
-        mode = datum.mode;
-
         footVis = 'none';
         parcelVis = 'none';
         mapPitch = [0];
@@ -300,20 +309,26 @@ export default {
       case 'mode-query':
       //make sure comes from the previous step
       if (state.mode !== 'mode-query'){
-        mode = datum.mode;
-
+        //set map
+        mapPitch = [0];
+        mapBearing = 0;
+        //set data
+        compsLines=[];
+        compsPts=[];
+        routeLines=[[],[]];
+        routePts=[];
+        parcelRange=[0,600000];
+        popupCoords=[0,0];
+        tableStatus='hidden';
+        //set layer
         footVis = 'none';
         parcelVis = 'visible';
         blueVis = 'none';
         vacantVis = 'visible';
-        mapPitch = [0];
-        mapBearing = 0;
       };
       break;
       case 'mode-measure':
       if(state.mode !== 'mode-measure'){
-        mode = datum.mode;
-
         popupCoords = [0,0];
         tableStatus = 'hidden';
         compsLines=[];
@@ -329,8 +344,6 @@ export default {
       break;
       case 'mode-build':
       if (state.mode !== 'mode-build'){
-        mode = datum.mode;
-
         mapPitch = [65];
         mapBearing = 9.2;
         parcelVis = 'none';
@@ -338,21 +351,19 @@ export default {
         vacantVis = 'none';
       };
       break;
-      case 'mode-decide':
-      if (state.mode !== 'mode-decide'){
-        mode = datum.mode;
-      };
-      break;
       default:
       break;
     }
-    console.log('debug changing mode into', mode)
     // zoom number must extract the number first, cannot tell [14] === [14] is true
-    return { ...state, mode, mapPitch,
-      mapZoom, mapCenter, mapBearing,
-      compsLines,compsPts, parcelRange,
-      footVis, vacantVis, parcelVis, blueVis,
-    tableMessage,tableStatus};
+    return { ...state, mode,
+      //set map
+      mapPitch, mapZoom, mapCenter, mapBearing,
+      //set data (cleaned if not mode-query)
+      compsLines, compsPts, routePts,routeLines, parcelRange, popupCoords, tableStatus, tableMessage,
+      //set data (cleaned after the full step)
+      calData, height, snackMessage,
+      //set layer
+      footVis, parcelVis, vacantVis, blueVis};
     },
 
     getZillow(state, datum){
@@ -370,9 +381,9 @@ export default {
 
         const tempPts = datum.dataZillow.map((item, i)=>{
           return turf.point(_.values(item.coord),{...item, i});
-        })
+        });
         // set the point data
-        compsPts = tempPts
+        compsPts = tempPts;
         // add the origin to create bbox contains all features
         const origin = turf.point(popupInfo.coords); //convert to array
         const tempBbox = turf.featureCollection(_.concat(tempPts, [origin]))
@@ -394,7 +405,7 @@ export default {
         routeLines = [routePts, ...routeLines, popupInfo.coords];
         const tempBbox = turf.lineString(routeLines);
         const bounds = turf.bbox(tempBbox);
-        map.fitBounds(bounds, {padding: 500});
+        map.fitBounds(bounds, {padding: 100});
       } else{
         snackMessage = `Sorry, we don't find any route!`
       }
@@ -433,21 +444,20 @@ export default {
 
   },
   effects: {
-    *mapLoad(datum, {call,put}){
+    *mapLoad({map,draw}, {call,put}){
       yield put({ type: 'asyncLoaded', mapLoaded: false});
-      yield put({ type: 'mapSetup', datum});
+      yield put({ type: 'mapSetup', map, draw});
       const res = yield call(fetchData.slider);
       yield put({ type: 'getSlider', res});
       yield put({ type: 'asyncLoaded', mapLoaded: true});
     },
 
-    *queryZillow(datum, {call, put}){
-      const {zpid} = datum;
+    *queryZillow({zpid}, {call, put}){
       yield put({ type: 'asyncLoaded', mapLoaded: false});
       const dataZillow = yield call(Zillow.getComps, zpid);
       yield put({ type: 'getZillow', dataZillow});
       yield put({ type: 'asyncLoaded', mapLoaded: true});
-
+      yield console.log(dataZillow, 'data from zillow')
     },
 
     *geocodeAddress(datum, {call, put}){

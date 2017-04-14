@@ -13,7 +13,6 @@ class Content extends React.Component {
   render() {
     const props = { ...this.props };
     const isMode = props.isMode;
-    delete props.isMode;
     const animType = {
       queue: isMode ? 'bottom' : 'left',
       one: isMode ? { y: '+=30', opacity: 0, type: 'from' }

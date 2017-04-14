@@ -38,7 +38,7 @@ export default class ChartPlot extends Component {
 		data: [],
 		forceFit: false,
 		width: 500,
-		height: 300,
+		height: 250,
 		plotCfg: {
 			margin: [50,100,50,70]
 		}

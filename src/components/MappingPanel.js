@@ -114,74 +114,66 @@ export default class MappingPanel extends Component{
 	}
 
 	componentWillUpdate(nextProps,nextState){
-		console.log(nextProps.calData.polygon.length, 'from mapping panel')
-		switch (nextState.stepIndex) {
-			case 1:
-			this.props.dispatch({
-				type: 'smartselect/changeStyle',
-				styleName: 'light',
-			});
-			if(this.props.mode !== 'mode-query'){
-				setTimeout(()=>{
-					this.props.dispatch({
-						type: 'smartselect/changeMode',
-						mode: 'mode-query',
-					});
-				},1000)
-			}
-			break;
-			case 2:
-			this.props.dispatch({
-				type: 'smartselect/changeMode',
-				mode: 'mode-measure',
-			});
-			break;
-			case 3:
-			if(this.props.mode !== 'mode-build'){
-				this.props.dispatch({
-					type: 'smartselect/changeMode',
-					mode: 'mode-build',
-				})
-			}
-			if(this.props.footVis !== 'visible'){
-				this.props.dispatch({
-					type: 'smartselect/changeVis',
-					layerName: 'footprint',
-					layerVis: 'none',
-				});
-			}
-			setTimeout(()=>{
+		if(this.state.stepIndex !== nextState.stepIndex){
+			switch (nextState.stepIndex) {
+				case 1:
 				this.props.dispatch({
 					type: 'smartselect/changeStyle',
-					styleName: 'customized',
-				})
-			},1000)
-			break;
-			case 4:
-				this.props.dispatch({
-					type: 'smartselect/changeVis',
-					layerName: 'footprint',
-					layerVis: 'visible',
+					styleName: 'light',
 				});
-				// setTimeout(()=>{
-				// 	this.props.dispatch({
-				// 		type: 'smartselect/changeStyle',
-				// 		styleName: 'customized',
-				// 	})
-				// },1000)
-
-			break;
-			default:
-			break;
+				if(this.props.mode !== 'mode-query'){
+					setTimeout(()=>{
+						this.props.dispatch({
+							type: 'smartselect/changeMode',
+							mode: 'mode-query',
+						});
+					},1000)
+				}
+				break;
+				case 2:
+				this.props.dispatch({
+					type: 'smartselect/changeMode',
+					mode: 'mode-measure',
+				});
+				break;
+				case 3:
+				if(this.props.mode !== 'mode-build'){
+					this.props.dispatch({
+						type: 'smartselect/changeMode',
+						mode: 'mode-build',
+					})
+				}
+				if(this.props.footVis !== 'visible'){
+					this.props.dispatch({
+						type: 'smartselect/changeVis',
+						layerName: 'footprint',
+						layerVis: 'none',
+					});
+				}
+				setTimeout(()=>{
+					this.props.dispatch({
+						type: 'smartselect/changeStyle',
+						styleName: 'customized',
+					})
+				},1000)
+				break;
+				case 4:
+					this.props.dispatch({
+						type: 'smartselect/changeVis',
+						layerName: 'footprint',
+						layerVis: 'visible',
+					});
+				break;
+				default:
+				break;
+			}
 		}
 	}
 	render() {
 		const {loading, stepIndex} = this.state;
-		console.log( this.props.calData.polygon.length )
 		return (
 			<div>
 				{this.renderSlider(stepIndex)}
-
 				<Paper style={paperStyle} zDepth={3}>
 					<Spin
 						spinning={!this.props.mapLoaded}

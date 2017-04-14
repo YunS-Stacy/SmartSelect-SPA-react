@@ -84,7 +84,6 @@ export default class Corrplot extends Component {
 		}
 	}
 
-
 	componentWillMount() {
 		const self = this;
 		axios.get('https://gist.githubusercontent.com/YunS-Stacy/87e80a6a4e96725fe09546d15fb5029b/raw/5a422fb60be38fc5da2d8a6524605c48138e7b8c/data_corrplot.json')

@@ -31,7 +31,6 @@ import Content2 from '../components/Content2';
 import Content3 from '../components/Content3';
 import Footer from '../components/Footer';
 import Point from '../components/Point';
-// import App from '../components/Tutorial';
 import Predictors from '../components/Predictors';
 
 // Goggle MD
@@ -63,7 +62,7 @@ export default class Index extends React.Component {
 
   componentWillReceiveProps(nextProps){
     this.setState({
-      snackStatus: nextProps.snackMessage !== this.props.snackMessage ? true : false
+      snackStatus: nextProps.snackMessage !== (this.props.snackMessage || '') ? true : false
     })
   }
 
@@ -88,7 +87,7 @@ export default class Index extends React.Component {
             dispatch={this.props.dispatch}
             mapLoaded={this.props.mapLoaded}
             mode={this.props.mode}
-            id="map" key="map" isMode={this.state.isMode}/>
+            id="map" key="map" className='map' isMode={this.state.isMode}/>
           <Background id="background" key="background" isMode={this.state.isMode}
             className='background' style= {{height: '50vh'}}/>
           {/* missing value */}
@@ -100,7 +99,7 @@ export default class Index extends React.Component {
           <Section4 id="section_4_0" key="section_4_0" isMode={this.state.isMode}/>
 
           <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode} style= {{padding: '5em 0'}}/>
-          <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode} style= {{padding: '5em 0'}}/>
+          <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode} style= {{padding: '3em 0'}}/>
 
 
           {/* <Predictors id="content_2_1" key="content_2_1" isMode={this.state.isMode}/> */}
@@ -108,7 +107,7 @@ export default class Index extends React.Component {
           {/* <Content2 id="content_3_0" key="content_3_0" isMode={this.state.isMode}/> */}
           {/* <Content3 id="content_4_0" key="content_4_0" isMode={this.state.isMode}/> */}
 
-          <Footer id="footer" key="footer" isMode={this.state.isMode}/>
+          <Footer id="footer" key="footer" className='footer' isMode={this.state.isMode}/>
           <Point key="list" ref="list" data={['map', 'background', 'content_2_0', 'localmarket', 'section_4_0', 'processoverview', 'variableselection']} />
         </div>
       )

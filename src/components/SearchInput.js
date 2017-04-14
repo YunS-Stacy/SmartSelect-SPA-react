@@ -20,9 +20,9 @@ export default class InfoCard extends Component {
 
   render(){
     return (
-      <div style={{display: 'inline-flex'}}>
+      <div style={{display: 'inline-flex', width:'100%'}}>
         <TextField
-          style={{fontSize: '1.1em', width: '15vw'}}
+          style={{fontSize: '1.1em'}}
           hintText="Search for Address"
           value={this.state.address}
           onChange={this.handleChange}
@@ -33,6 +33,6 @@ export default class InfoCard extends Component {
           <Search />
         </IconButton>
       </div>
-        );
+    );
   }
 };

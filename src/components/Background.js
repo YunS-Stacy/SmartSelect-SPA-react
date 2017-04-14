@@ -22,9 +22,7 @@ export default class Section2 extends React.Component {
     const props = { ...this.props };
     delete props.isMode;
     const dataSource = [
-      { title: 'About', content: aboutContent
-      // , icon: 'https://zos.alipayobjects.com/rmsportal/YPMsLQuCEXtuEkmXTTdk.png'
-    },
+      { title: 'About', content: aboutContent},
       { title: 'Problem', content: problemContent },
       { title: 'Solution', content: solutionContent },
 

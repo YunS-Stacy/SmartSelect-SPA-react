@@ -10,19 +10,6 @@ import './css/map.css';
 // import './less/section1.less';
 
 export default class Map extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  static propTypes = {
-    className: React.PropTypes.string,
-    id: React.PropTypes.string,
-  };
-
-  static defaultProps = {
-    className: 'map',
-  };
-
   render() {
     const props = { ...this.props };
     delete props.isMode;

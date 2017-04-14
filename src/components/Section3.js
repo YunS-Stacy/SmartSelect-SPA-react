@@ -6,10 +6,6 @@ import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 
 
 export default class Section3 extends React.Component {
-  static defaultProps = {
-    className: 'content0',
-  };
-
   render() {
 //props.className =content2_0
     const props = { ...this.props };
@@ -30,7 +26,6 @@ export default class Section3 extends React.Component {
       >
         <OverPack
           className={`content-template content2_0`}
-          // hideProps={{ img: { reverse: true } }}
           location={props.id}
         >
           <TweenOne
@@ -43,19 +38,13 @@ export default class Section3 extends React.Component {
               display: 'inline-block',
               marginLeft: '4vw',
               width: '45vw',
-              // height: '05vw',
               padding: '1vh'
-              // float:'right',
-
             }}
           >
             <img style={{
-              // left: '4vw',
               width: '100%',
               height: '100%',
-              // float: 'right'
             }} src="/img/1_missingData.png" />
-
           </TweenOne>
           <QueueAnim
             className={`content2_0-text`}

@@ -85,22 +85,25 @@ export default class LocalMarket extends Component {
             </h3>
 
           </QueueAnim>
-          <TweenOne
-            className={`${props.className}-img`}
-            key="img1"
-            animation={imgAnim}
-            resetStyleBool
-          >
-            <SpiralPlot data={this.state.datumPh}/>
-          </TweenOne>
-          <TweenOne
-            className={`${props.className}-img`}
-            key="img2"
-            animation={imgAnim}
-            resetStyleBool
-          >
-            <RosePlot data={this.state.datumN}/>
-          </TweenOne>
+          <div key='chart'>
+            <TweenOne
+              className={`${props.className}-img`}
+              key="img1"
+              animation={imgAnim}
+              resetStyleBool
+            >
+              <SpiralPlot data={this.state.datumPh}/>
+            </TweenOne>
+            <TweenOne
+              className={`${props.className}-img`}
+              key="img2"
+              animation={imgAnim}
+              resetStyleBool
+            >
+              <RosePlot data={this.state.datumN}/>
+            </TweenOne>
+          </div>
+
         </OverPack>
       </div>
     );
