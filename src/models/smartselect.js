@@ -451,13 +451,24 @@ export default {
       yield put({ type: 'getSlider', res});
       yield put({ type: 'asyncLoaded', mapLoaded: true});
     },
+    // 
+    // *mapLoad({map,draw}, {call,put}){
+    //   yield put({ type: 'asyncLoaded', mapLoaded: false});
+    //   yield put({ type: 'mapSetup', map, draw});
+    //   const res = yield call(fetchData.slider);
+    //   yield put({ type: 'getSlider', res});
+    //   const res = yield call(fetchData.corrplot);
+    //   yield put({ type: 'getCorrplot', res});
+    //   const res = yield call(fetchData.market);
+    //   yield put({ type: 'getMarket', res});
+    //   yield put({ type: 'asyncLoaded', mapLoaded: true});
+    // },
 
     *queryZillow({zpid}, {call, put}){
       yield put({ type: 'asyncLoaded', mapLoaded: false});
       const dataZillow = yield call(Zillow.getComps, zpid);
       yield put({ type: 'getZillow', dataZillow});
       yield put({ type: 'asyncLoaded', mapLoaded: true});
-      yield console.log(dataZillow, 'data from zillow')
     },
 
     *geocodeAddress(datum, {call, put}){
