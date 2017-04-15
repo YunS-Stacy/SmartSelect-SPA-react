@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import g2 from 'g2';
 import createG2 from 'g2-react';
-import axios from 'axios';
+
+import {Spin} from 'antd';
 // x-Axis
 const Chart = createG2(chart => {
 	chart.cols({
@@ -22,7 +23,6 @@ const Chart = createG2(chart => {
 				return datum.toFixed(2)
 			}
 		}
-
 	});
 
 	chart.axis('Variable1', {
@@ -56,10 +56,6 @@ const Chart = createG2(chart => {
 		height: 100,
 		width: 10,
 	});
-	// rgb(127, 205, 187)
-	// rgb(29, 145, 192)
-	// rgb(219, 58, 27)
-	// rgb(232, 92, 65)
 	chart.polygon().position('Variable1*Variable2').color('COEF', 'rgb(254, 190, 18)-#f7f7f7-rgb(29, 145, 192)')
 	.size('COEF',0,0.5)
 	.style({
@@ -71,45 +67,22 @@ const Chart = createG2(chart => {
 	chart.render();
 });
 
-
-
 export default class Corrplot extends Component {
-	state = {
-		data: [],
-		forceFit: true,
-		width: 550,
-		height: 650,
-		plotCfg: {
-			margin: [0,150,150,50]
-		}
-	}
-
-	componentWillMount() {
-		const self = this;
-		axios.get('https://smartselect-34c02.firebaseio.com/corrPlot.json')
-		.then(function (response) {
-			self.setState({
-				data: response.data
-			});
-		}).catch(function (error) {
-			console.log(error);
-		});
-	}
-
 	render() {
-		if (this.state.data.length === 0) {
-			return (<div></div>);
-		} else {
+
 			return (
 				<div style={{display: 'inline-flex'}}>
 					<div style={{width: '50vw'}}>
-						<Chart
-							data={this.state.data}
-							height={this.state.height}
-							width={this.state.width}
-							plotCfg={this.state.plotCfg}
-							forceFit={this.state.forceFit} />
-					</div>
+						<Spin
+							spinning={this.props.data.length === 0}
+							size='large'
+							style={{top: '20vw', position: 'absolute'}}
+							delay={500}
+						>
+							{(this.props.data.length === 0) && (<div></div>)}
+							{(this.props.data.length !== 0) && (<Chart {...this.props} />)}
+						</Spin>
+						</div>
 					<div style={{width: '35vw', marginTop: '15vh', paddingRight: '2vw'}}>
 						<h3>Correlation Matrix</h3>
 						<br />
@@ -118,7 +91,6 @@ export default class Corrplot extends Component {
 						<p style={{fontSize: '1.4em'}}>To find the relationship between variables, the correlation matrix may serve the goal well.</p>
 					</div>
 				</div>
-				);
-			}
+			);
 		}
-	};
+	}

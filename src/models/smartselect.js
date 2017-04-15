@@ -1,12 +1,9 @@
 
 import request from '../utils/request';
 import fetch from 'dva/fetch';
-import { parseString } from 'xml2js';
-
 
 import Zillow from '../services/fetchZillow';
 import * as fetchData from '../services/fetchData';
-
 
 import _ from 'lodash';
 import turf from 'turf';
@@ -81,6 +78,11 @@ export default {
     routeLines:[[],[]],
     routePts:[],
     dataSlider: [],
+    dataMarket: {
+      marketPhilly:[],
+      marketNeigh:[]
+    },
+    dataCorrplot: [],
     dataInitialized: false,
     parcelRange: [0,600000],
     snackMessage: '',
@@ -436,9 +438,46 @@ export default {
     },
 
 
-    filterParcel(state, datum){
-      const parcelRange = datum.parcelRange;
+    filterParcel(state, {parcelRange}){
       return {...state, parcelRange}
+    },
+
+    getChartData(state, {resSlider,resMarket,resCorrplot}){
+      // slider
+      const tempSlider = resSlider.data.rows
+      const frameSlider = new Frame(tempSlider);
+      const filterSlider = Frame.filter(frameSlider, function(obj, index) {
+        return obj.refprice < 600000;
+      });
+      const sortSlider = Frame.sort(filterSlider, 'refprice');
+      const dataSlider = sortSlider.toJSON();
+      // localmarket
+      const tempMarket = resMarket.data;
+      const frameMarket = new Frame(tempMarket);
+      // philly
+      const dataPhilly = Frame.filter(frameMarket, function(obj){
+        return obj['Region Type'] == 'city'
+      });
+      const tempPhillyMonth = Frame.combineColumns(dataPhilly,
+        ['Jan_2010', 'Feb_2010', 'Mar_2010', 'Apr_2010', 'May_2010', 'Jun_2010', 'Jul_2010', 'Aug_2010', 'Sep_2010', 'Oct_2010', 'Nov_2010', 'Dec_2010',
+        'Jan_2011', 'Feb_2011', 'Mar_2011', 'Apr_2011', 'May_2011', 'Jun_2011', 'Jul_2011', 'Aug_2011', 'Sep_2011', 'Oct_2011', 'Nov_2011', 'Dec_2011',
+        'Jan_2012', 'Feb_2012', 'Mar_2012', 'Apr_2012', 'May_2012', 'Jun_2012', 'Jul_2012', 'Aug_2012', 'Sep_2012', 'Oct_2012', 'Nov_2012', 'Dec_2012',
+        'Jan_2013', 'Feb_2013', 'Mar_2013', 'Apr_2013', 'May_2013', 'Jun_2013', 'Jul_2013', 'Aug_2013', 'Sep_2013', 'Oct_2013', 'Nov_2013', 'Dec_2013',
+        'Jan_2014', 'Feb_2014', 'Mar_2014', 'Apr_2014', 'May_2014', 'Jun_2014', 'Jul_2014', 'Aug_2014', 'Sep_2014', 'Oct_2014', 'Nov_2014', 'Dec_2014',
+        'Jan_2015', 'Feb_2015', 'Mar_2015', 'Apr_2015', 'May_2015', 'Jun_2015', 'Jul_2015', 'Aug_2015', 'Sep_2015', 'Oct_2015', 'Nov_2015', 'Dec_2015',
+        'Jan_2016', 'Feb_2016', 'Mar_2016', 'Apr_2016', 'May_2016', 'Jun_2016', 'Jul_2016', 'Aug_2016', 'Sep_2016', 'Oct_2016', 'Nov_2016', 'Dec_2016',
+        'Jan_2017', 'Feb_2017'], 'valueChange', 'monthYear', ['Region_Name']);
+      const marketPhilly = tempPhillyMonth.toJSON();
+      // neighborhood
+      const dataNeigh = Frame.sort(frameMarket,'Feb_2017');
+      const filterNeigh = Frame.filter(dataNeigh, function(obj){
+        return obj['Region Type'] == 'neighborhood'
+      });
+      const tempNeigh = Frame.combineColumns(filterNeigh, ['Feb_2017', 'Jan_2017', 'Dec_2016', 'Nov_2016','Oct_2016', 'Sep_2016', 'Aug_2016', 'Jul_2016', 'Jun_2016', 'May_2016', 'Apr_2016', 'Mar_2016', 'Feb_2016', 'Jan_2016', 'Dec_2015', 'Nov_2015', 'Oct_2015', 'Sep_2015', 'Aug_2015', 'Jul_2015', 'Jun_2015', 'May_2015', 'Apr_2015', 'Mar_2015', 'Feb_2015', 'Jan_2015'], 'valueChange', 'monthYear', ['Region_Name']);
+      const marketNeigh = tempNeigh.toJSON();
+      // corrplot
+      const dataCorrplot = resCorrplot.data;
+      return { ...state, dataSlider, dataMarket: {marketPhilly, marketNeigh}, dataCorrplot }
     },
 
 
@@ -447,22 +486,12 @@ export default {
     *mapLoad({map,draw}, {call,put}){
       yield put({ type: 'asyncLoaded', mapLoaded: false});
       yield put({ type: 'mapSetup', map, draw});
-      const res = yield call(fetchData.slider);
-      yield put({ type: 'getSlider', res});
+      const resSlider = yield call(fetchData.slider);
+      const resMarket = yield call(fetchData.market);
+      const resCorrplot = yield call(fetchData.corrplot);
+      yield put({ type: 'getChartData', resSlider, resMarket, resCorrplot});
       yield put({ type: 'asyncLoaded', mapLoaded: true});
     },
-    // 
-    // *mapLoad({map,draw}, {call,put}){
-    //   yield put({ type: 'asyncLoaded', mapLoaded: false});
-    //   yield put({ type: 'mapSetup', map, draw});
-    //   const res = yield call(fetchData.slider);
-    //   yield put({ type: 'getSlider', res});
-    //   const res = yield call(fetchData.corrplot);
-    //   yield put({ type: 'getCorrplot', res});
-    //   const res = yield call(fetchData.market);
-    //   yield put({ type: 'getMarket', res});
-    //   yield put({ type: 'asyncLoaded', mapLoaded: true});
-    // },
 
     *queryZillow({zpid}, {call, put}){
       yield put({ type: 'asyncLoaded', mapLoaded: false});

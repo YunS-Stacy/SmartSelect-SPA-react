@@ -92,14 +92,18 @@ export default class Index extends React.Component {
             className='background' style= {{height: '50vh'}}/>
           {/* missing value */}
           <Section3 id="content_2_0" key="content_2_0" isMode={this.state.isMode}/>
-          <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}/>
+          <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}
+            dataMarket={this.props.dataMarket}
+          />
 
 
           {/* banner */}
           <Section4 id="section_4_0" key="section_4_0" isMode={this.state.isMode}/>
 
           <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode} style= {{padding: '5em 0'}}/>
-          <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode} style= {{padding: '3em 0'}}/>
+          <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode} style= {{padding: '3em 0'}}
+            data={this.props.dataCorrplot}
+          />
 
 
           {/* <Predictors id="content_2_1" key="content_2_1" isMode={this.state.isMode}/> */}

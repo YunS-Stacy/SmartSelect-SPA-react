@@ -3,6 +3,9 @@ import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 
+import {Spin} from 'antd';
+
+
 import './css/background.css';
 
 import Corrplot from '../components/Corrplot'
@@ -35,8 +38,18 @@ export default class VariableSelection extends Component {
               component="ul" type="bottom" key="block" leaveReverse
               id={`${props.id}-contentWrapper`}
             >
-              <Corrplot />
-            </QueueAnim>
+
+              <Corrplot
+                data={this.props.data}
+                forceFit={true}
+                width={550}
+                height={650}
+                plotCfg={{
+              			margin: [0,150,150,50]
+                }}
+              />
+              
+          </QueueAnim>
           </OverPack>
         </div>
       );
