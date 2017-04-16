@@ -6,8 +6,8 @@ import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 const styles = {
   button: {
-    margin: '1em 0.5em',
-    width: '15vw'
+    margin: '0 0.5em',
+    top:'0.1em'
   },
 };
 
@@ -19,7 +19,7 @@ export default class Nav extends Component {
           { (props.pathname === '/')&&(
             <RaisedButton
               label={props.mode === 'mode-welcome' ? 'Project Home': 'Back to Home'}
-              style={styles.button}
+              style={{margin: '0.7em 0.5em'}}
               onTouchTap={(e)=>{
                 e.preventDefault();
                 if(props.mode !== 'mode-welcome'){
@@ -39,7 +39,7 @@ export default class Nav extends Component {
             <RaisedButton
               href="/"
               label='Back to Home'
-              style={styles.button}
+              style={{margin: '0.7em 0.5em'}}
             >
             </RaisedButton>
           )}
@@ -48,9 +48,8 @@ export default class Nav extends Component {
             <RaisedButton
               href="/portfolio"
               label="Other Works"
-              style={styles.button}
-            >
-            </RaisedButton>
+              style={{margin: '0.7em 0.5em',display:'inline-flex'}}
+            />
           )}
           {(props.pathname === '/portfolio')&&(
             <DropDownMenu
