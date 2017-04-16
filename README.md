@@ -1,8 +1,6 @@
 # Smart Select
-## Run the Demo
-- run 'yarn' or 'npm install'
-- run 'npm start'
-- go to 'localhost:8000'
+## Live Demo
+https://smartselect.herokuapp.com/#/
 
 ### This is the MUSA Capstone Project by Yun Shi, from MUSA 17', UPenn.
 Smart Select is an interactive map created by Yun Shi that explores the commercial real estate investment by predicting the apartment price in Philadelphia.
