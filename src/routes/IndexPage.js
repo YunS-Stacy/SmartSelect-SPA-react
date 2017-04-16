@@ -7,6 +7,7 @@ function IndexPage({dispatch, smartselect}) {
   return (
     <Index
       dispatch = {dispatch}
+      location = {location}
     />
   )
 };
@@ -43,7 +44,6 @@ function mapStateToProps(state){
     compsPts,
     routeLines,
     routePts,
-
   } = state.smartselect;
   return {
     mapLoaded,

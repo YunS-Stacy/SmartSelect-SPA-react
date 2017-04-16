@@ -7,8 +7,6 @@ import Workflow from '../components/Workflow';
 import ModelSelection from '../components/ModelSelection';
 import ChartPlot from '../components/ChartPlot';
 
-import './css/localmarket.css';
-
 export default class ProcessOverview extends Component {
   render() {
     const props = { ...this.props };

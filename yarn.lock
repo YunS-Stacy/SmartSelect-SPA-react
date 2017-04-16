@@ -5149,9 +5149,15 @@ promise@^7.0.3, promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.2, prop-types@^15.5.4, prop-types@~15.5.0:
+prop-types@^15.5.2, prop-types@~15.5.0:
   version "15.5.4"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.4.tgz#2ed3692716a5060f8cc020946d8238e7419d92c0"
+  dependencies:
+    fbjs "^0.8.9"
+
+prop-types@^15.5.4, prop-types@^15.5.6:
+  version "15.5.8"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.8.tgz#6b7b2e141083be38c8595aa51fc55775c7199394"
   dependencies:
     fbjs "^0.8.9"
 
@@ -5651,11 +5657,21 @@ react-faux-dom@^3.0.1:
     query-selector "^1.0.9"
     style-attr "^1.0.1"
 
+react-frame-component@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-frame-component/-/react-frame-component-1.0.3.tgz#00a5deea81671927ea973954a0d8eb19ecc339de"
+
 react-hammerjs@~0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/react-hammerjs/-/react-hammerjs-0.5.0.tgz#aa20e5c5f44d660f3e8e87ed11282f12173e77ae"
   dependencies:
     hammerjs "^2.0.8"
+
+react-iframe@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/react-iframe/-/react-iframe-1.0.5.tgz#3b7aa11ca582f7f6536b141ba6af0c2b3b247f5a"
+  dependencies:
+    prop-types "^15.5.6"
 
 react-joyride@^1.10.1:
   version "1.10.1"

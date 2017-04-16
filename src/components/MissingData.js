@@ -1,13 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
-// import './less/section3.less';
 
-
-export default class Section3 extends React.Component {
+export default class MissingData extends Component {
   render() {
-//props.className =content2_0
     const props = { ...this.props };
     const isMode = props.isMode;
     delete props.isMode;
@@ -19,19 +16,19 @@ export default class Section3 extends React.Component {
     return (
       <div
         {...props}
-        className={`content-template-wrapper content-half-wrapper content2_0-wrapper`}
+        className={`content-template-wrapper content-half-wrapper missingdata-wrapper`}
         style={{
           height:'60vh',
         }}
       >
         <OverPack
-          className={`content-template content2_0`}
+          className={`content-template missingdata`}
           location={props.id}
         >
           <TweenOne
             key="img"
             animation={animType.one}
-            className={`content2_0-img`}
+            className={`missingdata-img`}
             id={`${props.id}-imgWrapper`}
             resetStyleBool
             style={{
@@ -44,10 +41,10 @@ export default class Section3 extends React.Component {
             <img style={{
               width: '100%',
               height: '100%',
-            }} src="/img/1_missingData.png" />
+            }} src="./img/MissingData.png" />
           </TweenOne>
           <QueueAnim
-            className={`content2_0-text`}
+            className={`missingdata-text`}
             type={animType.queue}
             key="text"
             leaveReverse

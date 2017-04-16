@@ -1,15 +1,13 @@
-import React, { Component, PropTypes } from 'react';
+import React, {Component} from 'react';
 
-import { Button, Icon } from 'antd';
+import { Icon } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 
 import MainButton from './MainButton';
-import './css/map.css';
-// import './less/section1.less';
 
-export default class Map extends React.Component {
+export default class Map extends Component {
   render() {
     const props = { ...this.props };
     delete props.isMode;

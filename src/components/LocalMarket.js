@@ -49,6 +49,7 @@ export default class LocalMarket extends Component {
 
           </QueueAnim>
           <Spin
+            key="spin"
             spinning={!this.props.dataMarket}
             size='large'
             style={{top: '30%', position: 'absolute'}}

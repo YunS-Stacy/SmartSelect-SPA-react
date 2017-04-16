@@ -27,7 +27,7 @@ Smart Select is an interactive map created by Yun Shi that explores the commerci
 
 ## Technologies used
 - React, Redux;
-- D3;
+- G2;
 - Mapbox GL;
 
 ## Use-cases
@@ -41,6 +41,3 @@ Smart Select is an interactive map created by Yun Shi that explores the commerci
 
 ## Finished list:
 - Use of React, Redux
-
-## To-do list:
-- Model and Data visualization: react-d3 components

@@ -1,12 +1,14 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import enquire from 'enquire.js';
 import { scrollScreen } from 'rc-scroll-anim';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 import Snackbar from 'material-ui/Snackbar';
 
 import Nav from '../components/Nav';
+
 import Mapping from '../components/Mapping';
 import MappingPanel from '../components/MappingPanel';
 import LayerToggle from '../components/LayerToggle';
@@ -17,33 +19,21 @@ import LocalMarket from '../components/LocalMarket';
 import VariableSelection from '../components/VariableSelection';
 import ModelSelection from '../components/ModelSelection';
 import ProcessOverview from '../components/ProcessOverview';
-
-import Paper from 'material-ui/Paper';
-import FlatButton from 'material-ui/FlatButton';
-import { Button, Spin} from 'antd';
-import TrendingDown from 'material-ui/svg-icons/action/trending-down';
-import TrendingUp from 'material-ui/svg-icons/action/trending-up';
-
-import Section3 from '../components/Section3';
-import Section4 from '../components/Section4';
-
-import Content2 from '../components/Content2';
-import Content3 from '../components/Content3';
+import MissingData from '../components/MissingData';
+import Banner from '../components/Banner';
 import Footer from '../components/Footer';
 import Point from '../components/Point';
 import Predictors from '../components/Predictors';
+
+import {Spin} from 'antd';
+import TrendingDown from 'material-ui/svg-icons/action/trending-down';
+import TrendingUp from 'material-ui/svg-icons/action/trending-up';
 
 // Goggle MD
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
-import './less/antMotion_style.less';
-// import './less/common.less';
-// import './less/global.less';
-// import './less/custom.less';
-
-
-export default class Index extends React.Component {
+export default class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -83,36 +73,31 @@ export default class Index extends React.Component {
     if(this.props.mode === 'mode-welcome'){
       return (
         <div>
+          {/* banner and main button*/}
           <Map
             dispatch={this.props.dispatch}
             mapLoaded={this.props.mapLoaded}
             mode={this.props.mode}
             id="map" key="map" className='map' isMode={this.state.isMode}/>
-          <Background id="background" key="background" isMode={this.state.isMode}
-            className='background' style= {{height: '50vh'}}/>
-          {/* missing value */}
-          <Section3 id="content_2_0" key="content_2_0" isMode={this.state.isMode}/>
+          {/* backgrond */}
+          <Background id="background" key="background" className='background' isMode={this.state.isMode}
+            style= {{height: '50vh'}}/>
+          {/* missing data section */}
+          <MissingData id="missingdata" key="missingdata" className="missingdata" isMode={this.state.isMode}/>
+          {/* data visualization */}
           <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}
             dataMarket={this.props.dataMarket}
           />
-
-
           {/* banner */}
-          <Section4 id="section_4_0" key="section_4_0" isMode={this.state.isMode}/>
-
+          <Banner id="banner" key="banner" className='banner' isMode={this.state.isMode}/>
+          {/* process overview */}
           <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode} style= {{padding: '5em 0'}}/>
+          {/* corrplot */}
           <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode} style= {{padding: '3em 0'}}
             data={this.props.dataCorrplot}
           />
-
-
-          {/* <Predictors id="content_2_1" key="content_2_1" isMode={this.state.isMode}/> */}
-
-          {/* <Content2 id="content_3_0" key="content_3_0" isMode={this.state.isMode}/> */}
-          {/* <Content3 id="content_4_0" key="content_4_0" isMode={this.state.isMode}/> */}
-
           <Footer id="footer" key="footer" className='footer' isMode={this.state.isMode}/>
-          <Point key="list" ref="list" data={['map', 'background', 'content_2_0', 'localmarket', 'section_4_0', 'processoverview', 'variableselection']} />
+          <Point key="list" ref="list" data={['map', 'background', 'missingdata', 'localmarket', 'banner', 'processoverview', 'variableselection']} />
         </div>
       )
     } else {
@@ -130,10 +115,6 @@ export default class Index extends React.Component {
             dispatch={this.props.dispatch}
             mapLoaded={this.props.mapLoaded}
           />
-          {/* <Spin
-  					spinning={!this.props.mapLoaded}
-  					delay={500}
-          style={{top: '13vh', right: '-40vw', position: 'absolute'}}> */}
           <LayerToggle
             styleName={this.props.styleName}
             mode={this.props.mode}
@@ -144,7 +125,6 @@ export default class Index extends React.Component {
             height={this.props.height}
             dispatch={this.props.dispatch}
           />
-          {/* </Spin> */}
           <Snackbar
             open={this.state.snackStatus}
             message={this.props.snackMessage}
@@ -156,13 +136,11 @@ export default class Index extends React.Component {
             }}
           />
         </div>
-
       )
     }
   }
 
   render() {
-
     return(
       <MuiThemeProvider>
         <div className="templates-wrapper">
@@ -202,15 +180,13 @@ export default class Index extends React.Component {
             />
           </Spin>
           <Nav
+            pathname={this.props.location.pathname}
             className='nav'
             dispatch={this.props.dispatch}
             mode={this.props.mode} id="nav" key="nav" isMode={this.state.isMode}/>
           {this.renderContent()}
-
-          {/* <App /> */}
         </div>
       </MuiThemeProvider>
     );
-
   }
 }

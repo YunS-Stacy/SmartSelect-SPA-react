@@ -1,9 +1,7 @@
-import React from 'react';
+import React, {Component} from 'react';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
-
-import './css/background.css'
 
 const aboutContent = `Smart Select is a web application that allows you to navigate through the city,
                       find your next investment opportunity of apartments, and ... build it!`;
@@ -11,9 +9,10 @@ const problemContent = `Pro forma is EXHAUSTING, and the data sources are compli
                         and may sometimes have a large proportion of the MISSING values.`;
 const solutionContent = `The final model used only "LOCATION" factors as predictors.
                           Everyone will have an easy access to get a suggested price for a parcel!`
-export default class Section2 extends React.Component {
+export default class Background extends Component {
   getBlockChildren = (item, i) =>(
-    <li key={i} id={`${this.props.id}-block${i}`}>
+    <li key={i} id={`${this.props.id}-block${i}`}
+    >
       <h3>{item.title}</h3>
       <p>{item.content}</p>
     </li>);
@@ -25,7 +24,6 @@ export default class Section2 extends React.Component {
       { title: 'About', content: aboutContent},
       { title: 'Problem', content: problemContent },
       { title: 'Solution', content: solutionContent },
-
     ];
     const listChildren = dataSource.map(this.getBlockChildren);
 

@@ -5,9 +5,6 @@ import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 
 import {Spin} from 'antd';
 
-
-import './css/background.css';
-
 import Corrplot from '../components/Corrplot'
 
 export default class VariableSelection extends Component {
@@ -48,7 +45,7 @@ export default class VariableSelection extends Component {
               			margin: [0,150,150,50]
                 }}
               />
-              
+
           </QueueAnim>
           </OverPack>
         </div>

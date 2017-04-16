@@ -6,8 +6,6 @@ import g2, { Frame } from 'g2';
 
 import ChartPlot from '../components/ChartPlot';
 
-import './css/localmarket.css';
-
 export default class ModelSelection extends Component {
   render() {
     const props = { ...this.props };

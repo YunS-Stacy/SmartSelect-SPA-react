@@ -127,7 +127,7 @@ export default class Mapping extends Component {
         pitch={this.props.mapPitch}
         containerStyle={{
           height: "100vh",
-          width: "100vw",
+          width: "100%",
           position: mapPosition,
         }}
         movingMethod='easeTo'

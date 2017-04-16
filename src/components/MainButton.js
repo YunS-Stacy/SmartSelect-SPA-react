@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import { Button } from 'antd';
+import 'antd/lib/button/style';
 
 const style = {
   container: {
@@ -23,53 +24,40 @@ const style = {
 };
 
 export default class MainButton extends Component{
-	renderContent(){
-		if(this.props.mapLoaded === true){
-      // console.log('map is loaded');
-			return (
-				<Button
+  renderContent(){
+    if(this.props.mapLoaded === true){
+      return (
+        <Button
           style={{textShadow: '0'}}
-          // .banner0-wrapper button:hover
-          // span {
-          //   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.35);
-          // }
-          // loading={this.state.loading}
-					onClick={(e) => {e.preventDefault();
+          onClick={(e) => {e.preventDefault();
             this.props.dispatch({
               type: 'smartselect/changeMode',
               mode: 'mode-intro',
             });
           }}//use bind(this), if not using constructor
-					id="btn-get-started-loader"
-          style={style.button}
-    >
-					GET STARTED
-				</Button>
-			)
-
-		} else {
-      // console.log('map is still loading');
+          id="btn-get-started-loader"
+          style={style.button}>
+          GET STARTED
+        </Button>
+      )
+    } else {
       return (
-
-				<RefreshIndicator
-					size={60}
-					left={0}
-					top={6}
-					status="loading"
-					style={style.refresh}
-    />
-
-		)}
-	}
-
-
-	render() {
-		const {mapLoaded} = this.props;
-		return (
-				<div style={style.container}>
-				{this.renderContent()}
-			</div>
-
-		); //return
-	}
+        <RefreshIndicator
+          size={60}
+          left={0}
+          top={6}
+          status="loading"
+          style={style.refresh}
+        />
+      )
+    }
+  }
+  render() {
+    const {mapLoaded} = this.props;
+    return (
+      <div style={style.container}>
+        {this.renderContent()}
+      </div>
+    ); //return
+  }
 };

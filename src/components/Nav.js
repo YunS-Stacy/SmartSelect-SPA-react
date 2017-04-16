@@ -1,52 +1,74 @@
-import React, { PropTypes } from 'react';
-import TweenOne from 'rc-tween-one';
-import { Menu } from 'antd';
-import { Navbar, Nav, NavItem } from 'react-bootstrap/lib';
-import './css/nav.css';
+import React, {Component} from 'react';
 
-const Item = Menu.Item;
+import RaisedButton from 'material-ui/RaisedButton';
+import Paper from 'material-ui/Paper';
+import DropDownMenu from 'material-ui/DropDownMenu';
+import MenuItem from 'material-ui/MenuItem';
+const styles = {
+  button: {
+    margin: '1em 0.5em',
+    width: '15vw'
+  },
+};
 
-export default class Navigation extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state={
-      isMode: false
-    }
-  }
+export default class Nav extends Component {
+    render() {
+      const {props} = this;
+      return (
+        <Paper zDepth={1} style={{width: '100%', height: '7vh', position: 'relative'}}>
+          { (props.pathname === '/')&&(
+            <RaisedButton
+              label={props.mode === 'mode-welcome' ? 'Project Home': 'Back to Home'}
+              style={styles.button}
+              onTouchTap={(e)=>{
+                e.preventDefault();
+                if(props.mode !== 'mode-welcome'){
+                  props.dispatch({type: 'smartselect/changeMode', mode: 'mode-welcome'});
+                  setTimeout(()=>{
+                    props.dispatch({
+                      type: 'smartselect/changeStyle',
+                      styleName: 'customized',
+                    })
+                  },1000)
+                }
+              }}
+            >
+            </RaisedButton>
+          )}
+          {(props.pathname === '/portfolio')&&(
+            <RaisedButton
+              href="/"
+              label='Back to Home'
+              style={styles.button}
+            >
+            </RaisedButton>
+          )}
 
-  render() {
-    const props = { ...this.props };
-    delete props.isMode;
-    const firstNavItem= props.mode === 'mode-welcome' ? 'Home' : 'Back'
-    const navData = props.mode === 'mode-welcome' ? {Item1: 'Background', Item2: 'About Model'} : {}
-    const navChildren = Object.keys(navData)
-    .map((item, i) => (<NavItem key={i} href={`#${navData[item]}`}>{navData[item]}</NavItem>));
-
-    return (
-      <Navbar collapseOnSelect style={{margin: 0, height: '7vh', borderRadius: 0}}>
-        <Navbar.Header>
-          {/* <Navbar.Brand >
-          </Navbar.Brand> */}
-          <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse >
-          <Nav style={{fontSize: '1.2em'}}>
-            <NavItem onClick={(e) => {
-              e.preventDefault();
-              if(props.mode !== 'mode-welcome'){
-                props.dispatch({type: 'smartselect/changeMode', mode: 'mode-welcome'});
-                setTimeout(()=>{
-                  props.dispatch({
-                    type: 'smartselect/changeStyle',
-                    styleName: 'customized',
-                  })
-                },1000)
-              }
-            }} href="#">{firstNavItem}</NavItem>
-            {navChildren}
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+          {(props.mode === 'mode-welcome')&&(
+            <RaisedButton
+              href="/portfolio"
+              label="Other Works"
+              style={styles.button}
+            >
+            </RaisedButton>
+          )}
+          {(props.pathname === '/portfolio')&&(
+            <DropDownMenu
+              selectedMenuItemStyle={{color:'#158cba'}}
+              value={props.portName}
+              onChange={(e, value) => {
+                e.preventDefault();
+                props.dispatch({type: 'smartselect/changePortfolio', portName: value===0?'design':'analysis'});
+              }}
+              style={{position: 'absolute'}}>
+              <MenuItem value={'design'} primaryText="Urban Design + Planning" />
+              <MenuItem value={'analysis'} primaryText="Geospatial Analysis" />
+            </DropDownMenu>
+          )}
+          <div style={{position: 'absolute', right: 0, top:0 ,margin:'2vh 1.5vw 1.5vh'}}>
+            <h3 style={{color: '#757575'}}>Smart Select</h3>
+          </div>
+        </Paper>
     );
   }
-}
+};

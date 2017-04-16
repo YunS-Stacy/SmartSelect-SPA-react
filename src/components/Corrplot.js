@@ -3,6 +3,7 @@ import g2 from 'g2';
 import createG2 from 'g2-react';
 
 import {Spin} from 'antd';
+
 // x-Axis
 const Chart = createG2(chart => {
 	chart.cols({
@@ -69,7 +70,6 @@ const Chart = createG2(chart => {
 
 export default class Corrplot extends Component {
 	render() {
-
 			return (
 				<div style={{display: 'inline-flex'}}>
 					<div style={{width: '50vw'}}>
