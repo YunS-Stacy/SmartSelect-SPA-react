@@ -3,7 +3,7 @@ import { connect } from 'dva';
 
 import Index from '../components/Index';
 
-function IndexPage({dispatch, smartselect}) {
+function IndexPage({dispatch, location, smartselect}) {
   return (
     <Index
       dispatch = {dispatch}

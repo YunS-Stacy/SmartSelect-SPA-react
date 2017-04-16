@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { Link } from 'dva/router';
+
 
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
@@ -37,7 +39,7 @@ export default class Nav extends Component {
           )}
           {(props.pathname === '/portfolio')&&(
             <RaisedButton
-              href="/"
+              containerElement={<Link to="/" />}
               label='Back to Home'
               style={{margin: '0.7em 0.5em'}}
             >
@@ -46,10 +48,11 @@ export default class Nav extends Component {
 
           {(props.mode === 'mode-welcome')&&(
             <RaisedButton
-              href="/portfolio"
+              containerElement={<Link to="/portfolio" />}
               label="Other Works"
               style={{margin: '0.7em 0.5em',display:'inline-flex'}}
-            />
+            >
+            </RaisedButton>
           )}
           {(props.pathname === '/portfolio')&&(
             <DropDownMenu

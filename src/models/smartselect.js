@@ -110,7 +110,6 @@ export default {
   },
   reducers: {
     changePortfolio(state, {portName}){
-      console.log(portName)
       return {...state, portName}
     },
     showSnack(state, {snackMessage}){

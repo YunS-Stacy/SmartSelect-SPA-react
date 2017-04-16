@@ -23,7 +23,7 @@ export default class Portfolio extends Component {
                       </head>
                       <body style="margin: 0">
                         <div data-configid="22809099/41527839" class="issuuembed" style="height: 99vh"></div>
-                        <script type="text/javascript" src="//e.issuu.com/embed.js"></script>
+                        <script type="text/javascript" src="https://e.issuu.com/embed.js"></script>
                       </body>
                     </html>`}
                   />
@@ -37,7 +37,7 @@ export default class Portfolio extends Component {
                     </head>
                     <body style="margin: 0">
                       <div data-configid="22809099/47345258" class="issuuembed" style="height: 99vh"></div>
-                      <script type="text/javascript" src="//e.issuu.com/embed.js"></script>
+                      <script type="text/javascript" src="https://e.issuu.com/embed.js"></script>
                     </body>
                   </html>`}
                   />

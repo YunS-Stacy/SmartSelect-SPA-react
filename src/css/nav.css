@@ -1,0 +1,92 @@
+.header0 {
+  height: 64px;
+  background: rgba(51, 51, 51, 0.95);
+  width: 100%;
+  z-index: 970;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  top: 0;
+  background-color: #fff;
+  color: #555555;
+}
+.header0-nav {
+  float: left;
+  margin-left: 4%;
+  line-height: 64px;
+  position: relative;
+}
+.header0-nav .ant-menu-horizontal {
+  border-bottom-color: transparent;
+}
+.header0-nav .ant-menu {
+  background: transparent;
+  color: #fff;
+  line-height: 62px;
+}
+.header0-nav .ant-menu li {
+  float: left;
+  text-align: center;
+  width: 100px;
+  color: #333;
+  background-color: transparent;
+}
+.header0-nav .ant-menu-horizontal > .ant-menu-item-active {
+  color: #34aff3;
+  border-bottom-color: #34aff3;
+}
+@media screen and (max-width: 767px) {
+  .header0-phone-nav {
+    width: 16px;
+    height: 14px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 20px;
+  }
+  .header0-phone-nav-bar {
+    position: relative;
+    z-index: 100;
+  }
+  .header0-phone-nav-bar em {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: #FFF;
+    margin-top: 4px;
+    transition: transform .3s .45s, opacity .3s .45s;
+  }
+  .header0-phone-nav-bar :first-child {
+    margin-top: 0;
+  }
+  .header0-phone-nav.open .header0-phone-nav-bar em:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+  .header0-phone-nav.open .header0-phone-nav-bar em:nth-child(2) {
+    opacity: 0;
+  }
+  .header0-phone-nav.open .header0-phone-nav-bar em:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+  .header0-phone-nav.open .header0-phone-nav-text {
+    opacity: 1;
+    pointer-events: auto;
+    transition-timing-function: .45s;
+  }
+  .header0-phone-nav-text {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: 64px;
+    opacity: 0;
+    transition: opacity .3s .45s;
+    pointer-events: none;
+    background: #404040;
+  }
+  .header0-phone-nav-text .ant-menu-item-selected {
+    border: none;
+  }
+}
