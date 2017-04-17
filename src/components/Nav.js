@@ -68,7 +68,7 @@ export default class Nav extends Component {
             </DropDownMenu>
           )}
           <div style={{position: 'absolute', right: 0, top:0 ,margin:'2vh 1.5vw 1.5vh'}}>
-            <h3 style={{color: '#757575'}}>Smart Select</h3>
+            <h2 style={{color: '#757575'}}>Smart Select</h2>
           </div>
         </Paper>
     );
