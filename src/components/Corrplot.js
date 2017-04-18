@@ -84,7 +84,13 @@ export default class Corrplot extends Component {
 						</Spin>
 					</Col>
 					<Col span={8}>
-						<h3>Correlation Matrix</h3>
+						<h3
+							style={{
+								fontSize: '1.6em',
+								fontWeight: '400',
+								textAlign: 'left',
+							}}
+						>Correlation Matrix</h3>
 						<br />
 						<p >Built a large dataset, it's time to find the least variables that describe the apartment price best.</p>
 						<br/>

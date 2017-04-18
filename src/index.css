@@ -95,6 +95,12 @@ h3 {
   padding-top: 5vh
 }
 
+.content-template-wrapper > h3 {
+  font-size: 1.6em;
+  font-weight: 400;
+  text-align: left;
+}
+
 .ontent-template-wrapper:before {
   color: white;
   background-size: cover;

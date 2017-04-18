@@ -8,7 +8,7 @@ import {Row,Col} from 'antd';
 function renderTree(nodes, edges, dx, chart) {
       chart.clear();
       var height = Math.max(500, 26 / dx); // 最小高度 500
-      chart.changeSize(1000, height);
+      chart.changeSize(1300, height);
       // 首先绘制 edges，点要在边的上面
       // 创建单独的视图
       var edgeView = chart.createView();

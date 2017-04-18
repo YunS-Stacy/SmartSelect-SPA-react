@@ -36,7 +36,13 @@ export default class ProcessOverview extends Component {
             </Col>
             <Col offset={2} span={22} key='h3'>
 
-              <h3>
+              <h3
+                style={{
+                  fontSize: '1.6em',
+                  fontWeight: '400',
+                  textAlign: 'left',
+                }}
+              >
                 Workflow
               </h3>
             </Col>
@@ -62,7 +68,13 @@ export default class ProcessOverview extends Component {
               type="flex" align="middle"
             >
               <Col span={9} offset={2}>
-                <h3>
+                <h3
+                  style={{
+                    fontSize: '1.6em',
+                    fontWeight: '400',
+                    textAlign: 'left',
+                  }}
+                >
                   Model Performace <br/>
                   K-Fold Cross-Validation (K=5)
                 </h3>
