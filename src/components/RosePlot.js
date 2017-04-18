@@ -34,30 +34,19 @@ const Chart = createG2(chart => {
 });
 
 export default class RosePlot extends Component {
-	state = {
-		forceFit: true,
-		width: 600,
-		height: 600,
-		plotCfg: {
-			margin: [50,50,50,50]
-		}
-	}
-
 	render() {
 		if (this.props.data.length === 0) {
 			return (<div></div>);
 		} else {
 			return (
-				<div style={{paddingLeft: '5em'}}>
 					<Chart
 						data={this.props.data}
-						width={this.state.width}
-						height={this.state.height}
-						plotCfg={this.state.plotCfg}
-						forceFit={this.state.forceFit} />
-					<p style={{fontSize: '1.4em', marginTop: '-50px', position: 'absolute', marginRight: '50px'}}>Location is, unsprisingly, an important factor. The house prices vary wildly from one neighborhood to another.</p>
-				</div>
-				);
+						width={this.props.width}
+						height={this.props.height}
+						plotCfg={this.props.plotCfg}
+						forceFit={this.props.forceFit}
+					/>
+					);
 			}
 		}
 	};

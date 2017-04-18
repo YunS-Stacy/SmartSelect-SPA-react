@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import g2 from 'g2';
 import createG2 from 'g2-react';
 
-import {Spin} from 'antd';
+import {Spin,Col,Row} from 'antd';
 
 // x-Axis
 const Chart = createG2(chart => {
@@ -71,26 +71,26 @@ const Chart = createG2(chart => {
 export default class Corrplot extends Component {
 	render() {
 			return (
-				<div style={{display: 'inline-flex'}}>
-					<div style={{width: '50vw'}}>
+				<Row>
+					<Col span={12} offset={2}>
 						<Spin
 							spinning={this.props.data.length === 0}
 							size='large'
-							style={{top: '20vw', position: 'absolute'}}
+							// style={{top: '20vw', position: 'absolute'}}
 							delay={500}
 						>
 							{(this.props.data.length === 0) && (<div></div>)}
 							{(this.props.data.length !== 0) && (<Chart {...this.props} />)}
 						</Spin>
-						</div>
-					<div style={{width: '35vw', marginTop: '15vh', paddingRight: '2vw'}}>
+					</Col>
+					<Col span={8}>
 						<h3>Correlation Matrix</h3>
 						<br />
-						<p style={{fontSize: '1.4em'}}>Built a large dataset, it's time to find the least variables that describe the apartment price best.</p>
+						<p >Built a large dataset, it's time to find the least variables that describe the apartment price best.</p>
 						<br/>
-						<p style={{fontSize: '1.4em'}}>To find the relationship between variables, the correlation matrix may serve the goal well.</p>
-					</div>
-				</div>
+						<p >To find the relationship between variables, the correlation matrix may serve the goal well.</p>
+					</Col>
+				</Row>
 			);
 		}
 	}

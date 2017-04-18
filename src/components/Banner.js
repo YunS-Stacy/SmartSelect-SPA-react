@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Icon } from 'antd';
+import { Button, Icon, Row, Col } from 'antd';
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
@@ -13,20 +13,22 @@ export default class Banner extends Component {
         replay
         playScale={[0.3, 0.1]}
         {...props}
-        style={{height: '60vh'}}
       >
-        <QueueAnim
-          type={['bottom', 'top']}
-          delay={200}
-          className={`${props.className}-wrapper`}
-          key="text"
-          id={`${props.id}-wrapper`}
+        <Row
+          className="title"
+          key="title"
+          id={`${props.id}-title`}
+          style={{height:'50vh'}}
+          type="flex" justify="space-around" align="middle"
         >
-          <span
-            className="title"
-            key="title"
-            id={`${props.id}-title`}
+          <QueueAnim
+            type={['bottom', 'top']}
+            delay={200}
+            className={`${props.className}-wrapper`}
+            key="text"
+            id={`${props.id}-wrapper`}
           >
+
             <h2 style={{
               textAlign: 'center',
               color: 'white',
@@ -36,15 +38,21 @@ export default class Banner extends Component {
             }}>
               About Model
             </h2>
-          </span>
-        </QueueAnim>
-        <TweenOne
-          animation={{ y: '-=20', yoyo: true, repeat: -1, duration: 1000 }}
-          className='map-icon'
-          key="icon"
+          </QueueAnim>
+        </Row>
+        <Row
+          key='icon'
+          // style={{margin: '30vh 0 1vh'}}
+          type="flex" justify="space-around" align="bottom"
         >
-          <Icon type="down"/>
-        </TweenOne>
+          <TweenOne
+            animation={{ y: '-=20', yoyo: true, repeat: -1, duration: 1000 }}
+            key="icon"
+          >
+            <Icon type="down" className='scrolldown-icon'/>
+          </TweenOne>
+        </Row>
+
       </OverPack>
     );
   }

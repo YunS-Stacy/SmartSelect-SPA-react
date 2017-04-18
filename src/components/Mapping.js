@@ -126,7 +126,7 @@ export default class Mapping extends Component {
         bearing={this,props.mapBearing}
         pitch={this.props.mapPitch}
         containerStyle={{
-          height: "100vh",
+          height: "99vh",
           width: "100%",
           position: mapPosition,
         }}

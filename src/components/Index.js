@@ -8,7 +8,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Snackbar from 'material-ui/Snackbar';
 
 import Nav from '../components/Nav';
-
 import Mapping from '../components/Mapping';
 import MappingPanel from '../components/MappingPanel';
 import LayerToggle from '../components/LayerToggle';
@@ -23,9 +22,9 @@ import MissingData from '../components/MissingData';
 import Banner from '../components/Banner';
 import Footer from '../components/Footer';
 import Point from '../components/Point';
-import Predictors from '../components/Predictors';
 
-import {Spin} from 'antd';
+import {Spin, Row, Col} from 'antd';
+
 import TrendingDown from 'material-ui/svg-icons/action/trending-down';
 import TrendingUp from 'material-ui/svg-icons/action/trending-up';
 
@@ -72,32 +71,63 @@ export default class Index extends Component {
   renderContent(){
     if(this.props.mode === 'mode-welcome'){
       return (
-        <div>
-          {/* banner and main button*/}
-          <Map
-            dispatch={this.props.dispatch}
-            mapLoaded={this.props.mapLoaded}
-            mode={this.props.mode}
-            id="map" key="map" className='map' isMode={this.state.isMode}/>
-          {/* backgrond */}
-          <Background id="background" key="background" className='background' isMode={this.state.isMode}
-            style= {{height: '50vh'}}/>
-          {/* missing data section */}
-          <MissingData id="missingdata" key="missingdata" className="missingdata" isMode={this.state.isMode}/>
-          {/* data visualization */}
-          <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}
-            dataMarket={this.props.dataMarket}
-          />
-          {/* banner */}
-          <Banner id="banner" key="banner" className='banner' isMode={this.state.isMode}/>
-          {/* process overview */}
-          <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode} style= {{padding: '5em 0'}}/>
-          {/* corrplot */}
-          <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode} style= {{padding: '3em 0'}}
-            data={this.props.dataCorrplot}
-          />
-          <Footer id="footer" key="footer" className='footer' isMode={this.state.isMode}/>
-          <Point key="list" ref="list" data={['map', 'background', 'missingdata', 'localmarket', 'banner', 'processoverview', 'variableselection']} />
+          <div>
+            <Row
+              type="flex" justify="space-around" align="middle"
+              style={{
+                height:'93vh',
+                backgroundColor: 'rgba(82, 186, 213, 0.8)',
+              }}>
+              {/* banner and main button*/}
+              <Map
+                dispatch={this.props.dispatch}
+                mapLoaded={this.props.mapLoaded}
+                mode={this.props.mode}
+                id="map" key="map" className='map' isMode={this.state.isMode}/>
+            </Row>
+            <Row>
+              {/* backgrond */}
+              <Background id="background" key="background" className='background' isMode={this.state.isMode}
+              />
+            </Row>
+            {/* missing data section */}
+            <Row>
+              <MissingData id="missingdata" key="missingdata" className="missingdata" isMode={this.state.isMode}/>
+            </Row>
+            <Row>
+              {/* data visualization */}
+              <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}
+                dataMarket={this.props.dataMarket}
+              />
+            </Row>
+            <Row
+              style={{
+                height: '60vh',
+                backgroundColor: 'rgba(82, 186, 213, 0.8)',
+              }}
+              type="flex" justify="space-around" align="middle"
+            >
+              {/* banner */}
+              <Banner
+                id="banner" key="banner" className='banner' isMode={this.state.isMode}/>
+            </Row>
+            <Row>
+              {/* process overview */}
+              <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode}
+              />
+            </Row>
+            <Row>
+              {/* corrplot */}
+              <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode}
+                data={this.props.dataCorrplot}
+              />
+            </Row>
+            <Row>
+              <Footer
+                style={{height:'9vh', width:'100%'}}
+                id="footer" key="footer" className='footer' isMode={this.state.isMode}/>
+            </Row>
+            <Point key="list" ref="list" data={['map', 'background', 'missingdata', 'localmarket', 'banner', 'processoverview', 'variableselection']} />
         </div>
       )
     } else {
@@ -143,15 +173,16 @@ export default class Index extends Component {
   render() {
     return(
       <MuiThemeProvider>
-        <div className="templates-wrapper">
+        <div>
+
           <Spin
             spinning={!this.props.mapLoaded}
             delay={500}
             size='large'
             style={{
-              visibility: this.props.mode === 'mode-welcome' ? 'hidden' : 'visible',
-              top: '35vh',
-              right: '38vw'
+                  visibility: this.props.mode === 'mode-welcome' ? 'hidden' : 'visible',
+                  top: '35vh',
+                  right: '38vw'
             }}>
             <Mapping
               map={this.props.map}
@@ -179,12 +210,17 @@ export default class Index extends Component {
               styleName={this.props.styleName}
             />
           </Spin>
-          <Nav
-            pathname={this.props.location.pathname}
-            className='nav'
-            dispatch={this.props.dispatch}
-            mode={this.props.mode} id="nav" key="nav" isMode={this.state.isMode}/>
-          {this.renderContent()}
+
+          <Row
+            style={{height:'7vh'}}
+          >
+            <Nav
+              pathname={this.props.location.pathname}
+              className='nav'
+              dispatch={this.props.dispatch}
+              mode={this.props.mode} id="nav" key="nav" isMode={this.state.isMode}/>
+            {this.renderContent()}
+          </Row>
         </div>
       </MuiThemeProvider>
     );

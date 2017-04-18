@@ -3,8 +3,9 @@ import TweenOne from 'rc-tween-one';
 import QueueAnim from 'rc-queue-anim';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
 
+import { Row, Col } from 'antd';
+
 import Workflow from '../components/Workflow';
-import ModelSelection from '../components/ModelSelection';
 import ChartPlot from '../components/ChartPlot';
 
 export default class ProcessOverview extends Component {
@@ -16,67 +17,68 @@ export default class ProcessOverview extends Component {
     const imgAnim = isMode ? { y: 30, opacity: 0, delay: 400, type: 'from', ease: 'easeOutQuad' }
     : { x: 30, opacity: 0, type: 'from', ease: 'easeOutQuad' };
     return (
-      <div {...props} className="content-template-wrapper processoverview-wrapper"
-        style={{height: '150vh', padding: '0 2vw', paddingTop: '10vh'}}
+      <Row {...props} className="content-template-wrapper processoverview-wrapper"
       >
         <OverPack
           className={`content-template ${props.className}`}
           location={props.id}
         >
           <QueueAnim
-            className={`${props.className}-text`}
             key="text"
             type={queue}
             leaveReverse
             ease={['easeOutQuad', 'easeInQuad']}
-            id={`${props.id}-textWrapper`}
           >
-            <h1
-              key="h1"
-              id={`${props.id}-title`}
-            >
-              Process Overview
-            </h1>
-            <h3
-              key="h3"
-              id={`${props.id}-title`}
-            >
-              Workflow
-            </h3>
+            <Col span={24} key='h2'>
+              <h2>
+                Process Overview
+              </h2>
+            </Col>
+            <Col offset={2} span={22} key='h3'>
+
+              <h3>
+                Workflow
+              </h3>
+            </Col>
+
           </QueueAnim>
+          <Row key='workflow'>
+            <TweenOne
+              key="img1"
+              animation={imgAnim}
+              resetStyleBool
+            >
+              <Workflow/>
+            </TweenOne>
+          </Row>
+
+
           <TweenOne
-            className={`${props.className}-img`}
-            key="img1"
-            animation={imgAnim}
-            resetStyleBool
-          >
-            <Workflow/>
-          </TweenOne>
-          <TweenOne
-            className={`${props.className}-img`}
             key="img2"
             animation={imgAnim}
             resetStyleBool
           >
-            <h3
-              key="h3"
-              id={`${props.id}-title`}
+            <Row
+              type="flex" align="middle"
             >
-              K-Fold Cross-Validation (K=5)
-            </h3>
-            <div style={{display: 'inline-flex'}}>
-              <div style={{fontSize: '1.4em'}}>
-                <br />
-                <br />
-                <br />
-
-                The model of Random Forests is the final winner between models, and is chosen to provide the predicted values.
-              </div>
-              <ChartPlot/>
-            </div>
+              <Col span={9} offset={2}>
+                <h3>
+                  Model Performace <br/>
+                  K-Fold Cross-Validation (K=5)
+                </h3>
+                <br></br>
+                <br></br>
+                <p>
+                  The model of Random Forests is the final winner between models, and is chosen to provide the predicted values.
+                </p>
+              </Col>
+              <Col span={9} offset={2}>
+                <ChartPlot/>
+              </Col>
+            </Row>
           </TweenOne>
         </OverPack>
-      </div>
+      </Row>
     );
   }
 }

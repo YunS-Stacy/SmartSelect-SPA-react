@@ -64,32 +64,19 @@ const Chart = createG2(chart => {
 
 });
 
-export default class RosePlotPhilly extends Component {
-  state = {
-    // data: [],
-    forceFit: true,
-    height: 600,
-    width: 500,
-    plotCfg: {
-      margin: [100,150,100,50]
-    }
-  }
+export default class SpiralPlot extends Component {
     render() {
       if (this.props.data.length === 0) {
         return (<div></div>);
       } else {
         return (
-          <div>
             <Chart
               data={this.props.data}
-              width={this.state.width}
-              height={this.state.height}
-              plotCfg={this.state.plotCfg}
-              forceFit={this.state.forceFit}
+              width={this.props.width}
+              height={this.props.height}
+              plotCfg={this.props.plotCfg}
+              forceFit={this.props.forceFit}
             />
-            <p style={{fontSize: '1.4em', marginTop: '-50px', position: 'absolute', marginRight: '50px'}}>It can be observed that in Philadelphia, the local housing market maintains a healthy state in recent years, which reflects a stable housing demand.</p>
-
-          </div>
         );
       }
     }

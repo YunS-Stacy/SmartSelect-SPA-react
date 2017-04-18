@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { Row, Col } from 'antd';
+
 import QueueAnim from 'rc-queue-anim';
 import TweenOne from 'rc-tween-one';
 import OverPack from 'rc-scroll-anim/lib/ScrollOverPack';
@@ -11,11 +13,13 @@ const solutionContent = `The final model used only "LOCATION" factors as predict
                           Everyone will have an easy access to get a suggested price for a parcel!`
 export default class Background extends Component {
   getBlockChildren = (item, i) =>(
-    <li key={i} id={`${this.props.id}-block${i}`}
+    <Col
+      span={6} offset={2}
+      key={i} id={`${this.props.id}-block${i}`}
     >
       <h3>{item.title}</h3>
       <p>{item.content}</p>
-    </li>);
+    </Col>);
 
   render() {
     const props = { ...this.props };
@@ -39,19 +43,25 @@ export default class Background extends Component {
         >
           <TweenOne
             animation={{ y: '+=30', opacity: 0, type: 'from' }}
-            component="h1"
             key="h1"
             reverseDelay={300}
             id={`${props.id}-title`}
           >
-            Background
+            <h2>
+              Background
+            </h2>
           </TweenOne>
-          <QueueAnim
-            component="ul" type="bottom" key="block" leaveReverse
-            id={`${props.id}-contentWrapper`}
+          <Row
+            key='content'
+            type="flex" justify="space-around" align="top"
           >
-            {listChildren}
-          </QueueAnim>
+            <QueueAnim
+              type="bottom" key="block" leaveReverse
+              id={`${props.id}-contentWrapper`}
+            >
+              {listChildren}
+            </QueueAnim>
+          </Row>
         </OverPack>
       </div>
     );

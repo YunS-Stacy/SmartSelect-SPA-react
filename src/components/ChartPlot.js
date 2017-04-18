@@ -28,7 +28,6 @@ const Chart = createG2(chart => {
 		'Index': { min: 0},
 		'Methods': {alias: 'Model Type'}
 	});
-
 	chart.intervalDodge().position('Methods*Index').color('type', 'rgb(254, 190, 18)-rgb(29, 145, 192)');
 	chart.render();
 });
@@ -36,9 +35,9 @@ const Chart = createG2(chart => {
 export default class ChartPlot extends Component {
 	state = {
 		data: [],
-		forceFit: false,
+		forceFit: true,
 		width: 500,
-		height: 250,
+		height: 400,
 		plotCfg: {
 			margin: [50,100,50,70]
 		}

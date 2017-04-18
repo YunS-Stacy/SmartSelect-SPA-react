@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import g2, { Shape, Layout, Stat } from 'g2';
 import createG2 from 'g2-react';
 
+import {Row,Col} from 'antd';
+
+
 function renderTree(nodes, edges, dx, chart) {
       chart.clear();
       var height = Math.max(500, 26 / dx); // 最小高度 500
-      chart.changeSize(1300, height);
+      chart.changeSize(1000, height);
       // 首先绘制 edges，点要在边的上面
       // 创建单独的视图
       var edgeView = chart.createView();
@@ -295,22 +298,23 @@ export default class Workflow extends Component {
       },
     ],
     forceFit: true,
-    width: 1000,
-    height: 450,
+    width: 1500,
+    height: 500,
     plotCfg: {
       margin: [20,50]
     },
   }
 render(){
   return (
-    <div>
-      <Chart
-        data={this.state.data}
-        width={this.state.width}
-        height={this.state.height}
-        plotCfg={this.state.plotCfg}
-        forceFit={this.state.forceFit} />
-    </div>
+      <Col span={22} offset={1}>
+        <Chart
+          data={this.state.data}
+          width={this.state.width}
+          height={this.state.height}
+          plotCfg={this.state.plotCfg}
+          forceFit={this.state.forceFit}
+        />
+      </Col>
     );
   }
 };
