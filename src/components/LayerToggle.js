@@ -8,7 +8,7 @@ import Checkbox from 'material-ui/Checkbox';
 const styles ={
   label: {
     fontWeight: 400,
-    fontSize: '0.9em'
+    fontSize: '0.85em'
   },
   paper: {
     width: '13.7em',
@@ -16,7 +16,8 @@ const styles ={
     position: 'absolute',
     top: '5.5em',
     right: '1em',
-    borderRadius: '5px'
+    borderRadius: '5px',
+    padding: '0.5em'
   },
   group: {
     marginLeft: '0.5em',

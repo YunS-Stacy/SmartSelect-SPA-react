@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import mapboxgl from 'mapbox-gl';
+// import { IntroManager } from '@panorama/toolkit';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -18,14 +18,13 @@ import CommunicationChat from 'material-ui/svg-icons/communication/chat';
 import NavigationChevronRight from 'material-ui/svg-icons/navigation/chevron-right';
 import NavigationChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 
-import QuerySlider from '../components/QuerySlider';
 import SearchInput from '../components/SearchInput';
 
 const paperStyle = {
 	"position": 'absolute',
 	"width": '25vw',
 	"margin": '0',
-	"padding": '0 0 2em 0',
+	"padding": '2em',
 	"backgroundColor": 'rgba(255,255,255,0.8)',
 }
 
@@ -36,6 +35,48 @@ export default class MappingPanel extends Component{
 		stepIndex: 0,
 		slider: 50,
 	}
+
+	//
+	// let introManagerConfig = {
+	//   open: true,
+	//   step: 1,
+	//   config: {
+	//     showStepNumbers: false,
+	//     skipLabel: '×',
+	//     nextLabel: '⟩',
+	//     prevLabel: '⟨',
+	//     doneLabel: '×'
+	//   },
+	//
+	//   steps: [
+	//     {
+	//       "element": ".left-column .top-row.template-tile",
+	//       "intro": "Some copy describing the first element.",
+	//       "position": "right"
+	//     },
+	//     {
+	//       "element": ".right-column .top-row.template-tile",
+	//       "intro": "<p>Some <strong>HTML</strong>copy for the second element.</p>",
+	//       "position": "left"
+	//     },
+	//     {
+	//       "element": ".left-column .bottom-row.template-tile",
+	//       "intro": "Saved the best element for last.",
+	//       "position": "top"
+	//     }
+	//   ],
+	//
+	//   onExit: () => {
+	//     // @panorama/toolkit components strive to be stateless.
+	//     // Therefore, consumers of IntroManager are expected to
+	//     // pass open/closed state into the component.
+	//     this.setState({
+	//       intro: {
+	//         open: false
+	//       }
+	//     });
+	//   }
+	// }
 
 	handleCalculate = () => {
 		this.props.dispatch({
@@ -98,20 +139,20 @@ export default class MappingPanel extends Component{
 			</div>
 		);
 	}
-	renderSlider(stepIndex){
-		if(stepIndex === 1){
-			return (
-				<QuerySlider
-					data={this.props.dataSlider}
-					height={130}
-					width={400}
-					plotCfg={{margin: [10,30,40,60]}}
-					forceFit={true}
-					dispatch={this.props.dispatch}
-				/>
-			)
-		} else {return <div></div>}
-	}
+	// renderSlider(stepIndex){
+	// 	if(stepIndex === 1){
+	// 		return (
+	// 			<QuerySlider
+	// 				data={this.props.dataSlider}
+	// 				height={130}
+	// 				width={400}
+	// 				plotCfg={{margin: [10,30,40,60]}}
+	// 				forceFit={true}
+	// 				dispatch={this.props.dispatch}
+	// 			/>
+	// 		)
+	// 	} else {return <div></div>}
+	// }
 
 	componentWillUpdate(nextProps,nextState){
 		if(this.state.stepIndex !== nextState.stepIndex){
@@ -173,7 +214,7 @@ export default class MappingPanel extends Component{
 		const {loading, stepIndex} = this.state;
 		return (
 			<div>
-				{this.renderSlider(stepIndex)}
+				{/* {this.renderSlider(stepIndex)} */}
 				<Paper style={paperStyle} zDepth={3}>
 					<Spin
 						spinning={!this.props.mapLoaded}
@@ -320,7 +361,7 @@ export default class MappingPanel extends Component{
 						</Stepper>
 					</Spin>
 
-					</Paper>
+				</Paper>
 				</div>
 	);
 }

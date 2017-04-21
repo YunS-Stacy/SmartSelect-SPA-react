@@ -9,7 +9,7 @@ import createG2 from 'g2-react';
 
 const paperStyle = {
   position: 'absolute',
-  bottom: '3vh',
+  top: '75vh',
   left: '0',
   width: '50vw',
   height: '25vh',

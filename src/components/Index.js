@@ -22,6 +22,8 @@ import MissingData from '../components/MissingData';
 import Banner from '../components/Banner';
 import Footer from '../components/Footer';
 import Point from '../components/Point';
+import QuerySlider from '../components/QuerySlider';
+
 
 import {Spin, Row, Col} from 'antd';
 
@@ -137,6 +139,7 @@ export default class Index extends Component {
             tableStatus={this.props.tableStatus}
             tableMessage={this.props.tableMessage}
           />
+
           <MappingPanel
             dataSlider={this.props.dataSlider}
             mode={this.props.mode}
@@ -145,6 +148,20 @@ export default class Index extends Component {
             dispatch={this.props.dispatch}
             mapLoaded={this.props.mapLoaded}
           />
+          {(this.props.mode === 'mode-query') && (
+            <QuerySlider
+              data={this.props.dataSlider}
+              height={130}
+              width={400}
+              plotCfg={{margin: [10,30,40,60]}}
+              forceFit={true}
+              dispatch={this.props.dispatch}
+              style={{
+                position: 'absolute',
+                top: '75vh'
+              }}
+            />
+          )}
           <LayerToggle
             styleName={this.props.styleName}
             mode={this.props.mode}
