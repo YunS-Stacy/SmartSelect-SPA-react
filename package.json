@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "roadhog server",
-    "build": "roadhog build"
+    "build": "roadhog build --debug"
   },
   "engines": {
     "install-node": "6.9.2"
