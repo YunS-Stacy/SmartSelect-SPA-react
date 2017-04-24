@@ -1,7 +1,8 @@
 import request from '../utils/request';
 import {google, mapbox} from './config.json'
 export function slider() {
-  return request(`https://yunshi-stacy.carto.com/api/v2/sql?format=JSON&q=SELECT cartodb_id as id,zpid,opaid,refprice FROM finalparcel`);
+  // return request(`https://yunshi-stacy.carto.com/api/v2/sql?format=JSON&q=SELECT cartodb_id as id,zpid,opaid,refprice FROM finalparcel`);
+  return request(`https://smartselect-34c02.firebaseio.com/slider.json`);
 }
 
 export function market() {
@@ -21,4 +22,8 @@ export function direction(origin, dest, methods) {
 
 export function modelPerformance() {
   return request(`https://smartselect-34c02.firebaseio.com/modelPerformance.json`);
+}
+
+export function listing() {
+  return request(`https://smartselect-34c02.firebaseio.com/houseListing.json`);
 }

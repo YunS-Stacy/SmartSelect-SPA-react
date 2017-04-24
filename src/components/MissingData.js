@@ -18,6 +18,8 @@ export default class MissingData extends Component {
       <Row
         {...props}
         className={`content-template-wrapper content-half-wrapper missingdata-wrapper`}
+        type="flex" justify="space-around" align="middle"
+
       >
         <OverPack
           className={`content-template missingdata`}
@@ -48,8 +50,8 @@ export default class MissingData extends Component {
             <Col
               span={8}
               offset={1}
+              style={{padding:'5em 0'}}
             >
-
               <h3 key="h3" id={`${props.id}-title`}>
               Find the Missing Piece</h3>
               <p

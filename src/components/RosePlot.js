@@ -41,12 +41,14 @@ export default class RosePlot extends Component {
 			return (
 					<Chart
 						data={this.props.data}
-						width={this.props.width}
-						height={this.props.height}
-						plotCfg={this.props.plotCfg}
-						forceFit={this.props.forceFit}
+						forceFit={true}
+						width={600}
+						height={600}
+						plotCfg={{
+								margin: [50,50,50,50]
+						}}
 					/>
-					);
+				);
 			}
 		}
 	};

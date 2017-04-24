@@ -106,7 +106,9 @@ export default {
       valueHigh: '',
       valueLow: '',
     },
-    portName: 'design'
+    portName: 'design',
+    listing: [],
+    imgsrc: '',
   },
   reducers: {
     changePortfolio(state, {portName}){
@@ -447,9 +449,20 @@ export default {
         return {...state, parcelRange}
       },
 
+      getTable(state, {resListing}){
+        let {imgsrc, listing} = state;
+        listing = resListing.data;
+
+        let pts = listing.map((item)=>{
+          return `pin-s+52bad5(${item.lon},${item.lat})`
+        });
+        imgsrc = `https://api.mapbox.com/styles/v1/mapbox/light-v9/static/${_.join(pts, ',')}/-75.145507,39.982574,10/600x600@2x?logo=false&access_token=${mapbox}`;
+        return {...state, listing, imgsrc}
+      },
+
       getChartData(state, {resSlider,resMarket,resCorrplot}){
         // slider
-        const tempSlider = resSlider.data.rows
+        const tempSlider = resSlider.data;
         const frameSlider = new Frame(tempSlider);
         const filterSlider = Frame.filter(frameSlider, function(obj, index) {
           return obj.refprice < 600000;
@@ -494,10 +507,11 @@ export default {
           const resSlider = yield call(fetchData.slider);
           const resMarket = yield call(fetchData.market);
           const resCorrplot = yield call(fetchData.corrplot);
+          const resListing = yield call(fetchData.listing);
           yield put({ type: 'getChartData', resSlider, resMarket, resCorrplot});
+          yield put({ type: 'getTable', resListing});
           yield put({ type: 'asyncLoaded', mapLoaded: true});
         },
-
         *queryZillow({zpid}, {call, put}){
           yield put({ type: 'asyncLoaded', mapLoaded: false});
           const dataZillow = yield call(Zillow.getComps, zpid);

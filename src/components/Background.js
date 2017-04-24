@@ -14,7 +14,7 @@ const solutionContent = `The final model used only "LOCATION" factors as predict
 export default class Background extends Component {
   getBlockChildren = (item, i) =>(
     <Col
-      span={6} offset={2}
+      span={6}
       key={i} id={`${this.props.id}-block${i}`}
     >
       <h3>{item.title}</h3>
@@ -51,18 +51,20 @@ export default class Background extends Component {
               Background
             </h2>
           </TweenOne>
-          <Row
-            key='content'
-            type="flex" justify="space-around" align="top"
+
+          <QueueAnim
+            type="bottom" key="block" leaveReverse
+            id={`${props.id}-contentWrapper`}
           >
-            <QueueAnim
-              type="bottom" key="block" leaveReverse
-              id={`${props.id}-contentWrapper`}
+            <Row
+              key='content'
+              type="flex" justify="space-around" align="top"
             >
               {listChildren}
+            </Row>
+
             </QueueAnim>
-          </Row>
-        </OverPack>
+          </OverPack>
       </div>
     );
   }

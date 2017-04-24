@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 import enquire from 'enquire.js';
 import { scrollScreen } from 'rc-scroll-anim';
 
@@ -10,6 +9,9 @@ import Snackbar from 'material-ui/Snackbar';
 import Nav from '../components/Nav';
 import Mapping from '../components/Mapping';
 import MappingPanel from '../components/MappingPanel';
+
+// import PanelTour from '../components/PanelTour';
+
 import LayerToggle from '../components/LayerToggle';
 import InfoCard from '../components/InfoCard';
 import Map from '../components/Map';
@@ -49,6 +51,12 @@ export default class Index extends Component {
     this.enquireScreen((isMode) => {
       this.setState({ isMode });
     });
+    setTimeout(() => {
+      this.setState({
+        isReady: true,
+        isRunning: true,
+      });
+    }, 8000);
   }
 
   componentWillReceiveProps(nextProps){
@@ -73,43 +81,45 @@ export default class Index extends Component {
   renderContent(){
     if(this.props.mode === 'mode-welcome'){
       return (
-          <div>
-            <Row
-              type="flex" justify="space-around" align="middle"
-              style={{
+        <div>
+          <Row
+            type="flex" justify="space-around" align="middle"
+            style={{
                 height:'93vh',
                 backgroundColor: 'rgba(82, 186, 213, 0.8)',
-              }}>
-              {/* banner and main button*/}
-              <Map
-                dispatch={this.props.dispatch}
-                mapLoaded={this.props.mapLoaded}
-                mode={this.props.mode}
-                id="map" key="map" className='map' isMode={this.state.isMode}/>
-            </Row>
-            <Row>
-              {/* backgrond */}
-              <Background id="background" key="background" className='background' isMode={this.state.isMode}
-              />
-            </Row>
-            {/* missing data section */}
-            <Row>
-              <MissingData id="missingdata" key="missingdata" className="missingdata" isMode={this.state.isMode}/>
-            </Row>
-            <Row>
-              {/* data visualization */}
-              <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}
-                dataMarket={this.props.dataMarket}
-              />
-            </Row>
-            <Row
-              style={{
+            }}>
+            {/* banner and main button*/}
+            <Map
+              dispatch={this.props.dispatch}
+              mapLoaded={this.props.mapLoaded}
+              mode={this.props.mode}
+              id="map" key="map" className='map' isMode={this.state.isMode}/>
+          </Row>
+          <Row>
+            {/* backgrond */}
+            <Background id="background" key="background" className='background' isMode={this.state.isMode}
+            />
+          </Row>
+          {/* missing data section */}
+          <Row>
+            <MissingData id="missingdata" key="missingdata" className="missingdata" isMode={this.state.isMode}/>
+          </Row>
+          <Row>
+            {/* data visualization */}
+            <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}
+              dataMarket={this.props.dataMarket}
+              listing={this.props.listing}
+              imgsrc={this.props.imgsrc}
+            />
+          </Row>
+          <Row
+            style={{
                 height: '60vh',
                 backgroundColor: 'rgba(82, 186, 213, 0.8)',
-              }}
-              type="flex" justify="space-around" align="middle"
-            >
-              {/* banner */}
+            }}
+            type="flex" justify="space-around" align="middle"
+          >
+            {/* banner */}
               <Banner
                 id="banner" key="banner" className='banner' isMode={this.state.isMode}/>
             </Row>
@@ -135,11 +145,11 @@ export default class Index extends Component {
     } else {
       return (
         <div>
+
           <InfoCard
             tableStatus={this.props.tableStatus}
             tableMessage={this.props.tableMessage}
           />
-
           <MappingPanel
             dataSlider={this.props.dataSlider}
             mode={this.props.mode}
@@ -191,7 +201,6 @@ export default class Index extends Component {
     return(
       <MuiThemeProvider>
         <div>
-
           <Spin
             spinning={!this.props.mapLoaded}
             delay={500}
@@ -237,6 +246,25 @@ export default class Index extends Component {
               dispatch={this.props.dispatch}
               mode={this.props.mode} id="nav" key="nav" isMode={this.state.isMode}/>
             {this.renderContent()}
+            {/* {(this.props.mode==='mode-query')&&(<Joyride
+              ref={c => (this.joyride = c)}
+              // callback={this.callback}
+              locale={{
+                back: (<span>Back</span>),
+                close: (<span>Close</span>),
+                last: (<span>Last</span>),
+                next: (<span>Next</span>),
+                skip: (<span>Skip</span>),
+              }}
+              run={this.state.isRunning}
+              // showOverlay={this.state.joyrideOverlay}
+              // showSkipButton={true}
+              // showStepsProgress={true}
+              stepIndex={this.state.stepIndex}
+              steps={this.state.steps}
+              ref='indexJoy'
+              // type={this.state.joyrideType}
+            />)} */}
           </Row>
         </div>
       </MuiThemeProvider>

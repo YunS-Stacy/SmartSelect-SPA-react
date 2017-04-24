@@ -13,7 +13,11 @@ import { Button, Spin} from 'antd';
 import SpiralPlot from '../components/SpiralPlot';
 import RosePlot from '../components/RosePlot';
 
+import ListingTable from '../components/ListingTable';
+
+
 export default class LocalMarket extends Component {
+
   render() {
     const props = { ...this.props };
     const isMode = props.isMode;
@@ -44,15 +48,34 @@ export default class LocalMarket extends Component {
               </h2>
             </Row>
             <Row
+              key="h3-table"
+              id={`${props.id}-title`}
+            >
+              <Col offset={1}>
+                <h3>
+                  Lastest Transactions (30 days)
+                </h3>
+              </Col>
+            </Row>
+            <Row key='zillow' style={{marginBottom:'2em'}}>
+              <Col offset={1} span={22}>
+                <ListingTable
+                  listing={this.props.listing}
+                  imgsrc={this.props.imgsrc}/>
+              </Col>
+
+            </Row>
+            <Row
               key="h3"
               id={`${props.id}-title`}
             >
               <Col offset={1}>
                 <h3>
-                  History Data
+                  Historical Data
                 </h3>
               </Col>
             </Row>
+
           </QueueAnim>
           <Spin
             key="spin"
@@ -64,7 +87,7 @@ export default class LocalMarket extends Component {
               key='chart'
               type="flex" justify="space-around" align="middle"
             >
-              <Col span={10} offset={2}  key='spiralplot'
+              <Col span={10} offset={1}  key='spiralplot'
               >
                 <TweenOne
                   className={`${props.className}-img`}
@@ -74,12 +97,6 @@ export default class LocalMarket extends Component {
                 >
                   <SpiralPlot
                     data={this.props.dataMarket.marketPhilly}
-                    forceFit={true}
-                    height={600}
-                    width={500}
-                    plotCfg={{
-                      margin: [100,150,100,50]
-                    }}
                   />
                 </TweenOne>
               </Col>
@@ -92,12 +109,6 @@ export default class LocalMarket extends Component {
                   resetStyleBool
                 >
                   <RosePlot
-                    forceFit={true}
-                    width={600}
-                    height={600}
-                    plotCfg={{
-                        margin: [50,50,50,50]
-                    }}
                     data={this.props.dataMarket.marketNeigh}/>
 
                 </TweenOne>
@@ -106,19 +117,19 @@ export default class LocalMarket extends Component {
           </Spin>
 
           <Row key='text'>
-              <Col
-                span={10} offset={2}
-                style={{paddingBottom: '5vh'}}
-              >
-                <p>It can be observed that in Philadelphia, the local housing market maintains a healthy state in recent years, which reflects a stable housing demand.</p>
-              </Col>
-              <Col
-                span={10} offset={2}
-                style={{paddingBottom: '5vh'}}
-              >
-                <p>Location is, unsprisingly, an important factor. The house prices vary wildly from one neighborhood to another.</p>
-              </Col>
-            </Row>
+            <Col
+              span={10} offset={1}
+              style={{paddingBottom: '5vh'}}
+            >
+              <p>It can be observed that in Philadelphia, the local housing market maintains a healthy state in recent years, which reflects a stable housing demand.</p>
+            </Col>
+            <Col
+              span={10} offset={2}
+              style={{paddingBottom: '5vh'}}
+            >
+              <p>Location is, unsprisingly, an important factor. The house prices vary wildly from one neighborhood to another.</p>
+            </Col>
+          </Row>
 
 
         </OverPack>

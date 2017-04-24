@@ -72,10 +72,12 @@ export default class SpiralPlot extends Component {
         return (
             <Chart
               data={this.props.data}
-              width={this.props.width}
-              height={this.props.height}
-              plotCfg={this.props.plotCfg}
-              forceFit={this.props.forceFit}
+              forceFit={true}
+              height={600}
+              width={500}
+              plotCfg={{
+                margin: [100,150,100,50]
+              }}
             />
         );
       }

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import { IntroManager } from '@panorama/toolkit';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -35,49 +34,6 @@ export default class MappingPanel extends Component{
 		stepIndex: 0,
 		slider: 50,
 	}
-
-	//
-	// let introManagerConfig = {
-	//   open: true,
-	//   step: 1,
-	//   config: {
-	//     showStepNumbers: false,
-	//     skipLabel: '×',
-	//     nextLabel: '⟩',
-	//     prevLabel: '⟨',
-	//     doneLabel: '×'
-	//   },
-	//
-	//   steps: [
-	//     {
-	//       "element": ".left-column .top-row.template-tile",
-	//       "intro": "Some copy describing the first element.",
-	//       "position": "right"
-	//     },
-	//     {
-	//       "element": ".right-column .top-row.template-tile",
-	//       "intro": "<p>Some <strong>HTML</strong>copy for the second element.</p>",
-	//       "position": "left"
-	//     },
-	//     {
-	//       "element": ".left-column .bottom-row.template-tile",
-	//       "intro": "Saved the best element for last.",
-	//       "position": "top"
-	//     }
-	//   ],
-	//
-	//   onExit: () => {
-	//     // @panorama/toolkit components strive to be stateless.
-	//     // Therefore, consumers of IntroManager are expected to
-	//     // pass open/closed state into the component.
-	//     this.setState({
-	//       intro: {
-	//         open: false
-	//       }
-	//     });
-	//   }
-	// }
-
 	handleCalculate = () => {
 		this.props.dispatch({
 			type: 'smartselect/askCalculate'
@@ -139,21 +95,6 @@ export default class MappingPanel extends Component{
 			</div>
 		);
 	}
-	// renderSlider(stepIndex){
-	// 	if(stepIndex === 1){
-	// 		return (
-	// 			<QuerySlider
-	// 				data={this.props.dataSlider}
-	// 				height={130}
-	// 				width={400}
-	// 				plotCfg={{margin: [10,30,40,60]}}
-	// 				forceFit={true}
-	// 				dispatch={this.props.dispatch}
-	// 			/>
-	// 		)
-	// 	} else {return <div></div>}
-	// }
-
 	componentWillUpdate(nextProps,nextState){
 		if(this.state.stepIndex !== nextState.stepIndex){
 			switch (nextState.stepIndex) {
@@ -199,11 +140,11 @@ export default class MappingPanel extends Component{
 				},1000)
 				break;
 				case 4:
-					this.props.dispatch({
-						type: 'smartselect/changeVis',
-						layerName: 'footprint',
-						layerVis: 'visible',
-					});
+				this.props.dispatch({
+					type: 'smartselect/changeVis',
+					layerName: 'footprint',
+					layerVis: 'visible',
+				});
 				break;
 				default:
 				break;
@@ -234,7 +175,7 @@ export default class MappingPanel extends Component{
 									<p style={{whiteSpace: 'pre-line'}}>
 										{`Welcome!
 
-												Click "Next" to find your next INVESTMENT!`}
+											Click "Next" to find your next INVESTMENT!`}
 									</p>
 									{this.renderStepActions(0)}
 								</StepContent>
@@ -267,9 +208,9 @@ export default class MappingPanel extends Component{
 											</em>
 											<br></br>
 											<span style={{
-														fontSize:'1.3em',
-														fontWeight:'600',
-														color: '#2c9ab7'
+													fontSize:'1.3em',
+													fontWeight:'600',
+													color: '#2c9ab7'
 											}}>
 											Polygon</span>
 											<br></br>
@@ -279,9 +220,9 @@ export default class MappingPanel extends Component{
 
 											<br></br>
 											<span style={{
-														fontSize:'1.3em',
-														fontWeight:'600',
-														color: '#2c9ab7'
+													fontSize:'1.3em',
+													fontWeight:'600',
+													color: '#2c9ab7'
 											}}>
 												Line
 											</span>
@@ -303,7 +244,7 @@ export default class MappingPanel extends Component{
 								</StepLabel>
 								<StepContent>
 									<div style={{
-											display:'inline-flex',
+										display:'inline-flex',
 									}}>
 										<Slider
 											axis='y'
@@ -314,31 +255,31 @@ export default class MappingPanel extends Component{
 											value={this.state.slider}
 											onChange={this.handleSlider}
 											style={{
-													position: 'absolute',
-													height: '8em',
+												position: 'absolute',
+												height: '8em',
 											}}
 											sliderStyle={{
-													position: 'absolute',
-													height: '6em',
-													paddingBottom: 0,
-													top: '1em',
-													left: '1em'
+												position: 'absolute',
+												height: '6em',
+												paddingBottom: 0,
+												top: '1em',
+												left: '1em'
 											}}
 										/>
 										<span style={{fontSize: '0.8em', height: '10em', width: '6em'}}>(Unit: Foot)</span>
 										<div style={{
-												justifyContent: 'center',
-												alignItems: 'flex-end',
-												float:'right',
-												textAlign: 'center'
+											justifyContent: 'center',
+											alignItems: 'flex-end',
+											float:'right',
+											textAlign: 'center'
 										}}>
 											<em>Use the slider to set the height</em><br></br><br></br>
 											Your building will be
 											<br></br>
 											<span style={{
-													fontSize:'1.5em',
-													fontWeight:'600',
-													color: '#2c9ab7'
+												fontSize:'1.5em',
+												fontWeight:'600',
+												color: '#2c9ab7'
 											}}>{this.props.height} </span>
 											feet!
 										</div>
@@ -360,9 +301,8 @@ export default class MappingPanel extends Component{
 							</Step>
 						</Stepper>
 					</Spin>
-
 				</Paper>
-				</div>
-	);
-}
+			</div>
+		);
+	}
 };

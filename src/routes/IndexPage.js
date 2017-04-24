@@ -44,6 +44,8 @@ function mapStateToProps(state){
     compsPts,
     routeLines,
     routePts,
+    listing,
+    imgsrc,
   } = state.smartselect;
   return {
     mapLoaded,
@@ -76,6 +78,8 @@ function mapStateToProps(state){
     compsPts,
     routeLines,
     routePts,
+    listing,
+    imgsrc,
   };
 }
 
