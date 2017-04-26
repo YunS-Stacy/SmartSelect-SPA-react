@@ -84,6 +84,8 @@ export default class Corrplot extends Component {
 						</Spin>
 					</Col>
 					<Col span={8}>
+						<br />
+						<br />
 						<h3
 							style={{
 								fontSize: '1.6em',

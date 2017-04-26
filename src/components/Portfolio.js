@@ -17,10 +17,9 @@ export default class Portfolio extends Component {
                   />
                 </Row>
                 <Row>
-
                   {(this.props.portName === 'design')&&(
                     <Frame
-                      style={{width: '100%',height:'100vw', border: '0', margin: 'auto'}}
+                      style={{width: '100%',height:'92vh', border: '0', margin: 'auto'}}
                       initialContent={`<!DOCTYPE html>
                     <html>
                       <head>
@@ -34,7 +33,7 @@ export default class Portfolio extends Component {
                   )}
                   {(this.props.portName === 'analysis')&&(
                     <Frame
-                      style={{width: '100%',height:'100vw', border: '0', margin: 'auto'}}
+                      style={{width: '100%',height:'92vh', border: '0', margin: 'auto'}}
                       initialContent={`<!DOCTYPE html>
                   <html>
                     <head>
@@ -47,7 +46,7 @@ export default class Portfolio extends Component {
                     />
                   )}
                 </Row>
-                
+
               </div>
             </MuiThemeProvider>
 

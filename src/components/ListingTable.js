@@ -10,7 +10,7 @@ export default class ListingTable extends Component {
 					delay={500}
 					size='large'
 				>
-					<Row>
+					<Row style={{padding: '0 5vw'}}>
 						<Table
 							height={'60vh'}
 							selectable={true}
@@ -53,17 +53,19 @@ export default class ListingTable extends Component {
 							style={{marginTop:'2em'}}
 							type="flex" align="middle"
 						>
-							<Col span={10}>
+							<Col span={10} offset={1}>
+								<br />
 								<h3>Market Heat</h3>
 								<br />
-								<p>From the latest transactions, it is easier to spot the market heat far away from your own home.</p>
+								<p style={{whiteSpace:'pre-line'}}>{`From the latest transactions, it is easier to spot the market heat far away from your own home.
+
+									For instance, you can stay in the Rittenhouse when building a pencil-out model about your investment in Overbrook depending on the real-time data.`}</p>
 							</Col>
 							<Col span={10} offset={2}>
-								<img src={this.props.imgsrc} style={{height:'400px'}}/>
+								<img src={this.props.imgsrc} style={{height:'550px'}}/>
 							</Col>
 						</Row>
 					)}
-
 				</Spin>
 			);
 		}

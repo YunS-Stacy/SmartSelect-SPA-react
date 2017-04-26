@@ -54,6 +54,7 @@ export default class MissingData extends Component {
             >
               <h3 key="h3" id={`${props.id}-title`}>
               Find the Missing Piece</h3>
+              <br />
               <p
                 key="p" id={`${props.id}-content`}>
                 As mentioned, public data sources for real estate are complicated with >30% missing values.

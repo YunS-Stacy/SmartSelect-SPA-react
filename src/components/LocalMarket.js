@@ -58,7 +58,7 @@ export default class LocalMarket extends Component {
               </Col>
             </Row>
             <Row key='zillow' style={{marginBottom:'2em'}}>
-              <Col offset={1} span={22}>
+              <Col>
                 <ListingTable
                   listing={this.props.listing}
                   imgsrc={this.props.imgsrc}/>
