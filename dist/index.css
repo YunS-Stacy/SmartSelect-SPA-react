@@ -468,6 +468,7 @@ a {
   text-decoration: none;
   outline: none;
   cursor: pointer;
+  -webkit-transition: color .3s ease;
   transition: color .3s ease;
 }
 a:hover {
@@ -2979,6 +2980,7 @@ samp {
   overflow: hidden;
 }
 .ant-motion-collapse-active {
+  -webkit-transition: height .12s, opacity .12s;
   transition: height .12s, opacity .12s;
 }
 @font-face {
@@ -3073,6 +3075,7 @@ body video {
   text-align: center;
 }
 a {
+  -webkit-transition: color 450 cubic-bezier(0.215, 0.61, 0.355, 1);
   transition: color 450 cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 h1, h2, h3, h4, p {
@@ -3230,12 +3233,14 @@ h3 {
   color: #fff;
   background: transparent;
   box-shadow: 0 0 0 transparent;
+  -webkit-transition: background 0.45s cubic-bezier(0.215, 0.61, 0.355, 1), box-shadow 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
   transition: background 0.45s cubic-bezier(0.215, 0.61, 0.355, 1), box-shadow 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
   line-height: 30px;
   font-size: 16px;
 }
 .map-wrapper button span {
   text-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  -webkit-transition: text-shadow 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
   transition: text-shadow 0.45s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 .map-wrapper button:hover {
@@ -3431,6 +3436,7 @@ h3 {
   text-align: center;
   opacity: 0;
   position: absolute;
+  -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
   transition: -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
   transition: transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
   transition: transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86), -webkit-transform 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
@@ -3486,6 +3492,7 @@ h3 {
   margin-top: -26px;
 }
 .ant-spin-container {
+  -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   position: relative;
 }
@@ -3507,6 +3514,7 @@ h3 {
   bottom: 0;
   background: #fff;
   opacity: 0.3;
+  -webkit-transition: all .3s;
   transition: all .3s;
 }
 .ant-spin-tip {
@@ -6498,6 +6506,7 @@ h3 {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   position: relative;
   color: rgba(0, 0, 0, 0.65);
@@ -6517,6 +6526,7 @@ h3 {
 }
 .ant-btn:not([disabled]):active {
   outline: 0;
+  -webkit-transition: none;
   transition: none;
 }
 .ant-btn.disabled,
@@ -7100,6 +7110,7 @@ h3 {
   content: '';
   border-radius: inherit;
   z-index: 1;
+  -webkit-transition: opacity .2s;
   transition: opacity .2s;
   pointer-events: none;
   display: none;
@@ -7108,6 +7119,7 @@ h3 {
   display: block;
 }
 .ant-btn .anticon {
+  -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 .ant-btn.ant-btn-loading:not(.ant-btn-circle):not(.ant-btn-circle-outline) {
@@ -7920,6 +7932,7 @@ a {
   text-decoration: none;
   outline: none;
   cursor: pointer;
+  -webkit-transition: color .3s ease;
   transition: color .3s ease;
 }
 a:hover {
@@ -10431,6 +10444,7 @@ samp {
   overflow: hidden;
 }
 .ant-motion-collapse-active {
+  -webkit-transition: height .12s, opacity .12s;
   transition: height .12s, opacity .12s;
 }
 @font-face {
@@ -10457,6 +10471,7 @@ samp {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   position: relative;
   color: rgba(0, 0, 0, 0.65);
@@ -10476,6 +10491,7 @@ samp {
 }
 .ant-btn:not([disabled]):active {
   outline: 0;
+  -webkit-transition: none;
   transition: none;
 }
 .ant-btn.disabled,
@@ -11059,6 +11075,7 @@ samp {
   content: '';
   border-radius: inherit;
   z-index: 1;
+  -webkit-transition: opacity .2s;
   transition: opacity .2s;
   pointer-events: none;
   display: none;
@@ -11067,6 +11084,7 @@ samp {
   display: block;
 }
 .ant-btn .anticon {
+  -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 .ant-btn.ant-btn-loading:not(.ant-btn-circle):not(.ant-btn-circle-outline) {
@@ -11425,6 +11443,7 @@ samp {
   margin: 4px auto;
   opacity: .5;
   cursor: pointer;
+  -webkit-transition: opacity .3s;
   transition: opacity .3s;
 }
 .templates-list.active {
