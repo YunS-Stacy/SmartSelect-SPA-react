@@ -100,12 +100,8 @@ export default class Index extends Component {
             <Background id="background" key="background" className='background' isMode={this.state.isMode}
             />
           </Row>
-          {/* missing data section */}
           <Row>
-            <MissingData id="missingdata" key="missingdata" className="missingdata" isMode={this.state.isMode}/>
-          </Row>
-          <Row>
-            {/* data visualization */}
+            {/* local market */}
             <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}
               dataMarket={this.props.dataMarket}
               listing={this.props.listing}
@@ -120,26 +116,30 @@ export default class Index extends Component {
             type="flex" justify="space-around" align="middle"
           >
             {/* banner */}
-              <Banner
-                id="banner" key="banner" className='banner' isMode={this.state.isMode}/>
-            </Row>
-            <Row>
-              {/* process overview */}
-              <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode}
-              />
-            </Row>
+            <Banner
+              id="banner" key="banner" className='banner' isMode={this.state.isMode}/>
+          </Row>
+          <Row>
+            {/* process overview */}
+            <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode}
+            />
             <Row>
               {/* corrplot */}
               <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode}
                 data={this.props.dataCorrplot}
               />
             </Row>
-            <Row>
-              <Footer
-                style={{height:'9vh', width:'100%'}}
-                id="footer" key="footer" className='footer' isMode={this.state.isMode}/>
-            </Row>
-            <Point key="list" ref="list" data={['map', 'background', 'missingdata', 'localmarket', 'banner', 'processoverview', 'variableselection']} />
+          </Row>
+          <Row>
+            {/* missing data section */}
+            <MissingData id="missingdata" key="missingdata" className="missingdata" isMode={this.state.isMode}/>
+          </Row>
+          <Row>
+            <Footer
+              style={{height:'9vh', width:'100%'}}
+              id="footer" key="footer" className='footer' isMode={this.state.isMode}/>
+          </Row>
+          <Point key="list" ref="list" data={['map', 'background', 'localmarket', 'banner', 'processoverview', 'variableselection','missingdata']} />
         </div>
       )
     } else {
@@ -246,25 +246,6 @@ export default class Index extends Component {
               dispatch={this.props.dispatch}
               mode={this.props.mode} id="nav" key="nav" isMode={this.state.isMode}/>
             {this.renderContent()}
-            {/* {(this.props.mode==='mode-query')&&(<Joyride
-              ref={c => (this.joyride = c)}
-              // callback={this.callback}
-              locale={{
-                back: (<span>Back</span>),
-                close: (<span>Close</span>),
-                last: (<span>Last</span>),
-                next: (<span>Next</span>),
-                skip: (<span>Skip</span>),
-              }}
-              run={this.state.isRunning}
-              // showOverlay={this.state.joyrideOverlay}
-              // showSkipButton={true}
-              // showStepsProgress={true}
-              stepIndex={this.state.stepIndex}
-              steps={this.state.steps}
-              ref='indexJoy'
-              // type={this.state.joyrideType}
-            />)} */}
           </Row>
         </div>
       </MuiThemeProvider>

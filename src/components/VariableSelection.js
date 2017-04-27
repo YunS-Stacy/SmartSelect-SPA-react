@@ -16,6 +16,7 @@ export default class VariableSelection extends Component {
         <Row
           {...props}
           className={`content-template-wrapper ${props.className}-wrapper`}
+          style={{height:'100vh'}}
         >
           <OverPack
             className={`content-template-wrapper ${props.className}`}
@@ -34,7 +35,7 @@ export default class VariableSelection extends Component {
               </Col>
             </TweenOne>
             <TweenOne
-              animation={{ y: '+=30', opacity: 0, type: 'from' }}
+              animation={{ x: '+=30', opacity: 0, type: 'from' }}
               key="corrplot"
               reverseDelay={300}
               id={`${props.id}-chart`}

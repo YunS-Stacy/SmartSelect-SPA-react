@@ -19,12 +19,24 @@ export default class MissingData extends Component {
         {...props}
         className={`content-template-wrapper content-half-wrapper missingdata-wrapper`}
         type="flex" justify="space-around" align="middle"
-
+        style={{paddingBottom:'5vh'}}
       >
         <OverPack
           className={`content-template missingdata`}
           location={props.id}
         >
+          <TweenOne
+            animation={{ y: '+=30', opacity: 0, type: 'from' }}
+            key="h3"
+            reverseDelay={300}
+            id={`${props.id}-title`}
+          >
+            <Col span={24}>
+              <h2>
+                Challenge
+              </h2>
+            </Col>
+          </TweenOne>
           <TweenOne
             key="img"
             animation={animType.one}
@@ -38,31 +50,23 @@ export default class MissingData extends Component {
             >
               <img style={{width: '100%'}} src="./img/MissingData.png" />
             </Col>
-          </TweenOne>
-          <QueueAnim
-            className={`missingdata-text`}
-            type={animType.queue}
-            key="text"
-            leaveReverse
-            ease={['easeOutCubic', 'easeInCubic']}
-            id={`${props.id}-textWrapper`}
-          >
-            <Col
-              span={8}
-              offset={1}
-              style={{padding:'5em 0'}}
-            >
-              <h3 key="h3" id={`${props.id}-title`}>
-              Find the Missing Piece</h3>
-              <br />
-              <p
-                key="p" id={`${props.id}-content`}>
-                As mentioned, public data sources for real estate are complicated with >30% missing values.
-              </p>
-            </Col>
+              <Col
+                span={8}
+                offset={1}
+                style={{padding:'5em 0'}}
+              >
+                <h3 key="h3" id={`${props.id}-title`}>
+                Find the Missing Piece</h3>
+                <br />
+                <p
+                  key="p" id={`${props.id}-content`}>
+                  As mentioned, public data sources for real estate are complicated with >30% missing values.
+                </p>
+              </Col>
+            </TweenOne>
 
-          </QueueAnim>
-        </OverPack>
+
+          </OverPack>
       </Row>
     );
   }
