@@ -451,8 +451,7 @@ export default {
 
       getTable(state, {resListing}){
         let {imgsrc, listing} = state;
-        listing = resListing.data;
-
+        listing = _.toArray(resListing.data);
         let pts = listing.map((item)=>{
           return `pin-s+52bad5(${item.lon},${item.lat})`
         });

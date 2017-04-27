@@ -25,5 +25,9 @@ export function modelPerformance() {
 }
 
 export function listing() {
-  return request(`https://smartselect-34c02.firebaseio.com/houseListing.json`);
+  const now = new Date();
+  const year = now.getFullYear();
+  const month=('0'+now.getMonth()).slice(-2)
+  const date = now.getDate();
+  return request(`https://smartselect-34c02.firebaseio.com/houseListing.json?orderBy="solddate"&startAt="${year}-${month}-${date}"`);
 }
