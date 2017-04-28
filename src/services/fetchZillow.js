@@ -12,7 +12,7 @@ const Zillow = {};
 Zillow.getComps = function (zpid) {
   return new Promise(function (resolve, reject) {
     const params = `zws-id=${zillow}&zpid=${zpid}&count=3`;
-    const endpoint = `http://cors-anywhere.herokuapp.com/www.zillow.com/webservice/GetDeepComps.htm?`;
+    const endpoint = `https://cors-anywhere.herokuapp.com/www.zillow.com/webservice/GetDeepComps.htm?`;
     fetch(`${endpoint}${params}`)
     .then(res => res.text())
     .catch(err => reject(err))
