@@ -4,7 +4,7 @@ https://smartselect.herokuapp.com/#/
 
 ### This is the MUSA Capstone Project by Yun Shi, from MUSA 17', UPenn.
 Smart Select is an interactive map created by Yun Shi that explores the commercial real estate investment by predicting the apartment price in Philadelphia.
-![image](./abstract.jpeg)
+![image](./final_poster.pdf)
 
 ## Problem / Question
 - Problem:
@@ -36,6 +36,3 @@ Smart Select is an interactive map created by Yun Shi that explores the commerci
 
 - Gain:
   Apartment price and several comps.
-
-## Finished list:
-- Use of React, Redux
