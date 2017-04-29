@@ -15,10 +15,9 @@ export default class ProcessOverview extends Component {
     delete props.isMode;
     const queue = isMode ? 'bottom' : 'left';
     const imgAnim = isMode ? { y: 30, opacity: 0, delay: 400, type: 'from', ease: 'easeOutQuad' }
-    : { x: 30, opacity: 0, type: 'from', ease: 'easeOutQuad' };
+    : { y: 30, opacity: 0, type: 'from', ease: 'easeOutQuad' };
     return (
-      <Row {...props} className="content-template-wrapper processoverview-wrapper"
-      >
+      <div {...props} className="content-template-wrapper processoverview-wrapper">
         <OverPack
           className={`content-template ${props.className}`}
           location={props.id}
@@ -35,7 +34,6 @@ export default class ProcessOverview extends Component {
               </h2>
             </Col>
             <Col offset={2} span={22} key='h3'>
-
               <h3
                 style={{
                   fontSize: '1.6em',
@@ -46,7 +44,6 @@ export default class ProcessOverview extends Component {
                 Workflow
               </h3>
             </Col>
-
           </QueueAnim>
           <Row key='workflow'>
             <TweenOne
@@ -57,8 +54,6 @@ export default class ProcessOverview extends Component {
               <Workflow/>
             </TweenOne>
           </Row>
-
-
           <TweenOne
             key="img2"
             animation={imgAnim}
@@ -90,7 +85,7 @@ export default class ProcessOverview extends Component {
             </Row>
           </TweenOne>
         </OverPack>
-      </Row>
+      </div>
     );
   }
 }

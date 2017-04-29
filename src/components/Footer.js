@@ -14,9 +14,9 @@ export default class Footer extends Component {
         animation={{ y: '+=30', opacity: 0, type: 'from' }}
         key="footer"
       >
-        <span id={`${props.id}-content`}>
-          Capstone Project by Yun Shi.
-          MUSA 17', University of Pennsylvania
+        <span id={`${props.id}-content`} style={{whiteSpace:'pre-line'}}>
+          {`Capstone Project by Yun Shi.
+          MUSA 17', University of Pennsylvania`}
         </span>
       </TweenOne>
     </OverPack>);

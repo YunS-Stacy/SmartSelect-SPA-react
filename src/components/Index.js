@@ -96,9 +96,12 @@ export default class Index extends Component {
               id="map" key="map" className='map' isMode={this.state.isMode}/>
           </Row>
           <Row>
+
             {/* backgrond */}
             <Background id="background" key="background" className='background' isMode={this.state.isMode}
-            />
+              style={{
+                padding: '5vh 0'
+              }}/>
           </Row>
           <Row>
             {/* local market */}
@@ -106,29 +109,33 @@ export default class Index extends Component {
               dataMarket={this.props.dataMarket}
               listing={this.props.listing}
               imgsrc={this.props.imgsrc}
+              style={{
+                padding: '5vh 0'
+              }}
             />
           </Row>
           <Row
-            style={{
-                height: '60vh',
-                backgroundColor: 'rgba(82, 186, 213, 0.8)',
-            }}
             type="flex" justify="space-around" align="middle"
+            style={{
+              backgroundColor: 'rgba(82, 186, 213, 0.8)',
+            }}
           >
             {/* banner */}
-            <Banner
-              id="banner" key="banner" className='banner' isMode={this.state.isMode}/>
+            <Banner id="banner" key="banner" className='banner' isMode={this.state.isMode}
+              style={{
+                height: '60vh',
+              }}
+            />
           </Row>
           <Row>
             {/* process overview */}
-            <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode}
+            <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode}/>
+          </Row>
+          <Row>
+            {/* corrplot */}
+            <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode}
+              data={this.props.dataCorrplot}
             />
-            <Row>
-              {/* corrplot */}
-              <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode}
-                data={this.props.dataCorrplot}
-              />
-            </Row>
           </Row>
           <Row>
             {/* missing data section */}
@@ -136,7 +143,7 @@ export default class Index extends Component {
           </Row>
           <Row>
             <Footer
-              style={{height:'9vh', width:'100%'}}
+              style={{height:'9vh'}}
               id="footer" key="footer" className='footer' isMode={this.state.isMode}/>
           </Row>
           <Point key="list" ref="list" data={['map', 'background', 'localmarket', 'banner', 'processoverview', 'variableselection','missingdata']} />
@@ -237,9 +244,7 @@ export default class Index extends Component {
             />
           </Spin>
 
-          <Row
-            style={{height:'7vh'}}
-          >
+          <Row>
             <Nav
               pathname={this.props.location.pathname}
               className='nav'

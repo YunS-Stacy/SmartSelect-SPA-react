@@ -35,7 +35,7 @@ export default class VariableSelection extends Component {
               </Col>
             </TweenOne>
             <TweenOne
-              animation={{ x: '+=30', opacity: 0, type: 'from' }}
+              animation={{ y: '-=30', opacity: 0, type: 'from' }}
               key="corrplot"
               reverseDelay={300}
               id={`${props.id}-chart`}
@@ -46,7 +46,7 @@ export default class VariableSelection extends Component {
                 width={550}
                 height={650}
                 plotCfg={{
-                      margin: [0,150,150,50]
+                  margin: [0,150,150,50]
                 }}
               />
 
