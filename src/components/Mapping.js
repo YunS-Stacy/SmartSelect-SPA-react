@@ -280,14 +280,13 @@ export default class Mapping extends Component {
         <Layer
           id='compsPoints'
           type='symbol'
-
           paint={{
-                'icon-opacity': 0.8,
+            'icon-opacity': 0.8,
           }}
           layout={{
-                'icon-image': 'city-15',
-                'icon-allow-overlap': true,
-                'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
+            'icon-image': 'city-15',
+            'icon-allow-overlap': true,
+            'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
           }}
         >
           {this.renderMarker()}

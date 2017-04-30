@@ -305,7 +305,7 @@ export default {
           footVis = 'none';
           parcelVis = 'none';
           mapPitch = [0];
-          mapZoom =[16];
+          mapZoom =[15];
           mapBearing = 0;
           if(state.mode === 'mode-welcome'){
             map.addControl(state.scaleControl,'bottom-right');
