@@ -42,9 +42,22 @@ export default class Index extends Component {
     this.state = {
       isMode: false,
       snackStatus: false,
+      snackMessage: ''
     };
   }
 
+  componentWillReceiveProps(nextProps){
+    if(nextProps.snackMessage !== this.state.snackMessage){
+      this.setState({
+        snackStatus: true,
+        snackMessage: nextProps.snackMessage,
+      })
+    } else {
+      this.setState({
+        snackStatus: false,
+      })
+    }
+  }
 
   componentDidMount() {
     // for mobile;
@@ -57,12 +70,6 @@ export default class Index extends Component {
         isRunning: true,
       });
     }, 8000);
-  }
-
-  componentWillReceiveProps(nextProps){
-    this.setState({
-      snackStatus: nextProps.snackMessage !== (this.props.snackMessage || '') ? true : false
-    })
   }
 
   enquireScreen = (cb) => {
@@ -152,7 +159,6 @@ export default class Index extends Component {
     } else {
       return (
         <div>
-
           <InfoCard
             tableStatus={this.props.tableStatus}
             tableMessage={this.props.tableMessage}
@@ -191,7 +197,7 @@ export default class Index extends Component {
           />
           <Snackbar
             open={this.state.snackStatus}
-            message={this.props.snackMessage}
+            message={this.state.snackMessage}
             autoHideDuration={5000}
             bodyStyle={{
               padding: '1em',
