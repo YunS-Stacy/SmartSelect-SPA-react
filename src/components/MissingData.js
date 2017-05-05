@@ -12,7 +12,7 @@ export default class MissingData extends Component {
     const animType = {
       queue: isMode ? 'bottom' : 'right',
       one: isMode ? { y: '+=30', opacity: 0, type: 'from' }
-        : { x: '-=30', opacity: 0, type: 'from' },
+      : { x: '-=30', opacity: 0, type: 'from' },
     }
     return (
       <Row
@@ -26,7 +26,7 @@ export default class MissingData extends Component {
           location={props.id}
         >
           <TweenOne
-            animation={{ y: '+=30', opacity: 0, type: 'from' }}
+            animation={{ y: '-=30', opacity: 0, type: 'from' }}
             key="h3"
             reverseDelay={300}
             id={`${props.id}-title`}
@@ -35,6 +35,7 @@ export default class MissingData extends Component {
               <h2>
                 Challenge
               </h2>
+              <br />
             </Col>
           </TweenOne>
           <TweenOne
@@ -50,23 +51,21 @@ export default class MissingData extends Component {
             >
               <img style={{width: '100%'}} src="./img/MissingData.png" />
             </Col>
-              <Col
-                span={8}
-                offset={1}
-                style={{padding:'5em 0'}}
-              >
-                <h3 key="h3" id={`${props.id}-title`}>
-                Find the Missing Piece</h3>
-                <br />
-                <p
-                  key="p" id={`${props.id}-content`}>
-                  As mentioned, public data sources for real estate are complicated with >30% missing values.
-                </p>
-              </Col>
-            </TweenOne>
-
-
-          </OverPack>
+            <Col
+              span={8}
+              offset={1}
+              style={{padding:'5em 0'}}
+            >
+              <h3 key="h3" id={`${props.id}-title`}>
+              Find the Missing Piece</h3>
+              <br />
+              <p
+                key="p" id={`${props.id}-content`}>
+                As mentioned, public data sources for real estate are complicated with >30% missing values.
+              </p>
+            </Col>
+          </TweenOne>
+        </OverPack>
       </Row>
     );
   }

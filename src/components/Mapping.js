@@ -174,13 +174,13 @@ export default class Mapping extends Component {
           type= "fill"
           sourceId='composite'
           layerOptions={{
-                'minzoom': 10,
-                'source-layer': 'vacantParcel',
-                'filter': ["<", 'Shape_Area', 10000],
+              'minzoom': 10,
+              'source-layer': 'vacantParcel',
+              'filter': ["<", 'Shape_Area', 10000],
           }}
           paint={{
-                "fill-color": '#aaa',
-                'fill-opacity': 0.8
+              "fill-color": '#aaa',
+              'fill-opacity': 0.8
           }}
           layout={{visibility: this.props.vacantVis}}
         />
@@ -221,11 +221,10 @@ export default class Mapping extends Component {
         {(this.props.mode === 'mode-build') && (this.props.styleName === 'customized') && (
           <GeoJSONLayer
             data={this.props.blueprint}
-
             fillExtrusionPaint={{
-                  'fill-extrusion-color': '#fbb217',
-                  'fill-extrusion-height': this.props.height * 0.3048,
-                  'fill-extrusion-opacity': 0.8,
+                'fill-extrusion-color': '#fbb217',
+                'fill-extrusion-height': this.props.height * 0.3048,
+                'fill-extrusion-opacity': 0.8,
             }}
             fillExtrusionLayout={{'visibility': this.props.blueVis}}
           />
@@ -236,10 +235,10 @@ export default class Mapping extends Component {
           id='routePoints'
           type='circle'
           paint={{
-            'circle-color': '#d93a1b',
+              'circle-color': '#d93a1b',
           }}
           layout={{
-                'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
+              'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
           }}
         >
           <Feature
@@ -251,12 +250,12 @@ export default class Mapping extends Component {
           id='routeLines'
           type='line'
           paint={{
-              'line-color': '#d93a1b',
-              'line-opacity': 0.5,
-              'line-width': 2,
+                'line-color': '#d93a1b',
+                'line-opacity': 0.5,
+                'line-width': 2,
           }}
           layout={{
-              'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
+                'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
           }}
         >
           <Feature
@@ -268,10 +267,10 @@ export default class Mapping extends Component {
           id='compsLines'
           type='line'
           paint={{
-              'line-color': '#ff9d00',
+                  'line-color': '#ff9d00',
           }}
           layout={{
-              'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
+                  'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
           }}
         >
           {this.renderLines()}
@@ -281,12 +280,12 @@ export default class Mapping extends Component {
           id='compsPoints'
           type='symbol'
           paint={{
-            'icon-opacity': 0.8,
+                    'icon-opacity': 0.8,
           }}
           layout={{
-            'icon-image': 'city-15',
-            'icon-allow-overlap': true,
-            'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
+                    'icon-image': 'city-15',
+                    'icon-allow-overlap': true,
+                    'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
           }}
         >
           {this.renderMarker()}
@@ -331,5 +330,5 @@ export default class Mapping extends Component {
         </Popup>
 
       </ReactMapboxGl>);
-            }
-          };
+                  }
+                };

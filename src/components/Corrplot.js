@@ -71,17 +71,18 @@ const Chart = createG2(chart => {
 export default class Corrplot extends Component {
 	render() {
 			return (
-				<Row>
+				<div>
 					<Col span={12} offset={2}>
-						<Spin
-							spinning={this.props.data.length === 0}
+						{(this.props.data.length === 0) && (<Spin
+							spinning={true}
 							size='large'
-							// style={{top: '20vw', position: 'absolute'}}
 							delay={500}
-						>
-							{(this.props.data.length === 0) && (<div></div>)}
-							{(this.props.data.length !== 0) && (<Chart {...this.props} />)}
+							style={{top:'10em'}}
+																								>
+							<div></div>
 						</Spin>
+						)}
+						{(this.props.data.length !== 0) && (<Chart {...this.props} />)}
 					</Col>
 					<Col span={8}>
 						<br />
@@ -98,7 +99,7 @@ export default class Corrplot extends Component {
 						<br/>
 						<p >To find the relationship between variables, the correlation matrix may serve the goal well.</p>
 					</Col>
-				</Row>
+				</div>
 			);
 		}
 	}

@@ -16,7 +16,6 @@ export default class VariableSelection extends Component {
         <Row
           {...props}
           className={`content-template-wrapper ${props.className}-wrapper`}
-          style={{height:'100vh'}}
         >
           <OverPack
             className={`content-template-wrapper ${props.className}`}

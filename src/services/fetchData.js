@@ -27,7 +27,7 @@ export function modelPerformance() {
 export function listing() {
   const now = new Date();
   const year = now.getFullYear();
-  const month=('0'+now.getMonth()).slice(-2)
-  const date = now.getDate();
+  const month=('0'+now.getMonth()).slice(-2);
+  const date =('0'+now.getDate()).slice(-2);
   return request(`https://smartselect-34c02.firebaseio.com/houseListing.json?orderBy="solddate"&startAt="${year}-${month}-${date}"`);
 }
