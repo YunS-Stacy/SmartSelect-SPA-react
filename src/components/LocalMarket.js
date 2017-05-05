@@ -87,34 +87,20 @@ export default class LocalMarket extends Component {
               key='chart'
               type="flex" justify="space-around" align="middle"
             >
-
-              {/* <TweenOne
-                className={`${props.className}-img`}
-                key="spiralplot"
-                animation={imgAnim}
-                resetStyleBool
-              > */}
               <Col span={10} offset={1}  key='spiralplot'
               >
-
-
-
                 <SpiralPlot
                   data={this.props.dataMarket.marketPhilly}
                 />
-
               </Col>
               <Col span={10}  offset={2} key='roseplot'
               >
                 <RosePlot
                   data={this.props.dataMarket.marketNeigh}/>
-                {/* </TweenOne> */}
               </Col>
-
             </Row>
           </Spin>
-
-
+          
           <Row key='text'>
             <Col
               span={10} offset={1}
