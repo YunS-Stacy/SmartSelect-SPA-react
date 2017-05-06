@@ -14,8 +14,8 @@ const styles ={
     width: '13.7em',
     flexDirection: 'column',
     position: 'absolute',
-    top: '5.5em',
-    right: '1em',
+    top: '8vh',
+    right: '10px',
     borderRadius: '5px',
     padding: '0.5em'
   },
@@ -78,8 +78,8 @@ export default class LayerToggle extends Component {
       <Paper
         zDepth={3}
         style={styles.paper}
+        className='rightPanel'
       >
-
         <div style={styles.group}>
           <RadioButtonGroup
             name="mapStyle"

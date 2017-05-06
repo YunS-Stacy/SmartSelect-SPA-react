@@ -17,6 +17,7 @@ export default class Nav extends Component {
             <Col span={15} style={{display:'flex',alignItems:"center"}}>
               {(props.pathname === '/')&&(
                 <RaisedButton
+                  className = {props.mode === 'mode-welcome' ? '': 'back'}
                   style={{marginLeft: '1em'}}
                   label={props.mode === 'mode-welcome' ? 'Project Home': 'Back to Home'}
                   onTouchTap={(e)=>{

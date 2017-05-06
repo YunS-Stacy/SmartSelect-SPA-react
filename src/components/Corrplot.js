@@ -77,8 +77,7 @@ export default class Corrplot extends Component {
 							spinning={true}
 							size='large'
 							delay={500}
-							style={{top:'10em'}}
-																								>
+							style={{top:'10em'}}>
 							<div></div>
 						</Spin>
 						)}

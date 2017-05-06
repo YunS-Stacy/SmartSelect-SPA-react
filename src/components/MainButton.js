@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import RefreshIndicator from 'material-ui/RefreshIndicator';
 import { Button } from 'antd';
-import 'antd/lib/button/style';
 
 const style = {
   container: {
-    position: 'relative',
+    position: 'absolute',
     marginTop: '10vh'
   },
   refresh: {

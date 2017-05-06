@@ -1,5 +1,5 @@
 Arguments: 
-  /Users/Angela/.nvm/versions/node/v7.9.0/bin/node /Users/Angela/.yarn/bin/yarn.js add @panorama/toolkit
+  /Users/Angela/.nvm/versions/node/v7.9.0/bin/node /Users/Angela/.yarn/bin/yarn.js add react-joyride
 
 PATH: 
   /Users/Angela/.nvm/versions/node/v7.9.0/bin:/Users/Angela/.yarn/bin:/Users/Angela/anaconda/bin:/usr/local/cuda/bin:/Users/Angela/miniconda2/bin:/Library/Frameworks/Python.framework/Versions/2.7/bin:/Library/Frameworks/Python.framework/Versions/3.6/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:./node_modules/.bin
@@ -22,7 +22,7 @@ npm manifest:
     "license": "MIT",
     "scripts": {
       "start": "roadhog server",
-      "build": "roadhog build"
+      "build": "roadhog build --debug"
     },
     "engines": {
       "install-node": "6.9.2"
@@ -7799,4 +7799,4 @@ Lockfile:
       window-size "0.1.0"
 
 Trace: 
-  Error: EACCES: permission denied, rmdir '/Users/Angela/Documents/myapp/node_modules/.cache/babel-loader'
+  Error: EACCES: permission denied, unlink '/Users/Angela/Documents/myapp/node_modules/.bin/babel-doctor'

@@ -20,14 +20,19 @@ export default class InfoCard extends Component {
 
   render(){
     return (
-      <div style={{display: 'inline-flex', width:'100%'}}>
+      <div
+        style={{display: 'inline-flex', width:'100%'}}
+      >
         <TextField
-          style={{fontSize: '1.1em'}}
           hintText="Search for Address"
+          hintStyle={{fontStyle:'italic', fontSize:'0.9em'}}
+          inputStyle={{fontSize:'0.9em'}}
           value={this.state.address}
           onChange={this.handleChange}
         />
         <IconButton
+          className='searchInput'
+
           onTouchTap={()=>{this.props.dispatch({type:'smartselect/geocodeAddress',address:`${this.state.address},Philadelphia`})}}
         >
           <Search />

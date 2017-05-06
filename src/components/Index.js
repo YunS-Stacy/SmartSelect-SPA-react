@@ -23,10 +23,7 @@ import Banner from '../components/Banner';
 import Footer from '../components/Footer';
 import Point from '../components/Point';
 import QuerySlider from '../components/QuerySlider';
-
-
 import {Spin, Row, Col} from 'antd';
-
 import TrendingDown from 'material-ui/svg-icons/action/trending-down';
 import TrendingUp from 'material-ui/svg-icons/action/trending-up';
 
@@ -155,20 +152,6 @@ export default class Index extends Component {
             mapLoaded={this.props.mapLoaded}
             snackMessage={this.props.snackMessage}
           />
-          {(this.props.mode === 'mode-query') && (
-            <QuerySlider
-              data={this.props.dataSlider}
-              height={130}
-              width={400}
-              plotCfg={{margin: [10,30,40,60]}}
-              forceFit={true}
-              dispatch={this.props.dispatch}
-              style={{
-                position: 'absolute',
-                top: '75vh'
-              }}
-            />
-          )}
           <LayerToggle
             styleName={this.props.styleName}
             mode={this.props.mode}
@@ -198,6 +181,7 @@ export default class Index extends Component {
                   right: '38vw'
             }}>
             <Mapping
+              className='mapping'
               map={this.props.map}
               maxBounds={this.props.maxBounds}
               mapStyle={this.props.mapStyle}
@@ -227,10 +211,23 @@ export default class Index extends Component {
           <Row>
             <Nav
               pathname={this.props.location.pathname}
-              className='nav'
               dispatch={this.props.dispatch}
               mode={this.props.mode} id="nav" key="nav" isMode={this.state.isMode}/>
             {this.renderContent()}
+            {(this.props.mode === 'mode-query') && (
+              <QuerySlider
+                data={this.props.dataSlider}
+                height={130}
+                width={400}
+                plotCfg={{margin: [10,30,40,60]}}
+                forceFit={true}
+                dispatch={this.props.dispatch}
+                style={{
+                  position: 'absolute',
+                  top: '75vh'
+                }}
+              />
+            )}
           </Row>
         </div>
       </MuiThemeProvider>

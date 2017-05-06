@@ -125,19 +125,19 @@ const legendChildren = legendArray.map((item, i) => {
 export default class QuerySlider extends Component {
   render(){
     return (
-      <Paper
-        zDepth={3}
-        style={paperStyle}
-      >
-        <HigherChart {...this.props}/>
-
-        <div style={{paddingLeft: '1%',bottom: '1em',width: '100%', }}>
-          <h6 style={{paddingLeft: '8.5%','lineHeight': '1.8em'}}>Legend</h6>
-          <ul>
-            {legendChildren}
-          </ul>
-        </div>
-      </Paper>
+        <Paper
+          zDepth={3}
+          style={paperStyle}
+          className='sliderChart'
+        >
+          {(this.props.data.length !==0 ) && (<HigherChart {...this.props}/>)}
+          <div style={{paddingLeft: '1%',bottom: '1em',width: '100%', }}>
+            <h6 style={{paddingLeft: '8.5%','lineHeight': '1.8em'}}>Legend</h6>
+            <ul>
+              {legendChildren}
+            </ul>
+          </div>
+        </Paper>
       );
     }
   };
