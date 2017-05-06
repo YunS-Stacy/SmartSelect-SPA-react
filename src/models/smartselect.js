@@ -398,6 +398,7 @@ export default {
           const tempBbox = turf.featureCollection(_.concat(tempPts, [origin]))
           const bounds = turf.bbox(tempBbox);
           map.fitBounds(bounds, {padding: 100});
+          snackMessage = '';
           break;
           case 'string':
           snackMessage = datum.dataZillow;

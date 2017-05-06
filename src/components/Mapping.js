@@ -279,13 +279,11 @@ export default class Mapping extends Component {
         {/* compsPts */}
         <Layer
           id='compsPoints'
-          type='symbol'
+          type='circle'
           paint={{
-                    'icon-opacity': 0.8,
+            'circle-color': '#ff9d00',
           }}
           layout={{
-                    'icon-image': 'city-15',
-                    'icon-allow-overlap': true,
                     'visibility': this.props.mode === 'mode-query' ? 'visible' : 'none'
           }}
         >
