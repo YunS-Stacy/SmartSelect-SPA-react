@@ -4,6 +4,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import FontIcon from 'material-ui/FontIcon';
 import IconButton from 'material-ui/IconButton';
+import Snackbar from 'material-ui/Snackbar';
+
 import { Button, Spin} from 'antd';
 import Paper from 'material-ui/Paper';
 import { Step, Stepper, StepLabel, StepContent } from 'material-ui/Stepper';
@@ -33,7 +35,11 @@ export default class MappingPanel extends Component{
 		finished: false,
 		stepIndex: 0,
 		slider: 50,
+		snackStatus: false,
+		snackMessage: ''
 	}
+
+
 	handleCalculate = () => {
 		this.props.dispatch({
 			type: 'smartselect/askCalculate'
@@ -95,6 +101,7 @@ export default class MappingPanel extends Component{
 			</div>
 		);
 	}
+
 	componentWillUpdate(nextProps,nextState){
 		if(this.state.stepIndex !== nextState.stepIndex){
 			switch (nextState.stepIndex) {
@@ -301,6 +308,16 @@ export default class MappingPanel extends Component{
 							</Step>
 						</Stepper>
 					</Spin>
+					<Snackbar
+						open={this.props.snackMessage === '' ? false : true}
+						message={this.props.snackMessage}
+						autoHideDuration={5000}
+						bodyStyle={{
+							padding: '1em',
+							textAlign: 'center',
+							lineHeight: '2em',
+						}}
+					/>
 				</Paper>
 			</div>
 		);

@@ -21,7 +21,8 @@ const styles ={
   },
   group: {
     marginLeft: '0.5em',
-    marginTop: '0.2em'
+    marginTop: '0.3em',
+    marginBottom: '0.3em'
   }
 }
 

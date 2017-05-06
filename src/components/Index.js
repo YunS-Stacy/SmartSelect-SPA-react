@@ -4,8 +4,6 @@ import { scrollScreen } from 'rc-scroll-anim';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import Snackbar from 'material-ui/Snackbar';
-
 import Nav from '../components/Nav';
 import Mapping from '../components/Mapping';
 import MappingPanel from '../components/MappingPanel';
@@ -41,22 +39,7 @@ export default class Index extends Component {
     super(props);
     this.state = {
       isMode: false,
-      snackStatus: false,
-      snackMessage: ''
     };
-  }
-
-  componentWillReceiveProps(nextProps){
-    if(nextProps.snackMessage !== this.state.snackMessage){
-      this.setState({
-        snackStatus: true,
-        snackMessage: nextProps.snackMessage,
-      })
-    } else {
-      this.setState({
-        snackStatus: false,
-      })
-    }
   }
 
   componentDidMount() {
@@ -170,6 +153,7 @@ export default class Index extends Component {
             height={this.props.height}
             dispatch={this.props.dispatch}
             mapLoaded={this.props.mapLoaded}
+            snackMessage={this.props.snackMessage}
           />
           {(this.props.mode === 'mode-query') && (
             <QuerySlider
@@ -194,16 +178,6 @@ export default class Index extends Component {
             blueVis={this.props.blueVis}
             height={this.props.height}
             dispatch={this.props.dispatch}
-          />
-          <Snackbar
-            open={this.state.snackStatus}
-            message={this.state.snackMessage}
-            autoHideDuration={5000}
-            bodyStyle={{
-              padding: '1em',
-              minHeight: '6em',
-              lineHeight: '2em',
-            }}
           />
         </div>
       )

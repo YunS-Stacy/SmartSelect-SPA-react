@@ -251,7 +251,7 @@ export default {
     },
 
     changeCenter(state, {mapCenter}){
-      return { ...state, mapCenter}
+      return { ...state, mapCenter, snackMessage: ''}
     },
 
     changeMode(state, {mode}){

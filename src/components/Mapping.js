@@ -117,6 +117,7 @@ export default class Mapping extends Component {
   render(){
     const {props} = this;
     const mapPosition= this.props.mode === 'mode-welcome' ? 'fixed' : 'absolute';
+    const mapWidth = this.props.mode === 'mode-welcome' ? '100vw' : '100%';
     return (
       <ReactMapboxGl
         style={this.props.mapStyle}
@@ -127,7 +128,7 @@ export default class Mapping extends Component {
         pitch={this.props.mapPitch}
         containerStyle={{
           height: "100vh",
-          width: "100vw",
+          width: mapWidth,
           position: mapPosition,
         }}
         movingMethod='easeTo'
