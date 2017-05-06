@@ -57,7 +57,7 @@ export default class Map extends Component {
           <Row
             key='icon'
             type="flex" justify="space-around"
-            style={{paddingTop:'40vh'}}
+            style={{paddingTop:'25vh'}}
           >
             <TweenOne
               animation={{ y: '-=20', yoyo: true, repeat: -1, duration: 1000 }}

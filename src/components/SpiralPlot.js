@@ -61,7 +61,6 @@ const Chart = createG2(chart => {
     },
   })
   chart.render();
-
 });
 
 export default class SpiralPlot extends Component {

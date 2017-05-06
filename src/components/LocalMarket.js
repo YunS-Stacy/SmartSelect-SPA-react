@@ -100,7 +100,7 @@ export default class LocalMarket extends Component {
               </Col>
             </Row>
           </Spin>
-          
+
           <Row key='text'>
             <Col
               span={10} offset={1}

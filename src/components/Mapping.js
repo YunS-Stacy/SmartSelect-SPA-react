@@ -100,7 +100,7 @@ export default class Mapping extends Component {
           });
         }
       };
-      timer = setInterval(checker, 500);
+      timer = setInterval(checker, 1000);
     };
   }
   handleLoaded(map){

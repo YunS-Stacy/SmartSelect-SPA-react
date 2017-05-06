@@ -144,7 +144,6 @@ export default class Index extends Component {
             tableMessage={this.props.tableMessage}
           />
           <MappingPanel
-            dataSlider={this.props.dataSlider}
             mode={this.props.mode}
             calData={this.props.calData}
             height={this.props.height}

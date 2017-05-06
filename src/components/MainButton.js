@@ -4,11 +4,10 @@ import { Button } from 'antd';
 
 const style = {
   container: {
-    position: 'absolute',
     marginTop: '10vh'
   },
   refresh: {
-    display: 'inline-block',
+    display: 'inline-flex',
     position: 'relative',
   },
   button: {

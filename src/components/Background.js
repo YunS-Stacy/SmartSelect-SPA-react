@@ -42,7 +42,7 @@ export default class Background extends Component {
           location={props.id}
         >
           <TweenOne
-            animation={{ y: '+=30', opacity: 0, type: 'from' }}
+            animation={{ y: '-=30', opacity: 0, type: 'from' }}
             key="h1"
             reverseDelay={300}
             id={`${props.id}-title`}
@@ -52,9 +52,11 @@ export default class Background extends Component {
             </h2>
           </TweenOne>
 
-          <QueueAnim
-            type="bottom" key="block" leaveReverse
-            id={`${props.id}-contentWrapper`}
+          <TweenOne
+            animation={{ y: '+=30', opacity: 0, type: 'from' }}
+            key="block"
+            reverseDelay={300}
+            id={`${props.id}-title`}
           >
             <Row
               key='content'
@@ -63,8 +65,8 @@ export default class Background extends Component {
               {listChildren}
             </Row>
 
-            </QueueAnim>
-          </OverPack>
+          </TweenOne>
+        </OverPack>
       </div>
     );
   }
