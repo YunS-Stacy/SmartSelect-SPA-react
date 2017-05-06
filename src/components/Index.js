@@ -92,14 +92,14 @@ export default class Index extends Component {
           </Row>
           <Row>
             {/* local market */}
-            <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}
+            {/* <LocalMarket id="localmarket" key="localmarket" className='localmarket' isMode={this.state.isMode}
               dataMarket={this.props.dataMarket}
               listing={this.props.listing}
               imgsrc={this.props.imgsrc}
               style={{
                 padding: '5vh 0'
               }}
-            />
+            /> */}
           </Row>
           <Row
             type="flex" justify="space-around" align="middle"
@@ -116,13 +116,13 @@ export default class Index extends Component {
           </Row>
           <Row>
             {/* process overview */}
-            <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode}/>
+            {/* <ProcessOverview id="processoverview" key="processoverview" className='processoverview' isMode={this.state.isMode}/> */}
           </Row>
           <Row>
             {/* corrplot */}
-            <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode}
+            {/* <VariableSelection id="variableselection" key="variableselection" className='variableselection' isMode={this.state.isMode}
               data={this.props.dataCorrplot}
-            />
+            /> */}
           </Row>
           <Row>
             {/* missing data section */}
@@ -133,7 +133,7 @@ export default class Index extends Component {
               style={{height:'9vh'}}
               id="footer" key="footer" className='footer' isMode={this.state.isMode}/>
           </Row>
-          <Point key="list" ref="list" data={['map', 'background', 'localmarket', 'banner', 'processoverview', 'variableselection','missingdata']} />
+          {/* <Point key="list" ref="list" data={['map', 'background', 'localmarket', 'banner', 'processoverview', 'variableselection','missingdata']} /> */}
         </div>
       )
     } else {
@@ -144,6 +144,7 @@ export default class Index extends Component {
             tableMessage={this.props.tableMessage}
           />
           <MappingPanel
+            dataSlider={this.props.dataSlider}
             mode={this.props.mode}
             calData={this.props.calData}
             height={this.props.height}
@@ -151,6 +152,7 @@ export default class Index extends Component {
             mapLoaded={this.props.mapLoaded}
             snackMessage={this.props.snackMessage}
           />
+
           <LayerToggle
             styleName={this.props.styleName}
             mode={this.props.mode}
@@ -213,20 +215,6 @@ export default class Index extends Component {
               dispatch={this.props.dispatch}
               mode={this.props.mode} id="nav" key="nav" isMode={this.state.isMode}/>
             {this.renderContent()}
-            {/* {(this.props.mode === 'mode-query') && (
-              <QuerySlider
-                data={this.props.dataSlider}
-                height={130}
-                width={400}
-                plotCfg={{margin: [10,30,40,60]}}
-                forceFit={true}
-                dispatch={this.props.dispatch}
-                style={{
-                  position: 'absolute',
-                  top: '75vh'
-                }}
-              />
-            )} */}
           </Row>
         </div>
       </MuiThemeProvider>
