@@ -7,16 +7,13 @@ import {Row,Col} from 'antd';
 
 function renderTree(nodes, edges, dx, chart) {
       chart.clear();
-      var height = Math.max(500, 26 / dx); // 最小高度 500
+      var height = Math.max(500, 26 / dx);
       chart.changeSize(1300, height);
-      // 首先绘制 edges，点要在边的上面
-      // 创建单独的视图
       var edgeView = chart.createView();
       edgeView.source(edges);
-      edgeView.coord().transpose().scale(1, -1); //
+      edgeView.coord().transpose().scale(1, -1);
       edgeView.axis(false);
       edgeView.tooltip(false);
-      // Stat.link 方法会生成 ..x, ..y的字段类型，数值范围是 0-1
       edgeView.edge()
         .position(Stat.link('source*target',nodes))
         .shape('smooth')
@@ -32,17 +29,14 @@ function renderTree(nodes, edges, dx, chart) {
         }
         return len;
       }
-      // 创建节点视图
       var nodeView = chart.createView();
       nodeView.coord().transpose().scale(1, -1); //'polar'
       nodeView.axis(false);
-      // 节点的x,y范围是 0，1
-      // 因为边的范围也是 0,1所以正好统一起来
       nodeView.source(nodes, {
         x: {min: 0,max:1},
         y: {min: 0, max:1},
         value: {min: 0}
-      },['id','x','y','name','children','collapsed']); // 由于数据中没有 'collapsed' 字段，所以需要设置所有的字段名称
+      },['id','x','y','name','children','collapsed']);
       nodeView.point().position('x*y').color('steelblue').size('name', function(name) {
         var length = strLen(name);
         return length * 6 + 5 * 2;
@@ -89,7 +83,7 @@ function renderTree(nodes, edges, dx, chart) {
             x: x,
             y: y,
             fill: '#fff',
-            stroke: cfg.color // 可以直接设置颜色 cfg.color，也可以使用映射
+            stroke: cfg.color
           }
         });
         var path = [];
@@ -125,8 +119,6 @@ function renderTree(nodes, edges, dx, chart) {
         }
       });
       var data = chart.get('data').data;
-      // 使用layout，用户可以自己编写自己的layout
-      // 仅约定输出的节点 存在 id,x，y字段即可
       var layout = new Layout.Tree({
         nodes: data
       });
@@ -134,7 +126,6 @@ function renderTree(nodes, edges, dx, chart) {
       var nodes = layout.getNodes();
       var edges = layout.getEdges();
       chart.animate(false);
-      // 不显示title
       chart.tooltip({
         title: null
       });

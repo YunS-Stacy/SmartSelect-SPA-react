@@ -11,23 +11,13 @@ import ChartPlot from '../components/ChartPlot';
 export default class ProcessOverview extends Component {
   render() {
     const props = { ...this.props };
-    const isMode = props.isMode;
-    delete props.isMode;
-    const queue = isMode ? 'bottom' : 'left';
-    const imgAnim = isMode ? { y: 30, opacity: 0, delay: 400, type: 'from', ease: 'easeOutQuad' }
-    : { y: 30, opacity: 0, type: 'from', ease: 'easeOutQuad' };
     return (
       <div {...props} className="content-template-wrapper processoverview-wrapper">
         <OverPack
           className={`content-template ${props.className}`}
           location={props.id}
         >
-          <QueueAnim
-            key="text"
-            type={queue}
-            leaveReverse
-            ease={['easeOutQuad', 'easeInQuad']}
-          >
+          
             <Col span={24} key='h2'>
               <h2>
                 Process Overview
@@ -44,21 +34,9 @@ export default class ProcessOverview extends Component {
                 Workflow
               </h3>
             </Col>
-          </QueueAnim>
-          <Row key='workflow'>
-            <TweenOne
-              key="img1"
-              animation={imgAnim}
-              resetStyleBool
-            >
+            <Row key='workflow'>
               <Workflow/>
-            </TweenOne>
-          </Row>
-          <TweenOne
-            key="img2"
-            animation={imgAnim}
-            resetStyleBool
-          >
+            </Row>
             <Row
               type="flex" align="middle"
             >
@@ -83,8 +61,7 @@ export default class ProcessOverview extends Component {
                 <ChartPlot/>
               </Col>
             </Row>
-          </TweenOne>
-        </OverPack>
+          </OverPack>
       </div>
     );
   }
