@@ -213,7 +213,7 @@ export default class Index extends Component {
               dispatch={this.props.dispatch}
               mode={this.props.mode} id="nav" key="nav" isMode={this.state.isMode}/>
             {this.renderContent()}
-            {(this.props.mode === 'mode-query') && (
+            {/* {(this.props.mode === 'mode-query') && (
               <QuerySlider
                 data={this.props.dataSlider}
                 height={130}
@@ -226,7 +226,7 @@ export default class Index extends Component {
                   top: '75vh'
                 }}
               />
-            )}
+            )} */}
           </Row>
         </div>
       </MuiThemeProvider>
