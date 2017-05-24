@@ -3,7 +3,7 @@
 http://smartselect.herokuapp.com/
 
 ### This is the MUSA Capstone Project by Yun Shi, from MUSA 17', UPenn.
-Smart Select is an interactive map created by Yun Shi that explores the commercial real estate investment by predicting the apartment price in Philadelphia.
+Smart Select is an interactive map for non-experts created by Yun Shi that explores the commercial real estate investment by predicting the apartment price in Philadelphia.
 ![image](./poster.jpg)
 
 ## Problem & Solution
@@ -24,13 +24,22 @@ Smart Select is an interactive map created by Yun Shi that explores the commerci
   4) After that I built a model in ArcGIS to generate distance variables as 3/5/7/... nearest facilities to the property.
   5) Then I built the prediction model in R using OLS, Gradient Boosting and Random Forests, and uploaded it to Mapbox.
 - Real-time Market Data
-  The market data (latest transactions) is collected from Zillow website every 10 minutes by R (Heroku Scheduler).
+  The market data (latest transactions) is collected from Zillow website every hour by the R script (deployed and scheduled by Heroku Scheduler).
 
 
 ## Technologies
-- React, Redux;
-- G2;
-- Mapbox GL;
+- Programming Languages:
+  JavaScript, HTML/CSS, R;
+- JS Libraries:
+  MapboxGL.js, G2.js;
+- APIs:
+  Zillow API, Google Geocode API, Mapbox Direction API;
+- Database:
+  Firebase NoSQL, CartoDB;
+- Front-End Framework:
+  React, Redux;
+- Statistical Model: 
+  ArcGIS Model Builder;
 
 ## Use-cases
 - Users:

@@ -348,9 +348,10 @@ export default class MappingPanel extends Component{
 						delay={500}
 						size='large'
 						style={{top: '30vh', left: '-38vw', position: 'absolute'}}>
-						<div className='showHelp' style={{width:'40%', float: 'right'}}>
+						<div className='showHelp' style={{position: 'absolute', width: '100%', float: 'right'}}>
 							<Toggle
 								label="Show Help"
+								labelStyle={{textAlign: 'right'}}
 								toggled={this.state.toggled}
 								onToggle={(e,bool)=>{this.showHelp(e,bool)}}
 							/>

@@ -2,9 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import mapboxgl from 'mapbox-gl';
 import MapboxDraw from 'mapbox-gl-draw';
 import ReactMapboxGl, { GeoJSONLayer, Layer, Feature, ZoomControl, ScaleControl, Source, Popup, Marker} from "react-mapbox-gl";
-import turf from 'turf';
-
-import { mapbox } from '../services/config.json';
+import _ from 'lodash';
 
 import Search from 'material-ui/svg-icons/action/search';
 import LocalOffer from 'material-ui/svg-icons/maps/local-offer';
@@ -12,16 +10,11 @@ import DirectionsCar from 'material-ui/svg-icons/maps/directions-car';
 import DirectionsBus from 'material-ui/svg-icons/maps/directions-bus';
 import DirectionsBike from 'material-ui/svg-icons/maps/directions-bike';
 import DirectionsWalk from 'material-ui/svg-icons/maps/directions-walk';
-
-
-
 import Business from 'material-ui/svg-icons/communication/business';
-
-
 import IconButton from 'material-ui/IconButton';
-
-import _ from 'lodash';
 import { Icon, Button } from 'antd';
+
+import { mapbox } from '../services/config.json';
 
 export default class Mapping extends Component {
   constructor(props) {
@@ -327,7 +320,7 @@ export default class Mapping extends Component {
             </li>
           </ul>
         </Popup>
-
-      </ReactMapboxGl>);
-                  }
-                };
+      </ReactMapboxGl>
+    );
+  }
+};

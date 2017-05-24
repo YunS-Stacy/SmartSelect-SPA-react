@@ -8,8 +8,6 @@ import Nav from '../components/Nav';
 import Mapping from '../components/Mapping';
 import MappingPanel from '../components/MappingPanel';
 
-// import PanelTour from '../components/PanelTour';
-
 import LayerToggle from '../components/LayerToggle';
 import InfoCard from '../components/InfoCard';
 import Map from '../components/Map';
@@ -115,7 +113,7 @@ export default class Index extends Component {
           </Row>
           <Row>
             {/* process overview */}
-            <ProcessOverview id="processoverview" key="processoverview" className='processoverview' /> 
+            <ProcessOverview id="processoverview" key="processoverview" className='processoverview' />
           </Row>
           <Row>
             {/* corrplot */}
