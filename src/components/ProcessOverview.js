@@ -17,7 +17,6 @@ export default class ProcessOverview extends Component {
           className={`content-template ${props.className}`}
           location={props.id}
         >
-
           <Col span={24} key='h2'>
             <h2>
               Process Overview
