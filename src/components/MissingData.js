@@ -65,6 +65,8 @@ export default class MissingData extends Component {
               </p>
             </Col>
           </TweenOne>
+
+          
         </OverPack>
       </Row>
     );

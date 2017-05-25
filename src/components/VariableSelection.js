@@ -48,7 +48,6 @@ export default class VariableSelection extends Component {
                   margin: [0,150,150,50]
                 }}
               />
-
             </TweenOne>
           </OverPack>
         </Row>

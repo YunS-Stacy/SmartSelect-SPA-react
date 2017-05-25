@@ -16,7 +16,7 @@ import LocalMarket from '../components/LocalMarket';
 import VariableSelection from '../components/VariableSelection';
 import ModelSelection from '../components/ModelSelection';
 import ProcessOverview from '../components/ProcessOverview';
-import MissingData from '../components/MissingData';
+import ModelBuilder from '../components/ModelBuilder';
 import Banner from '../components/Banner';
 import Footer from '../components/Footer';
 import Point from '../components/Point';
@@ -123,14 +123,14 @@ export default class Index extends Component {
           </Row>
           <Row>
             {/* missing data section */}
-            <MissingData id="missingdata" key="missingdata" className="missingdata" isMode={this.state.isMode}/>
+            <ModelBuilder id="modelbuilder" key="modelbuilder" className="modelbuilder" isMode={this.state.isMode}/>
           </Row>
           <Row>
             <Footer
               style={{height:'9vh'}}
               id="footer" key="footer" className='footer' isMode={this.state.isMode}/>
           </Row>
-          <Point key="list" ref="list" data={['map', 'background', 'localmarket', 'processoverview', 'variableselection','missingdata']} />
+          <Point key="list" ref="list" data={['map', 'background', 'localmarket', 'processoverview', 'variableselection','modelbuilder']} />
         </div>
       )
     } else {
