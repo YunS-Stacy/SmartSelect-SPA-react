@@ -10,7 +10,7 @@ const data = [
 		"RMSE": 0.45
 	},
 	{
-		"Methods": "Gradient Boost",
+		"Methods": "Gradient Boosting",
 		"R Squared": 0.77,
 		"MSE": 0.13,
 		"RMSE": 0.36
