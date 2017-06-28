@@ -90,7 +90,6 @@ class HigherChart extends Component {
 
 const legendArray = [
   [0, 'transparent'],
-
   [69100, 'rgba(12, 44, 132, 1)'],
   [94200, 'rgba(34, 94, 168, 1)'],
   [119000, 'rgba(29, 145, 192, 1)'],
@@ -100,7 +99,7 @@ const legendArray = [
   [225682, 'rgba(238, 131, 110, 1)'],
   [285000, 'rgba(232, 92, 65, 1)'],
   [386940, 'rgba(219, 58, 27, 1)'],
-[600000, 'rgba(170, 45, 23, 1)']]
+  [600000, 'rgba(170, 45, 23, 1)']]
 
 const legendChildren = legendArray.map((item, i) => {
   return (

@@ -40,7 +40,6 @@ export default class LayerToggle extends Component {
   }
 
   handlePrice (e, bool){
-    console.log(bool)
     let layerVisible = bool === true ? 'visible' : 'none';
     this.props.initialMap.setLayoutProperty('house-points', 'visibility', layerVisible);
   }

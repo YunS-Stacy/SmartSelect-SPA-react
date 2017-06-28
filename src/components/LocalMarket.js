@@ -53,7 +53,7 @@ export default class LocalMarket extends Component {
             >
               <Col offset={1}>
                 <h3>
-                  Lastest Transactions (30 days)
+                  Latest Transactions (30 days)
                 </h3>
               </Col>
             </Row>
